@@ -1,17 +1,10 @@
 <p align="center">
     <img src="./client/public/MERN.png" alt="mongo" height="100" />
 </p>
-<h1 align="center">BOILERPLATE</h1>
+<h1 align="center">Random Manga</h1>
 
-This is a boilerplate repo for creating new mern stack apps that doesn't sucks.
+This is the official repo for the website.
 
-This is minimalist boilerplate for Full Stack MERN developers *(Recommended for beginners only)*. This boilerplate provides basic configurations like:
-
-* Sample CRUD API
-* Create-react-app boilerplate
-* NPM Scripts needed for MERN Stack
-* Sample mongoose connection provided for connecting API with database like mongodb
-* Heroku Deployment Configurations
 
 ## Available Scripts
 
