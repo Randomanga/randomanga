@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engines": {
     "node": "12.x",
-    "yarn": "1.x"
+    "npm": "1.x"
   },
   "description": "This is a boilerplate repo for creating new mern stack apps",
   "main": "server.js",
@@ -11,17 +11,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "client": "cd client && yarn start",
-    "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"yarn run dev\" \"yarn run client\"",
-    "heroku-postbuild": "cd client && yarn install && yarn run build"
+    "client": "cd client && npm start",
+    "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run dev\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Gaurav Walia",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.0",
+    "@hapi/joi": "^15.0.3",
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.10.11"
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "validator": "^13.5.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
