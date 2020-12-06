@@ -2,14 +2,19 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
-
 const app = express();
 
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production')
+    require('dotenv').config();
+
+const jwt_strategy = require('./middleware/passport-strategy');
+const passport = require('passport')
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+passport.use('jwt',jwt_strategy)
 
 app.use('/auth', authRoutes);
 
@@ -28,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 const mongoose = require('mongoose');
-
+const { allowedNodeEnvironmentFlags } = require('process');
 
 const dbURI = process.env.MONGODB_URI;
 mongoose.connect(dbURI, {
