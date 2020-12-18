@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 passport.use('jwt',jwt_strategy)
 
-app.use('/auth', authRoutes);
+app.use(authRoutes);
 
 app.use(function (req, res, next) {
     res.sendStatus(404);
@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5006;
 
 const mongoose = require('mongoose');
 const { allowedNodeEnvironmentFlags } = require('process');
