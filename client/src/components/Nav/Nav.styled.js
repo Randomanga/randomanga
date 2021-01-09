@@ -13,7 +13,6 @@ const Nav = styled.nav`
     grid-template-columns: 1fr 3fr;
     align-items: center;
     height: 4rem;
-    overflow: hidden;
     max-width: 1400px;
     margin: 0 auto;
     img {

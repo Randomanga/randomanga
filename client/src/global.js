@@ -25,11 +25,7 @@ export const GlobalStyles = createGlobalStyle`
     div {
       text-align: center;
     }
-    img {
-    border-radius: 5px;
-    height: auto;
-    width: 10rem;
-  }
+   
     small {
       display: block;
     }

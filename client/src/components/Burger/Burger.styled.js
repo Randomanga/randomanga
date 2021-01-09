@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
 
 export const StyledBurger = styled.button`
     position: absolute;
