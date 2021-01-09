@@ -19,8 +19,8 @@ const DropdownMenu = ({ user, close }) => {
         close();
     };
     return (
-        <Dropdown >
-            <DropdownTrigger onClick={handleClick} >
+        <Dropdown>
+            <DropdownTrigger onClick={handleClick}>
                 <img
                     draggable="false"
                     src={user.avatar ? user.avatar : Placeholder}
@@ -55,7 +55,7 @@ const DropdownMenu = ({ user, close }) => {
     );
 };
 const Menu = ({ open, setOpen }) => {
-    const user = {};
+    const user = null;
     const handleClick = () => {
         setOpen(false);
     };
@@ -83,7 +83,9 @@ const Menu = ({ open, setOpen }) => {
                         close={handleClick}
                     />
                 ) : (
-                    <SigninButton onClick={handleClick}>Sign in</SigninButton>
+                    <SigninButton onClick={handleClick}>
+                        <Link to="/sign-in">Sign in</Link>
+                    </SigninButton>
                 )}
             </StyledItem>
         </StyledMenu>

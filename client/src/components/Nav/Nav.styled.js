@@ -7,6 +7,7 @@ const NavWrapper = styled.div`
     top: 0;
     background-color: ${({ theme }) => theme.primaryDark};
 `;
+
 const Nav = styled.nav`
     display: grid;
     grid-template-columns: 1fr 3fr;

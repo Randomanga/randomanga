@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+//Navigation links
 const StyledMenu = styled.ul`
     list-style: none;
     display: grid;
@@ -52,13 +53,14 @@ const StyledItem = styled.li`
         }
     }
 `;
-
+/* the entire container */
 const Dropdown = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
+// Part containing image and username
 const DropdownTrigger = styled.div`
     display: flex;
     justify-content: space-between;
@@ -81,6 +83,7 @@ const DropdownTrigger = styled.div`
         display: none;
     }
 `;
+//The dropdown list
 const DropdownList = styled.nav`
     position: absolute;
     z-index: 100;
@@ -116,6 +119,7 @@ const DropdownList = styled.nav`
             }
         }
     }
+    /* Show only the list on mobile */
     @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
         visibility: visible;
         position: relative;
