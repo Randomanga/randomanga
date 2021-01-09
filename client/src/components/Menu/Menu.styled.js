@@ -43,14 +43,15 @@ const StyledItem = styled.li`
         }
     }
     @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
+        a {
+            font-size: 1.2rem;
+        }
         padding: 15px;
         :first-child {
             margin-top: 1rem;
         }
     }
 `;
-
-
 
 const Dropdown = styled.div`
     position: relative;
@@ -75,6 +76,9 @@ const DropdownTrigger = styled.div`
         height: 30px;
         object-fit: cover;
         border-radius: 5px;
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
+        display: none;
     }
 `;
 const DropdownList = styled.nav`
@@ -103,13 +107,25 @@ const DropdownList = styled.nav`
             }
             a {
                 text-align: left;
-                padding: 7px 5px;
+                padding: 9px 5px;
                 display: block;
             }
             :nth-child(2) {
                 margin-bottom: 7px;
                 border-bottom: 1px solid rgba(199, 199, 199, 0.6);
             }
+        }
+    }
+    @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
+        visibility: visible;
+        position: relative;
+        opacity: 1;
+        transform: translateY(0);
+        top: 1rem;
+        background-color: transparent;
+        a {
+            display: inline-block !important;
+            text-align: center;
         }
     }
 `;
@@ -125,13 +141,11 @@ const SigninButton = styled.button`
     &:hover {
         background-color: transparent;
     }
-    
 `;
 
 export {
     StyledMenu,
     StyledItem,
-   
     Dropdown,
     DropdownTrigger,
     DropdownList,

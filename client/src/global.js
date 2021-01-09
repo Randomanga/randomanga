@@ -25,13 +25,18 @@ export const GlobalStyles = createGlobalStyle`
     div {
       text-align: center;
     }
-   
+    
     small {
       display: block;
     }
     a {
       color: ${({ theme }) => theme.primaryHover};
       text-decoration: none;
+      user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
     }
 
 `;

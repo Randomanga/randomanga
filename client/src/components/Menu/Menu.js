@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import {
     StyledMenu,
     StyledItem,
-    StyledProfile,
     Dropdown,
     DropdownTrigger,
     DropdownList,
@@ -12,14 +11,18 @@ import {
 } from './Menu.styled';
 import Placeholder from './user-placehold.svg';
 
-const DropdownMenu = ({ user }) => {
+const DropdownMenu = ({ user, close }) => {
     const dropdownRef = useRef(null);
     const [isActive, setActive] = useState(false);
-    const handleClick = () => setActive(!isActive);
+    const handleClick = () => {
+        setActive(!isActive);
+        close();
+    };
     return (
-        <Dropdown>
-            <DropdownTrigger onClick={handleClick}>
+        <Dropdown >
+            <DropdownTrigger onClick={handleClick} >
                 <img
+                    draggable="false"
                     src={user.avatar ? user.avatar : Placeholder}
                     alt="Profile avatar"></img>
                 <span>
@@ -30,19 +33,19 @@ const DropdownMenu = ({ user }) => {
             <DropdownList ref={dropdownRef} active={isActive}>
                 <ul>
                     <li>
-                        <Link to="/profile">
-                            <i class="far fa-user"></i>Profile
+                        <Link to="/profile" onClick={handleClick}>
+                            <i className="far fa-user"></i>Profile
                         </Link>
                     </li>
                     <li>
-                        <Link to="/settings">
-                            <i class="fas fa-cogs"></i>
+                        <Link to="/settings" onClick={handleClick}>
+                            <i className="fas fa-cogs"></i>
                             Settings
                         </Link>
                     </li>
                     <li>
-                        <Link to="/logout">
-                            <i class="fas fa-sign-out-alt"></i>
+                        <Link to="/logout" onClick={handleClick}>
+                            <i className="fas fa-sign-out-alt"></i>
                             Log out
                         </Link>
                     </li>
@@ -51,27 +54,37 @@ const DropdownMenu = ({ user }) => {
         </Dropdown>
     );
 };
-const Menu = ({ open }) => {
+const Menu = ({ open, setOpen }) => {
     const user = {};
+    const handleClick = () => {
+        setOpen(false);
+    };
     return (
         <StyledMenu open={open}>
             <StyledItem>
-                <Link to="/">Home</Link>
+                <Link to="/" onClick={handleClick}>
+                    Home
+                </Link>
             </StyledItem>
             <StyledItem>
-                <Link to="/recommendations">Recommendations</Link>
+                <Link to="/recommendations" onClick={handleClick}>
+                    Recommendations
+                </Link>
             </StyledItem>
             <StyledItem>
-                <Link to="/lists">Top Lists</Link>
+                <Link to="/lists" onClick={handleClick}>
+                    Top Lists
+                </Link>
             </StyledItem>
             <StyledItem>
                 {user ? (
                     <DropdownMenu
                         user={{ avatar: '/avatar.jpg', username: 'Wiz1991' }}
+                        close={handleClick}
                     />
-                ) : <SigninButton>
-                    Sign in
-                    </SigninButton>}
+                ) : (
+                    <SigninButton onClick={handleClick}>Sign in</SigninButton>
+                )}
             </StyledItem>
         </StyledMenu>
     );

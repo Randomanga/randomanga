@@ -6,7 +6,6 @@ const NavWrapper = styled.div`
     position: --webkit-sticky;
     top: 0;
     background-color: ${({ theme }) => theme.primaryDark};
-
 `;
 const Nav = styled.nav`
     display: grid;
@@ -20,8 +19,10 @@ const Nav = styled.nav`
         width: auto;
         justify-self: start;
         margin-left: 20px;
+        @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
+            height: 1.7rem;
+        }
     }
-
 `;
 
 export { NavWrapper, Nav };
