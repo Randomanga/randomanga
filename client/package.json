@@ -1,5 +1,5 @@
 {
-    "name": "client",
+    "name": "randomanga_client",
     "version": "1.0.0",
     "private": true,
     "dependencies": {
@@ -36,5 +36,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://localhost:5006"
+    "proxy": "http://localhost:5000"
 }

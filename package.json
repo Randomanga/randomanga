@@ -1,15 +1,14 @@
 {
-  "name": "mernboilerplate",
+  "name": "randomanga-api",
   "version": "1.0.0",
   "engines": {
     "node": "12.x",
     "npm": "1.x"
   },
-  "description": "This is a boilerplate repo for creating new mern stack apps",
+  "description": "The API code for randomanga",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "pm2 start server.js --name randomanga",
     "dev": "nodemon server.js",
     "client": "cd client && npm start",
     "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run dev\" \"npm run client\"",
