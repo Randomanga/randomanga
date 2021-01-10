@@ -36,7 +36,7 @@ const sign_up = async (req, res, next) => {
         });
     });
 };
-const login = async (req, res, next) => {
+const sign_in = async (req, res, next) => {
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).json(error);
     const user = await User.findOne({ username: req.body.username });
@@ -66,5 +66,5 @@ const login = async (req, res, next) => {
 
 module.exports = {
     sign_up,
-    login,
+    sign_in,
 };

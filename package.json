@@ -9,7 +9,7 @@
   "main": "server.js",
   "scripts": {
     "start": "pm2 start server.js --name randomanga",
-    "dev": "nodemon server.js",
+    "dev": "pm2 start server.js --watch --name randomanga",
     "client": "cd client && npm start",
     "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run dev\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"

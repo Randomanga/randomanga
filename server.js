@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 const app = express();
 require('dotenv').config();
 
@@ -15,8 +16,8 @@ app.use(passport.initialize());
 passport.use('jwt', jwt_strategy);
 
 //routes, all routes must use /api prefix because of nginx routing
-
-app.use('/api',authRoutes);
+app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 
 app.use(function (req, res, next) {
     res.sendStatus(404);
