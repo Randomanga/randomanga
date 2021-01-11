@@ -21,7 +21,7 @@ const Nav = styled.nav`
         justify-self: start;
         margin-left: 20px;
         @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
-            height: 1.7rem;
+            height: 1.8rem;
         }
     }
 `;

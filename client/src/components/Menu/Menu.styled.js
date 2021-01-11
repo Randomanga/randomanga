@@ -4,9 +4,13 @@ import styled from 'styled-components';
 const StyledMenu = styled.ul`
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-self: end;
     align-items: center;
+    li:nth-child(4) {
+        text-align: right;
+    }
+
     @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
         background-color: #252525;
         display: flex;
@@ -22,10 +26,14 @@ const StyledMenu = styled.ul`
         height: calc(60vh - 4rem);
         transition: transform 0.5s ease-in-out;
         transform: ${({ open }) =>
-            open ? 'translateX(0)' : 'translateY(-120%) !important'};
+            open ? 'translateX(0)' : 'translateY(-120vh) !important'};
         text-align: center;
-        li:last-child {
+        li:nth-child(4) {
             margin-top: auto;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        li:last-child {
             margin-bottom: 1rem;
         }
     }

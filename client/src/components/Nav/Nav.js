@@ -1,13 +1,17 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { NavWrapper, Nav } from './Nav.styled';
 import { Burger, Menu } from '../../components';
 import logo from './TitleLogo.svg';
 import { Link } from 'react-router-dom';
+import useOnclickOutside from 'react-cool-onclickoutside';
+
 function Navigation(props) {
     const [open, setOpen] = useState(false);
-
+    const ref = useOnclickOutside(() => {
+        setOpen(false);
+    });
     return (
-        <NavWrapper>
+        <NavWrapper ref={ref}>
             <Nav>
                 <Link to="/">
                     <Logo />
@@ -20,13 +24,7 @@ function Navigation(props) {
 }
 
 const Logo = () => {
-    return (
-        <img
-            draggable="false"
-            src={logo}
-            alt="logo"
-        />
-    );
+    return <img draggable="false" src={logo} alt="logo" />;
 };
 
 export default Navigation;

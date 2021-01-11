@@ -19,8 +19,7 @@ export const GlobalStyles = createGlobalStyle`
 
     h1 {
     font-size: 2rem;
-    text-align: center;
-    text-transform: uppercase;
+    text-align: left;
     }
     div {
       text-align: center;
@@ -30,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
       display: block;
     }
     a {
-      color: ${({ theme }) => theme.primaryHover};
+      color: ${({ theme }) => theme.primaryLight};
       text-decoration: none;
       user-select: none;
         -moz-user-select: none;

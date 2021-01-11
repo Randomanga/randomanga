@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const StyledBurger = styled.button`
     position: absolute;
     top: 1rem;
-    right: 2rem;
+    right: 0;
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 2rem;
+    width: 4rem;
     height: 2rem;
     background: transparent;
     border: none;
@@ -43,4 +43,11 @@ export const StyledBurger = styled.button`
     @media only screen and (max-width: ${({ theme }) => theme.mobile}) {
         display: flex;
     }
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 `;

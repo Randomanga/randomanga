@@ -60,15 +60,13 @@ const DropdownMenu = ({ user, close }) => {
     );
 };
 const Menu = ({ open, setOpen }) => {
-    const user = {};
+    const user = null;
     const handleClick = () => {
         setOpen(false);
     };
-    const ref = useOnclickOutside(() => {
-        setOpen(false);
-    });
+    
     return (
-        <StyledMenu open={open} ref={ref}>
+        <StyledMenu open={open}>
             <StyledItem>
                 <Link to="/" onClick={handleClick}>
                     Home
@@ -84,6 +82,12 @@ const Menu = ({ open, setOpen }) => {
                     Top Lists
                 </Link>
             </StyledItem>
+
+            <StyledItem>
+                <Link to="sign-in" onClick={handleClick}>
+                    Sign In
+                </Link>
+            </StyledItem>
             <StyledItem>
                 {user ? (
                     <DropdownMenu
@@ -92,7 +96,7 @@ const Menu = ({ open, setOpen }) => {
                     />
                 ) : (
                     <SigninButton onClick={handleClick}>
-                        <Link to="/sign-in">Sign in</Link>
+                        <Link to="/sign-up">Sign Up</Link>
                     </SigninButton>
                 )}
             </StyledItem>
