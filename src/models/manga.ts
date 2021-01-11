@@ -11,7 +11,7 @@ const Manga = new mongoose.Schema(
         related:[
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Manga',
+                ref: 'manga',
             }
         ],
         banner: {
@@ -22,10 +22,13 @@ const Manga = new mongoose.Schema(
             type: Object,
             default: null,
         },
-        likesCount: Number
-    },
-    {
-        timestamps: true,
+        likes_count: Number,
+        al_id: {
+            type: Number,
+            required: true,
+        },
+        al_url: String
     }
+    
 );
-export default mongoose.model<IManga & mongoose.Document>('Manga', Manga)
+export default mongoose.model<IManga & mongoose.Document>('manga', Manga,'mangas')

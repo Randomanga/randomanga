@@ -3,8 +3,8 @@ import { Container } from 'typedi';
 import AuthService from '../../services/auth';
 import { IUserInputDTO } from '../../interfaces/IUser';
 import middlewares from '../middlewares';
-import { celebrate, Joi, Segments } from 'celebrate';
-import { Logger, loggers } from 'winston';
+import { celebrate, Joi} from 'celebrate';
+import { Logger} from 'winston';
 
 const route = Router();
 
