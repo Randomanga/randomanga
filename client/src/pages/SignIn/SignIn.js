@@ -1,4 +1,3 @@
-import { sign } from 'jsonwebtoken';
 import React, { useState, useEffect } from 'react';
 
 function SignIn(props) {
