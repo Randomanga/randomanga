@@ -10,7 +10,7 @@ export default class DailyGeneratorService {
   ) {}
   private query = `
     query($page: Int){
-      Page(page: $page){
+      Page(page: $page,perPage: 1){
         media(type: MANGA,isAdult: false, tagCategory_not_in: ["Sexual Content"],averageScore_greater: 65) {
           id
           bannerImage
@@ -44,7 +44,7 @@ export default class DailyGeneratorService {
     const body = await response.json();
     return body['data']['Page']['pageInfo']['lastPage'];
   }
-  private async getAlData(mPage, mIndex) {
+  private async getAlData(mIndex) {
     const options = {
       method: 'POST',
       headers: {
@@ -53,22 +53,21 @@ export default class DailyGeneratorService {
       },
       body: JSON.stringify({
         query: this.query,
-        variables: { page: mPage },
+        variables: { page: mIndex },
       }),
     };
 
     const response = await fetch(this.url, options);
     const body = await response.json();
 
-    return body.data.Page.media[mIndex];
+    return body.data.Page.media[0];
   }
 
   private async getRandomFromAL() {
     const pageCount = await this.getPageCountAL();
-    const randPage = Math.floor(Math.random() * pageCount);
-    const randIndex = Math.floor(Math.random() * 50);
+    const randIndex = Math.floor(Math.random() * pageCount);
 
-    const manga = await this.getAlData(randPage, randIndex);
+    const manga = await this.getAlData(randIndex);
     return manga;
   }
 
@@ -78,8 +77,11 @@ export default class DailyGeneratorService {
       let manga;
       while (!found) {
         manga = await this.getRandomFromAL();
+
         if (manga.bannerImage != null) {
           found = true;
+        } else {
+          this.logger.silly('Daily Gen: Banner not found, regenerating manga');
         }
       }
       const localManga = await this.mangaModel.findOne({ al_id: manga.id });
