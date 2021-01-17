@@ -9,6 +9,7 @@ export default class MangaService {
   constructor(
     @Inject('mangaModel') private mangaModel: Models.MangaModel,
     @Inject('logger') private logger,
+    @Inject('dailyMangaModel') private dailyMangaModel: any,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
@@ -37,6 +38,16 @@ export default class MangaService {
       throw Error('Manga does not exist');
     }
     const manga = mangaRecord.toObject();
+    return { manga };
+  }
+  public async getRandomDaily(): Promise<{ manga: IManga }> {
+    const mangaRecord = await this.dailyMangaModel
+      .find({ date: new Date().toISOString().split('T')[0] })
+      .populate('manga');
+    if (!mangaRecord) {
+      throw Error('Error in retriving daily manga');
+    }
+    const manga = mangaRecord;
     return { manga };
   }
 }
