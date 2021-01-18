@@ -5,9 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './global';
 import { theme } from './theme';
 import { Navigation } from './components';
-import Home from './pages/Home/Home';
-import SignIn from './pages/SignIn/SignIn';
-import SignUp from './pages/SignUp/SignUp';
+import { SignUp,Home,SignIn } from './pages';
 function App() {
     return (
         <ThemeProvider theme={theme}>

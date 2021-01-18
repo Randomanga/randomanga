@@ -3,6 +3,7 @@ import { Service, Inject } from 'typedi';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
 import { IManga, IMangaSearchDTO } from '../interfaces/IManga';
+import { Document } from 'mongoose';
 
 @Service()
 export default class MangaService {
@@ -21,7 +22,7 @@ export default class MangaService {
     const manga = mangaRecord.toObject();
     return { manga };
   }
-  public async getMangaRelations(search: IMangaSearchDTO): Promise<{ manga: IManga }> {
+  public async getMangaRelations(search: IMangaSearchDTO): Promise<{ manga: IManga  }> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { al_id: 1, title: 1 }).populate({
       path: 'related',
       select: {

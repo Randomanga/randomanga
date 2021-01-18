@@ -1,55 +1,94 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '../../components';
-import { FormContainer, FormWrapper } from './SignUp.styled';
-function SignUp(props) {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
+import { Errors, FormContainer, FormWrapper } from './SignUp.styled';
+import { useForm } from 'react-hook-form';
 
-    function onSubmit(e) {
-        e.preventDefault();
-    }
+function SignUp(props) {
+    const { register, errors, handleSubmit, watch } = useForm();
+    const password = useRef({});
+    password.current = watch('password', '');
+
+    function onSubmit(data) {}
 
     return (
         <FormWrapper>
             <FormContainer>
                 <h1>Sign Up</h1>
-                <form onSubmit={onSubmit}>
+                {Object.keys(errors).length ? (
+                    <Errors>
+                        <ul>
+                            {errors.email && <li>{errors.email.message}</li>}
+                            {errors.username && (
+                                <li>{errors.username.message}</li>
+                            )}
+                            {errors.password && (
+                                <li>{errors.password.message}</li>
+                            )}
+                            {errors.password_repeat && (
+                                <li>{errors.password_repeat.message}</li>
+                            )}
+                        </ul>
+                    </Errors>
+                ) : null}
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <Input
-                        handleChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        fieldType="email"
                         label="Email Address"
-                        required
+                        name="email"
+                        ref={register({
+                            required: 'Email is required',
+                            pattern: {
+                                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                message: 'Invalid email address',
+                            },
+                        })}
                     />
                     <Input
-                        handleChange={(e) => setUsername(e.target.value)}
-                        fieldType="text"
-                        value={username}
                         label="Username"
-                        required
-                        minimium="6"
+                        name="username"
+                        fieldType="text"
+                        ref={register({
+                            required: 'Username is required',
+                            minLength: {
+                                value: 4,
+                                message:
+                                    'Username must be at least 4 characters long',
+                            },
+                        })}
                     />
                     <Input
-                        handleChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        fieldType="password"
                         label="Password"
-                        required
+                        name="password"
+                        fieldType="password"
+                        ref={register({
+                            required: 'Password is required',
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                message:
+                                    'Password must contain at least one uppercase letter, one lowercase letter and one number',
+                            },
+                            minLength: {
+                                value: 8,
+                                message:
+                                    'Password must have at least 8 characters',
+                            },
+                        })}
                     />
                     <Input
-                        handleChange={(e) => setPassword2(e.target.value)}
-                        value={password2}
-                        fieldType="password"
                         label="Confirm password"
-                        required
+                        name="password_repeat"
+                        fieldType="password"
+                        ref={register({
+                            required: 'Confirm your password',
+                            validate: (value) =>
+                                value === password.current ||
+                                'The passwords do not match',
+                        })}
                     />
-                    <button type="submit">Submit</button>
+                    <button type="submit">Sign up</button>
                 </form>
                 <small>
-                    or <Link to="/sign-in">Sign in</Link>
+                    Have an account? <Link to="/sign-in">Sign in</Link>
                 </small>
             </FormContainer>
         </FormWrapper>
