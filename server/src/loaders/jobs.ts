@@ -2,6 +2,7 @@ import config from '../config';
 import EmailSequenceJob from '../jobs/emailSequence';
 import Agenda from 'agenda';
 import DailyGenerationJob from '../jobs/dailyGeneration';
+import UserRoleChangerJob from '../jobs/changeRole';
 
 export default ({ agenda }: { agenda: Agenda }) => {
   agenda.define(
@@ -17,5 +18,11 @@ export default ({ agenda }: { agenda: Agenda }) => {
     new DailyGenerationJob().handler,
   );
 
+  agenda.define(
+    'change-role',
+    { priority: 'low', concurrency: config.agenda.concurrency },
+    new UserRoleChangerJob().handler,
+  );
+  
   agenda.start();
 };

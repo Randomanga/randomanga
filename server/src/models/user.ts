@@ -18,7 +18,7 @@ const User = new mongoose.Schema(
     avatar: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
 
     password: String,
@@ -28,6 +28,7 @@ const User = new mongoose.Schema(
     role: {
       type: String,
       default: 'user',
+      enum: ['user', 'admin'],
     },
   },
   { timestamps: true },

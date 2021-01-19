@@ -22,8 +22,8 @@ const StyledMenu = styled.ul`
         padding: 0;
         top: 4rem;
         width: 100%;
-        z-index: -1;
         height: calc(60vh - 4rem);
+
         transition: transform 0.5s ease-in-out;
         transform: ${({ open }) =>
             open ? 'translateX(0)' : 'translateY(-120vh) !important'};

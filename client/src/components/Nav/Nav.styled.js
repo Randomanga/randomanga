@@ -5,6 +5,7 @@ const NavWrapper = styled.div`
     position: sticky;
     position: --webkit-sticky;
     top: 0;
+    z-index: 10000;
     background-color: ${({ theme }) => theme.primaryDark};
 `;
 

@@ -1,7 +1,7 @@
 
 import { Router } from 'express'
 import basicAuth from 'express-basic-auth';
-import agendash from 'agendash'
+import agendash from 'agendash2'
 import { Container } from 'typedi'
 import config from '../../config'
 

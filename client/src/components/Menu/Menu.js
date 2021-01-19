@@ -64,7 +64,7 @@ const Menu = ({ open, setOpen }) => {
     const handleClick = () => {
         setOpen(false);
     };
-    
+
     return (
         <StyledMenu open={open}>
             <StyledItem>

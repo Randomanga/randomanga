@@ -29,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
       display: block;
     }
     a {
-      color: ${({ theme }) => theme.primaryLight};
+      color: #ffffff;
       text-decoration: none;
       user-select: none;
         -moz-user-select: none;
