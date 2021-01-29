@@ -1,33 +1,61 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Input } from '../../components';
 import { Errors, FormContainer, FormWrapper } from './SignUp.styled';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../context/auth';
+import axios from 'axios';
 
 function SignUp(props) {
+    const { login, user } = useContext(AuthContext);
     const { register, errors, handleSubmit, watch } = useForm();
+    const history = useHistory();
+    const [reqError, setReqError] = useState('');
     const password = useRef({});
     password.current = watch('password', '');
 
-    function onSubmit(data) {}
+    useEffect(() => {
+        if (user) {
+            history.push('/');
+        }
+    }, []);
+    function onSubmit(data) {
+        axios
+            .post('http://localhost:5000/api/auth/signup', {
+                username: data.username,
+                email: data.email,
+                password: data.password,
+            })
+            .then((response) => {
+                login(response.data);
+                history.push('/');
+            })
+
+            .catch((error) => {
+                setReqError(error.response.data.errors.message);
+            });
+    }
 
     return (
         <FormWrapper>
             <FormContainer>
                 <h1>Sign Up</h1>
-                {Object.keys(errors).length ? (
+                {Object.keys(errors).length || reqError ? (
                     <Errors>
                         <ul>
-                            {errors.email && <li>{errors.email.message}</li>}
-                            {errors.username && (
+                            {errors.email ? (
+                                <li>{errors.email.message}</li>
+                            ) : null}
+                            {errors.username ? (
                                 <li>{errors.username.message}</li>
-                            )}
-                            {errors.password && (
+                            ) : null}
+                            {errors.password ? (
                                 <li>{errors.password.message}</li>
-                            )}
-                            {errors.password_repeat && (
+                            ) : null}
+                            {errors.password_repeat ? (
                                 <li>{errors.password_repeat.message}</li>
-                            )}
+                            ) : null}
+                            {reqError ? <li>{reqError}</li> : null}
                         </ul>
                     </Errors>
                 ) : null}

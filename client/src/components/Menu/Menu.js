@@ -1,5 +1,5 @@
 import { bool } from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 
@@ -12,8 +12,10 @@ import {
     SigninButton,
 } from './Menu.styled';
 import Placeholder from './user-placehold.svg';
+import { AuthContext } from '../../context/auth';
 
 const DropdownMenu = ({ user, close }) => {
+    const { logout } = useContext(AuthContext);
     const dropdownRef = useRef(null);
     const [isActive, setActive] = useState(false);
     const closeMenuAndDropdown = () => {
@@ -49,10 +51,14 @@ const DropdownMenu = ({ user, close }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/logout" onClick={closeMenuAndDropdown}>
+                        <a
+                            onClick={() => {
+                                closeMenuAndDropdown();
+                                logout();
+                            }}>
                             <i className="fas fa-sign-out-alt"></i>
                             Log out
-                        </Link>
+                        </a>
                     </li>
                 </ul>
             </DropdownList>
@@ -60,13 +66,13 @@ const DropdownMenu = ({ user, close }) => {
     );
 };
 const Menu = ({ open, setOpen }) => {
-    const user = null;
+    const { user } = useContext(AuthContext);
     const handleClick = () => {
         setOpen(false);
     };
 
     return (
-        <StyledMenu open={open}>
+        <StyledMenu open={open} user={user}>
             <StyledItem>
                 <Link to="/" onClick={handleClick}>
                     Home
@@ -82,18 +88,16 @@ const Menu = ({ open, setOpen }) => {
                     Top Lists
                 </Link>
             </StyledItem>
-
-            <StyledItem>
-                <Link to="sign-in" onClick={handleClick}>
-                    Sign In
-                </Link>
-            </StyledItem>
+            {user ? null : (
+                <StyledItem>
+                    <Link to="sign-in" onClick={handleClick}>
+                        Sign In
+                    </Link>
+                </StyledItem>
+            )}
             <StyledItem>
                 {user ? (
-                    <DropdownMenu
-                        user={{ avatar: '/avatar.jpg', username: 'Wiz1991' }}
-                        close={handleClick}
-                    />
+                    <DropdownMenu user={user} close={handleClick} />
                 ) : (
                     <SigninButton onClick={handleClick}>
                         <Link to="/sign-up">Sign Up</Link>

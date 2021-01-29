@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledMenu = styled.ul`
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(${({ user }) => (user ? '4' : '5')}, 1fr);
     justify-self: end;
     align-items: center;
     li:nth-child(4) {
@@ -31,6 +31,7 @@ const StyledMenu = styled.ul`
         li:nth-child(4) {
             margin-top: auto;
             margin-bottom: 0;
+            margin-left: 0;
             padding-bottom: 0;
         }
         li:last-child {

@@ -13,8 +13,7 @@ export default class AuthService {
     @Inject('userModel') private userModel: Models.UserModel,
     @Inject('logger') private logger,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
-  ) {
-  }
+  ) {}
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {
     try {
@@ -43,10 +42,11 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
-      Reflect.deleteProperty(user,'createdAt');
-      Reflect.deleteProperty(user,'_id');
-      Reflect.deleteProperty(user,'updatedAt');
-      Reflect.deleteProperty(user,'__v');
+      Reflect.deleteProperty(user, 'createdAt');
+      Reflect.deleteProperty(user, '_id');
+      Reflect.deleteProperty(user, 'updatedAt');
+      Reflect.deleteProperty(user, '__v');
+      Reflect.deleteProperty(user, 'email');
       return { user, token };
     } catch (e) {
       this.logger.error(e);
@@ -72,6 +72,10 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
+      Reflect.deleteProperty(user, '__v');
+      Reflect.deleteProperty(user, 'updatedAt');
+      Reflect.deleteProperty(user, 'createdAt');
+      Reflect.deleteProperty(user, 'email');
       /**
        * Easy as pie, you don't need passport.js anymore :)
        */
@@ -100,10 +104,11 @@ export default class AuthService {
       {
         _id: user._id, // We are gonna use this in the middleware 'isAuth'
         role: user.role,
-        name: user.name,
+        username: user.username,
+        avatar: user.avatar,
         exp: exp.getTime() / 1000,
       },
-      config.jwtSecret
+      config.jwtSecret,
     );
   }
 }
