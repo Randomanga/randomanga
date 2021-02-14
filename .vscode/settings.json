@@ -1,3 +1,13 @@
 {
-    "god.tsconfig": "./server/tsconfig.json"
+    "god.tsconfig": "./server/tsconfig.json",
+    "emmet.excludeLanguages": [
+
+        "markdown"
+    ],
+    "emmet.preferences": {
+    
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    }
 }
