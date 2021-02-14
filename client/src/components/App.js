@@ -3,11 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../context/auth';
 import routes, { RenderRoutes } from "../routes"
 import 'react-toastify/dist/ReactToastify.min.css';
-
+import Navbar from './navbar/navbar'
 function App() {
     return (
         <AuthProvider>
-            <h1>NAVBAR</h1>
+            <Navbar />
             <RenderRoutes routes={routes} />
             <ToastContainer
                 position="top-center"

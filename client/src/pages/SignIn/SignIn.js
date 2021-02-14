@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/auth';
 
@@ -20,12 +21,12 @@ function SignIn(props) {
         } catch (err) {
             setLoading(false);
             const message = err.response.data.errors.message;
-            toast.error(`⚠️ ${message}`);
+            toast.error(`⚠️ Error! ${message}.`);
         }
     };
 
     return (
-        <div className="bg-darkGray-500 lg:w-4/12 md:6/12 w-10/12 m-auto my-10 shadow-md">
+        <div className="bg-darkGray-500 lg:w-4/12 md:6/12 w-10/12 m-auto my-10 mt-40 shadow-md">
             <div className="py-8 px-8 rounded-xl">
                 <h1 className=" font-medium text-2xl mt-3 text-center text-white">
                     Login
@@ -57,7 +58,6 @@ function SignIn(props) {
                         </label>
                         <input
                             type="password"
-                            autoFocus
                             id="password"
                             name="password"
                             required="true"
@@ -65,15 +65,15 @@ function SignIn(props) {
                             ref={register()}
                         />
                         <div class="flex justify-end mt-1 text-xs">
-                            <a href="../../pages/auth/forget_password.html" className="text-gray-400 hover:text-white">Forget Password?</a>
+                            <Link to="/forgot" className="text-gray-400 hover:text-white">Forget Password?</Link>
                         </div>
 
                     </div>
-                    <button className="mt-10 block text-center text-white bg-blue-500 p-3 duration-300 rounded-sm hover:bg-blue-600 focus:outline-none w-full">
+                    <button disabled={loading} className="mt-10 block text-center text-white bg-blue-500 p-3 duration-300 rounded-sm hover:bg-blue-600 focus:outline-none disabled:opacity-50 w-full">
                         Login
                     </button>
                 </form>
-                <p class="mt-6 text-xs text-center font-light text-gray-400 "> Don't have an account? <a href="../auth/register.html" class="text-gray-400 hover:text-white font-medium"> Create One </a>  </p> 
+                <p class="mt-6 text-xs text-center font-light text-gray-400 "> Don't have an account? <Link to="/sign-up" className="text-gray-400 hover:text-white font-medium"> Create One </Link>  </p>
             </div>
         </div >
     );

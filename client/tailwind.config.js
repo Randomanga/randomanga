@@ -19,7 +19,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      pointerEvents: ['hover'],
+      opacity: ['disabled']
+    },
   },
   plugins: [],
 }
