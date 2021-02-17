@@ -146,41 +146,41 @@ const UserDropdown = ({ hidden, toggleNavbar }) => {
 };
 const Hamburger = ({ handleClick, open }) => {
     return (
-        <div class="absolute inset-y-0 right-0 flex items-center md:hidden">
+        <div className="absolute inset-y-0 right-0 flex items-center md:hidden">
             <button
-                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-darkGray-500 focus:outline-none"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-darkGray-500 focus:outline-none"
                 aria-expanded="false"
                 onClick={() => {
                     handleClick();
                 }}>
-                <span class="sr-only">Open main menu</span>
+                <span className="sr-only">Open main menu</span>
 
                 <svg
-                    class={`${open ? 'hidden' : 'block'} h-8 w-8}`}
+                    className={`${open ? 'hidden' : 'block'} h-8 w-8}`}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     aria-hidden="true">
                     <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M4 6h16M4 12h16M4 18h16"
                     />
                 </svg>
 
                 <svg
-                    class={` ${open ? 'block' : 'hidden'} h-8 w-8}`}
+                    className={` ${open ? 'block' : 'hidden'} h-8 w-8}`}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     aria-hidden="true">
                     <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M6 18L18 6M6 6l12 12"
                     />
                 </svg>
@@ -202,11 +202,15 @@ const NavbarLink = ({ href, text, closeNavbar }) => {
 };
 const LinksDesktop = () => {
     return (
-        <div className="flex-1 flex items-center md:items-stretch md:justify-start">
-            <div className="flex flex-shrink-0 items-center ml-1">
-                <span className="font-extrabold text-3xl tracking-tight text-white">Rando</span>
-                <span className="font-extrabold text-3xl tracking-tight text-blue-400">Manga</span>
-            </div>
+        <div className="flex-1 flex items-center md:items-stretch md:justify-start select-none">
+            <Link to="/" className="flex flex-shrink-0 items-center ml-1">
+                <span className="font-extrabold text-3xl tracking-tight text-white">
+                    Rando
+                </span>
+                <span className="font-extrabold text-3xl tracking-tight text-blue-400">
+                    Manga
+                </span>
+            </Link>
             <div className="hidden md:block md:ml-auto">
                 <div className="flex space-x-4 mr-6">
                     <NavbarLink href="/" text="Home" />
@@ -225,9 +229,9 @@ export default function Navbar() {
         setOpen(!open);
     };
     return (
-        <nav class="fixed top-0 w-full bg-darkGray-500 shadow-lg">
-            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                <div class="relative flex items-center justify-between h-14">
+        <nav className="fixed top-0 w-full bg-darkGray-500 shadow-lg">
+            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div className="relative flex items-center justify-between h-14">
                     {/* Hamburger menu */}
                     <Hamburger handleClick={toggleNavbar} open={open} />
                     {/* Links */}

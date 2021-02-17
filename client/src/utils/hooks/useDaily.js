@@ -1,12 +1,11 @@
-import useSWR from 'swr'
-import useSwr from 'swr'
-import { fetcher } from '../helpers'
+import useSWR from 'swr';
+import { fetcher } from '../helpers';
 
-function useDaily() {
-    const { data, error } = useSWR('/api/daily', fetcher);
+export default function useDaily() {
+    const { data, error } = useSWR('http://localhost:5000/api/manga/daily', fetcher);
     return {
-        manga: data,
+        data,
         isLoading: !error && !data,
-        isError: error
-    }
+        isError: error,
+    };
 }

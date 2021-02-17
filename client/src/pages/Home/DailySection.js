@@ -2,9 +2,10 @@ import Pill from '../../components/Pill/Pill';
 import AlIcon from '../../components/Icons/AlIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import useDaily from '../../utils/hooks/useDaily';
 
 export default function DailySection(props) {
-    
+    const { data, error } = useDaily();
 
 
     return (
@@ -28,7 +29,7 @@ export default function DailySection(props) {
                                 className="h-36 min-w-28 w-28 sm:min-w-36 sm:h-48 sm:w-36 md:h-52 md:w-40 md:min-w-40 flex-shrink-0 rounded-sm"
                             />
                             <div className="hidden md:flex items-center flex-nowrap space-x-1 lg:space-x-3 mt-2">
-                                <button class="bg-blue-400 text-xs  tracking-tighter hover:text-gray-200 text-gray-100 font-bold py-2 px-3  sm:px-1 lg:px-5  rounded inline-flex items-center space-x-1">
+                                <button className="bg-blue-400 text-xs  tracking-tighter hover:text-gray-200 text-gray-100 font-bold py-2 px-3  sm:px-1 lg:px-5  rounded inline-flex items-center space-x-1">
                                     <AlIcon />
                                     <span className="text-xs">Add to list</span>
                                 </button>
@@ -58,7 +59,7 @@ export default function DailySection(props) {
                                 <Pill text="Drama" color="red" />
                             </div>
                             <div className="mt-4 md:hidden flex space-x-3">
-                                <button class="bg-blue-400  hover:text-gray-200 text-gray-100 font-bold py-2 px-3 rounded inline-flex items-center space-x-1">
+                                <button className="bg-blue-400  hover:text-gray-200 text-gray-100 font-bold py-2 px-3 rounded inline-flex items-center space-x-1">
                                     <AlIcon />
                                     <span className="text-xs">Add to list</span>
                                 </button>
