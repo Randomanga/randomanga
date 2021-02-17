@@ -6,11 +6,12 @@ declare global {
   namespace Express {
     export interface Request {
       currentUser: IUser & Document;
-    }    
+      token: Document;
+    }
   }
 
   namespace Models {
     export type UserModel = Model<IUser & Document>;
-    export type MangaModel = Model<IManga & Document>;    
+    export type MangaModel = Model<IManga & Document>;
   }
 }

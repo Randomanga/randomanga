@@ -17,6 +17,7 @@ export default (app: Router) => {
     res.sendStatus(204);
   });
   route.post('/:username/avatar', middlewares.isAuth, middlewares.attachCurrentUser, (req: Request, res: Response) => {
+    
     res.sendStatus(204);
   });
   route.delete('/:username/avatar', middlewares.isAuth, middlewares.attachCurrentUser, (req: Request, res: Response) => {

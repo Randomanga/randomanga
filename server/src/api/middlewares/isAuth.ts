@@ -24,12 +24,31 @@ const getTokenFromHeader = req => {
   return null;
 };
 
+
+/**
+ * Authorization with required credentials
+ * 
+ * Return 403 if credentials are absent
+ */
 const isAuth = jwt({
   secret: config.jwtSecret, // The _secret_ to sign the JWTs
   algorithms: [config.jwtAlgorithm], // JWT Algorithm
   userProperty: 'token', // Use req.token to store the JWT
   getToken: getTokenFromHeader, // How to extract the JWT from the request
-
 });
 
-export default isAuth;
+
+/**
+ * Authorization without credentials
+ * 
+ * Attach user to request if he has credentials, if not just continue
+ */
+const isLogged = jwt({
+  secret: config.jwtSecret, 
+  algorithms: [config.jwtAlgorithm], 
+  userProperty: 'token', 
+  getToken: getTokenFromHeader, 
+  credentialsRequired: false,
+});
+
+export { isAuth, isLogged };

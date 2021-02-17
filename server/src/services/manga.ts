@@ -4,6 +4,7 @@ import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDi
 import events from '../subscribers/events';
 import { IManga, IMangaSearchDTO } from '../interfaces/IManga';
 import { Document } from 'mongoose';
+import { IUser } from '../interfaces/IUser';
 
 @Service()
 export default class MangaService {
@@ -14,15 +15,15 @@ export default class MangaService {
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
-  public async getManga(search: IMangaSearchDTO): Promise<{ manga: IManga }> {
+  public async getManga(search: IMangaSearchDTO): Promise<IManga> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { related: 0 });
     if (!mangaRecord) {
       throw new Error('Manga does not exist');
     }
     const manga = mangaRecord.toObject();
-    return { manga };
+    return manga;
   }
-  public async getMangaRelations(search: IMangaSearchDTO): Promise<{ manga: IManga }> {
+  public async getMangaRelations(search: IMangaSearchDTO): Promise<IManga> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { al_id: 1, title: 1 }).populate({
       path: 'related',
       select: {
@@ -39,16 +40,22 @@ export default class MangaService {
       throw Error('Manga does not exist');
     }
     const manga = mangaRecord.toObject();
-    return { manga };
+    return manga;
   }
-  public async getRandomDaily(): Promise<{ manga: IManga }> {
+  public async getRandomDaily(): Promise<IManga> {
     const mangaRecord = await this.dailyMangaModel
       .findOne({ date: new Date().toISOString().split('T')[0] })
       .populate('manga');
     if (!mangaRecord) {
       throw Error('Error in retriving daily manga');
     }
-    const manga = mangaRecord.manga;
-    return { manga };
+
+    let manga: IManga = { ...mangaRecord.toObject().manga };
+    manga.likeStatus = false;
+    
+    return manga;
+  }
+  public async getLikeStatus(manga: IManga, user: IUser): Promise<boolean> {
+    return true;
   }
 }

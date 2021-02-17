@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^20.0.3",
+    "@types/express-jwt": "^6.0.0",
     "agenda": "^3.1.0",
     "agendash2": "^0.8.2",
     "argon2": "^0.27.0",
