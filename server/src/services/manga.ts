@@ -22,7 +22,7 @@ export default class MangaService {
     const manga = mangaRecord.toObject();
     return { manga };
   }
-  public async getMangaRelations(search: IMangaSearchDTO): Promise<{ manga: IManga  }> {
+  public async getMangaRelations(search: IMangaSearchDTO): Promise<{ manga: IManga }> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { al_id: 1, title: 1 }).populate({
       path: 'related',
       select: {
@@ -43,12 +43,12 @@ export default class MangaService {
   }
   public async getRandomDaily(): Promise<{ manga: IManga }> {
     const mangaRecord = await this.dailyMangaModel
-      .find({ date: new Date().toISOString().split('T')[0] })
+      .findOne({ date: new Date().toISOString().split('T')[0] })
       .populate('manga');
     if (!mangaRecord) {
       throw Error('Error in retriving daily manga');
     }
-    const manga = mangaRecord;
+    const manga = mangaRecord.manga;
     return { manga };
   }
 }
