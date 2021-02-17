@@ -2,8 +2,10 @@ import { Menu, Transition } from '@headlessui/react';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faSignOutAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 
-const UserDropdown = ({ hidden }) => {
+const UserDropdown = ({ hidden, toggleNavbar }) => {
     const { user, logout } = useContext(AuthContext);
     const history = useHistory();
     return (
@@ -66,29 +68,45 @@ const UserDropdown = ({ hidden }) => {
                                     <div className="">
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <a
-                                                    href="#account-settings"
+                                                <Link
+                                                    to="/profile"
+                                                    onClick={() =>
+                                                        toggleNavbar()
+                                                    }
                                                     className={`${
                                                         active
                                                             ? 'bg-gray-700 text-gray-200'
                                                             : 'text-gray-300'
-                                                    } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left rounded-t-md`}>
-                                                    Profile
-                                                </a>
+                                                    } flex space-x-1 items-center w-full px-4 py-2 text-sm leading-5 text-left rounded-t-md`}>
+                                                    <FontAwesomeIcon
+                                                        icon={faUser}
+                                                    />
+                                                    <span className="text-sm leading-5 text-left">
+                                                        Profile
+                                                    </span>
+                                                </Link>
                                             )}
                                         </Menu.Item>
 
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <a
-                                                    href="#license"
+                                                <Link
+                                                    to="/settings"
+                                                    onClick={() =>
+                                                        toggleNavbar()
+                                                    }
                                                     className={`${
                                                         active
                                                             ? 'bg-gray-700 text-gray-200'
                                                             : 'text-gray-300'
-                                                    } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}>
-                                                    Settings
-                                                </a>
+                                                    } flex space-x-1 items-center w-full px-4 py-2 text-sm leading-5 text-left rounded-t-md`}>
+                                                    <FontAwesomeIcon
+                                                        icon={faCog}
+                                                    />
+                                                    <span className="text-sm leading-5 text-left">
+                                                        Settings
+                                                    </span>
+                                                </Link>
                                             )}
                                         </Menu.Item>
                                     </div>
@@ -98,6 +116,7 @@ const UserDropdown = ({ hidden }) => {
                                             {({ active }) => (
                                                 <button
                                                     onClick={() => {
+                                                        toggleNavbar();
                                                         logout();
                                                         history.push('/');
                                                     }}
@@ -105,8 +124,13 @@ const UserDropdown = ({ hidden }) => {
                                                         active
                                                             ? 'bg-gray-700 text-gray-200'
                                                             : 'text-gray-300'
-                                                    } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left rounded-b-md`}>
-                                                    Sign out
+                                                    } flex space-x-1 items-center w-full px-4 py-2 text-sm leading-5 text-left rounded-b-md`}>
+                                                    <FontAwesomeIcon
+                                                        icon={faSignOutAlt}
+                                                    />
+                                                    <span className="text-sm leading-5 text-left">
+                                                        Sign out
+                                                    </span>
                                                 </button>
                                             )}
                                         </Menu.Item>
@@ -180,12 +204,12 @@ const LinksDesktop = () => {
     return (
         <div className="flex-1 flex items-center md:items-stretch md:justify-start">
             <div className="flex flex-shrink-0 items-center ml-1">
-                <span className="font-bold text-3xl text-white">Rando</span>
-                <span className="font-bold text-3xl text-blue-400">Manga</span>
+                <span className="font-extrabold text-3xl tracking-tight text-white">Rando</span>
+                <span className="font-extrabold text-3xl tracking-tight text-blue-400">Manga</span>
             </div>
             <div className="hidden md:block md:ml-auto">
-                <div className="flex space-x-4">
-                    <NavbarLink href="/home" text="Home" />
+                <div className="flex space-x-4 mr-6">
+                    <NavbarLink href="/" text="Home" />
                     <NavbarLink href="/recommedations" text="Recommendations" />
                     <NavbarLink href="/top-lists" text="Top Lists" />
                 </div>
@@ -201,9 +225,9 @@ export default function Navbar() {
         setOpen(!open);
     };
     return (
-        <nav class="bg-darkGray-500 shadow-lg">
+        <nav class="fixed top-0 w-full bg-darkGray-500 shadow-lg">
             <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                <div class="relative flex items-center justify-between h-16">
+                <div class="relative flex items-center justify-between h-14">
                     {/* Hamburger menu */}
                     <Hamburger handleClick={toggleNavbar} open={open} />
                     {/* Links */}
@@ -214,7 +238,10 @@ export default function Navbar() {
                          in order to not make the same component twice
                     */}
                     {user ? (
-                        <UserDropdown hidden={true} />
+                        <UserDropdown
+                            toggleNavbar={toggleNavbar}
+                            hidden={true}
+                        />
                     ) : (
                         <div className="flex items-center">
                             <Link
@@ -235,7 +262,7 @@ export default function Navbar() {
                 show={open}
                 enter="transition ease-in-out duration-100 transform"
                 enterFrom="-translate-y-full"
-                enterTo="translate-y-0"
+                enterTo="translate-y-0 "
                 leave="transition ease-in-out duration-100 transform"
                 leaveFrom="translate-y-0"
                 leaveTo="-translate-y-full">
@@ -243,7 +270,7 @@ export default function Navbar() {
                     <div className="px-2 pt-2 pb-3 space-y-2">
                         <NavbarLink
                             closeNavbar={toggleNavbar}
-                            href="/home"
+                            href="/"
                             text="Home"
                         />
                         <NavbarLink
@@ -257,16 +284,18 @@ export default function Navbar() {
                             text="Top Lists"
                         />
                         {user ? (
-                            <UserDropdown />
+                            <UserDropdown toggleNavbar={toggleNavbar} />
                         ) : (
                             <div className="flex items-center">
                                 <Link
                                     to="/sign-in"
+                                    onClick={() => toggleNavbar()}
                                     className=" text-gray-100 text-sm ml-3">
                                     Sign In
                                 </Link>
                                 <Link
                                     to="/sign-up"
+                                    onClick={() => toggleNavbar()}
                                     className="px-5 py-1 bg-blue-500 rounded-md text-gray-200 text-sm ml-3">
                                     Sign Up
                                 </Link>

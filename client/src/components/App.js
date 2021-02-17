@@ -1,9 +1,10 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../context/auth';
-import routes, { RenderRoutes } from "../routes"
+import routes, { RenderRoutes } from '../routes';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Navbar from './navbar/navbar'
+import Navbar from './Navbar/Navbar';
+
 function App() {
     return (
         <AuthProvider>
@@ -18,7 +19,8 @@ function App() {
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
-                pauseOnHover />
+                pauseOnHover
+            />
         </AuthProvider>
     );
 }
