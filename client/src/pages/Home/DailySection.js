@@ -39,7 +39,6 @@ const Motd = () => {
 
 const Controls = ({ likesCount, likedStatus, mobile, handleClick }) => {
     const [liked, setLiked] = useState(likedStatus);
-
     return (
         <div
             className={`${
@@ -51,7 +50,7 @@ const Controls = ({ likesCount, likedStatus, mobile, handleClick }) => {
             </button>
             <IconButton
                 text={likesCount}
-                fillColor={likedStatus ? 'red' : 'white'}
+                fillColor={liked ? 'red' : 'white'}
                 icon={faHeart}
                 handleClick={handleClick}
             />
@@ -63,6 +62,8 @@ export default function DailySection(props) {
     const { data, error, isLoading } = useDaily();
     if (isLoading) {
         return null;
+    } else {
+        console.log('%o', data);
     }
     return (
         <section>
@@ -78,8 +79,8 @@ export default function DailySection(props) {
                             />
                         </div>
                         <Controls
-                            likesCount={data.manga.likes_count}
-                            likedStatus={data.manga.likedStatus}
+                            likesCount={data.manga.likesCount}
+                            likedStatus={data.manga.likeStatus}
                         />
                     </div>
                     <div className="px-3 flex flex-col  leading-normal max-w-3xl">
@@ -103,8 +104,8 @@ export default function DailySection(props) {
                             }}
                         />
                         <Controls
-                            likesCount={data.manga.likes_count}
-                            likedStatus={data.manga.likedStatus}
+                            likesCount={data.manga.likesCount}
+                            likedStatus={data.manga.likeStatus}
                             mobile
                         />
                     </div>
