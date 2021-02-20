@@ -38,6 +38,10 @@ module.exports = {
             transitionProperty: {
                 height: 'height',
             },
+            lineClamp: {
+                8: '8',
+                9: '9',
+            },
         },
     },
     variants: {

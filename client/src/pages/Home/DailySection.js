@@ -5,6 +5,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import useDaily from '../../utils/hooks/useDaily';
 import { useState } from 'react';
 import DOMPurify from 'dompurify';
+import IconButton from '../../components/Button/FontAwesomeIconButton';
 
 const Banner = ({ banner }) => {
     return (
@@ -19,18 +20,10 @@ const Banner = ({ banner }) => {
         </>
     );
 };
-const Cover = ({ cover }) => {
-    return (
-        <img
-            src={cover}
-            alt="cover"
-            className="h-36 min-w-28 w-28 sm:min-w-36 sm:h-48 sm:w-36 md:h-52 md:w-40 md:min-w-40 flex-shrink-0 rounded-sm"
-        />
-    );
-};
+
 const DailyWrapper = ({ children }) => {
     return (
-        <div className="container  mx-auto flex flex-col justify-between  h-96 md:h-110 mt-28 md:mt-32">
+        <div className="container  mx-auto flex flex-col justify-between  h-96 md:h-110 mt-28 md:mt-32 overflow-visible">
             {children}
         </div>
     );
@@ -44,30 +37,24 @@ const Motd = () => {
     );
 };
 
-const Controls = ({ likesCount, likedStatus, mobile }) => {
+const Controls = ({ likesCount, likedStatus, mobile, handleClick }) => {
     const [liked, setLiked] = useState(likedStatus);
 
     return (
         <div
             className={`${
-                mobile
-                    ? 'mt-4 inline-flex md:hidden'
-                    : ' mt-2 hidden md:inline-flex'
-            } items-center flex-row flex-nowrap space-x-1 lg:space-x-3 }`}>
-            <button className="bg-blue-400 text-xs  tracking-tighter hover:text-gray-200 text-gray-100 font-bold py-2 px-3  sm:px-1 lg:px-5  rounded inline-flex items-center space-x-1">
+                mobile ? 'inline-flex md:hidden' : 'hidden md:inline-flex'
+            } mt-1 items-center flex-row flex-nowrap space-x-1 lg:space-x-3 }`}>
+            <button className="bg-blue-400 text-xs  hover:text-gray-200 text-gray-100 font-bold py-2 px-5  md:tracking-tighter md:px-2  rounded inline-flex items-center space-x-1 focus:outline-none">
                 <AlIcon />
                 <span className="text-xs">Add to list</span>
             </button>
-            <button className="flex items-center space-x-1 focus:outline-none">
-                <FontAwesomeIcon
-                    color={liked ? 'red' : 'white'}
-                    size="lg"
-                    icon={faHeart}
-                />
-                <span className="text-white font-medium md:text-xs lg:text-sm">
-                    {likesCount}
-                </span>
-            </button>
+            <IconButton
+                text={likesCount}
+                fillColor={likedStatus ? 'red' : 'white'}
+                icon={faHeart}
+                handleClick={handleClick}
+            />
         </div>
     );
 };
@@ -82,41 +69,44 @@ export default function DailySection(props) {
             <Banner banner={data.manga.banner} />
             <DailyWrapper>
                 <Motd />
-                <div className="w-full h-40 sm:h-auto px-2 ">
-                    <div className="flex items-center ">
-                        <div className="flex flex-col ">
-                            <Cover cover={data.manga.coverImage.large} />
-                            <Controls
-                                likesCount={data.manga.likes_count}
-                                likedStatus={data.manga.likedStatus}
+                <div className="w-full flex pl-1 md:pl-0 items-center">
+                    <div className="flex flex-col">
+                        <div className="h-auto w-28 md:w-36   flex-none bg-cover rounded-sm text-center overflow-hidden">
+                            <img
+                                src={data.manga.coverImage.large}
+                                title="Daily manga cover image"
                             />
                         </div>
-
-                        <div className="px-2 sm:px-3 py-4 overflow-hidden">
-                            <h3 className="text-lg md:text-xl py-2 font-semibold text-white">
-                                {data.manga.title}
-                            </h3>
-                            <div className="flex items-center space-x-2 flex-wrap overflow-hidden max-w-sm max-h-5">
-                                {data.manga.genre.map((genre) => {
-                                    return <Pill text={genre} color="red" />;
-                                })}
-                            </div>
-                            <Controls
-                                likesCount={data.manga.likes_count}
-                                likedStatus={data.manga.likedStatus}
-                                mobile
-                            />
-                            <div
-                                className="mt-4 hidden md:block text-gray-400 text-sm hover:text-gray-300 leading-snug tracking-tight max-w-3xl  md:line-clamp-5"
-                                dangerouslySetInnerHTML={{
-                                    __html: DOMPurify.sanitize(
-                                        DOMPurify.sanitize(
-                                            data.manga.description
-                                        )
-                                    ),
-                                }}
-                            />
+                        <Controls
+                            likesCount={data.manga.likes_count}
+                            likedStatus={data.manga.likedStatus}
+                        />
+                    </div>
+                    <div className="px-3 flex flex-col  leading-normal max-w-3xl">
+                        <h3 className="text-white font-bold text-lg md:text-xl mb-2 line-clamp-2">
+                            {data.manga.title}
+                        </h3>
+                        <div className="flex h-5 space-x-1 flex-wrap overflow-hidden mb-8 md:mb-5 max-w-md">
+                            {data.manga.genre.map((genre) => (
+                                <Pill text={genre} color="red" />
+                            ))}
+                            {data.manga.tags.map((tag) => (
+                                <Pill text={tag} color="blue" />
+                            ))}
                         </div>
+                        <div
+                            className="hidden md:block md:line-clamp-8 hover:text-gray-200  text-gray-400 leading-snug tracking-tight text-sm max-h-32"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                    DOMPurify.sanitize(data.manga.description)
+                                ),
+                            }}
+                        />
+                        <Controls
+                            likesCount={data.manga.likes_count}
+                            likedStatus={data.manga.likedStatus}
+                            mobile
+                        />
                     </div>
                 </div>
             </DailyWrapper>
