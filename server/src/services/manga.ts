@@ -5,6 +5,7 @@ import events from '../subscribers/events';
 import { IManga, IMangaSearchDTO } from '../interfaces/IManga';
 import { Document } from 'mongoose';
 import { IUser } from '../interfaces/IUser';
+import { reject } from 'lodash';
 
 @Service()
 export default class MangaService {
@@ -43,20 +44,32 @@ export default class MangaService {
     return manga;
   }
   public async getRandomDaily(): Promise<IManga> {
-    try {
-      const mangaRecord = await this.dailyMangaModel
-        .find({})
-        .sort({ _id: -1 })
-        .limit(1)
-        .populate('manga');
-      let manga: IManga = { ...mangaRecord['0'].toObject().manga };
-      manga.likeStatus = false;
-
-      return manga;
-    } catch (e) {
-      this.logger.debug(e.message);
-      throw e;
+    const mangaRecord = await this.dailyMangaModel
+      .find({})
+      .sort({ _id: -1 })
+      .limit(1)
+      .populate({
+        path: 'manga',
+        select: {
+          title: 1,
+          likes_count: 1,
+          al_id: 1,
+          coverImage: 1,
+          banner: 1,
+          description: 1,
+          genre: 1,
+          tags: 1,
+          _id: 0,
+        },
+      });
+    if (!mangaRecord) {
+      throw 'Error! 502,  Fetching daily manga from the database failed';
     }
+
+    let manga: IManga = { ...mangaRecord['0'].toObject().manga };
+    manga.likeStatus = false;
+
+    return manga;
   }
   public async getLikeStatus(manga: IManga, user: IUser): Promise<boolean> {
     return true;

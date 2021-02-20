@@ -44,7 +44,7 @@ export default class DailyGeneratorService {
     const body = await response.json();
     return body['data']['Page']['pageInfo']['lastPage'];
   }
-  private async getAlData(mIndex) {
+  private async requestAL(mIndex) {
     const options = {
       method: 'POST',
       headers: {
@@ -58,39 +58,34 @@ export default class DailyGeneratorService {
     };
 
     const response = await fetch(this.url, options);
-    const body = await response.json();
-
-    return body.data.Page.media[0];
+    return response;
   }
 
   private async getRandomFromAL() {
-    const pageCount = await this.getPageCountAL();
-    const randIndex = Math.floor(Math.random() * pageCount);
-
-    const manga = await this.getAlData(randIndex);
-    return manga;
+    try {
+      const pageCount = await this.getPageCountAL();
+      const randIndex = Math.floor(Math.random() * pageCount);
+      const res = await this.requestAL(randIndex);
+      const body = await res.json();
+      return body['data']['Page']['media'][0];
+    } catch (err) {
+      throw err;
+    }
   }
 
   public async GenerateManga() {
     try {
-      let found = false;
-      let manga;
-      while (!found) {
-        manga = await this.getRandomFromAL();
-
-        if (manga.bannerImage != null) {
-          found = true;
-        } else {
-          this.logger.silly('Daily Gen: Banner not found, regenerating manga');
-        }
+      const manga = await this.getRandomFromAL();
+      if (manga.bannerImage != null) {
+        const localManga = await this.mangaModel.findOne({ al_id: manga.id });
+        const mangaRecord = await this.dailyMangaModel.create({
+          manga: localManga._id,
+          date: new Date().toISOString().split('T')[0],
+        });
+        this.logger.silly(`Generated random manga with Al ID: ${manga.id} and local: ${localManga._id}`);
+        return;
       }
-      const localManga = await this.mangaModel.findOne({ al_id: manga.id });
-      const mangaRecord = await this.dailyMangaModel.create({
-        manga: localManga._id,
-        date: new Date().toISOString().split('T')[0],
-      });
-
-      this.logger.silly(`Generated random manga with Al ID: ${manga.id} and local: ${localManga._id}`);
+      throw 'Banner not available.';
     } catch (e) {
       throw e;
     }

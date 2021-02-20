@@ -24,7 +24,14 @@ export default (app: Router) => {
         }
         res.json({ manga }).status(200);
       } catch (e) {
-        logger.error('error: %o', e);
+        logger.error('Error: %o', e);
+        res
+          .json({
+            errors: {
+              message: 'A server error occured while fetching daily manga. ',
+            },
+          })
+          .status(502);
       }
     },
   );
