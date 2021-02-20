@@ -1,5 +1,5 @@
 import React, { useReducer, createContext } from 'react';
-import { getStoredUserAuth } from '../utils/helpers'
+import { getStoredUserAuth } from '../utils/helpers';
 
 const initialState = {
     user: getStoredUserAuth(),
@@ -7,8 +7,8 @@ const initialState = {
 
 const AuthContext = createContext({
     user: null,
-    login: (userData) => { },
-    logout: () => { },
+    login: (userData) => {},
+    logout: () => {},
 });
 function authReducer(state, action) {
     switch (action.type) {
@@ -30,14 +30,14 @@ function AuthProvider(props) {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     function login(userData) {
-        localStorage.setItem('randid', userData.token);
+        localStorage.setItem('rmgid', JSON.stringify(userData));
         dispatch({
             type: 'LOGIN',
             payload: userData,
         });
     }
     function logout() {
-        localStorage.removeItem('randid');
+        localStorage.removeItem('rmgid');
         dispatch({ type: 'LOGOUT' });
     }
     return (

@@ -45,7 +45,7 @@ function SignIn(props) {
                             autoFocus
                             id="username"
                             name="username"
-                            required="true"
+                            required={true}
                             className="rounded-sm px-4 py-3 mt-2 focus:outline-none bg-gray-700 w-full text-white"
                             ref={register()}
                         />
@@ -61,11 +61,11 @@ function SignIn(props) {
                             type="password"
                             id="password"
                             name="password"
-                            required="true"
+                            required={true}
                             className="rounded-sm px-4 py-3 mt-2 focus:outline-none bg-gray-700 w-full text-white"
                             ref={register()}
                         />
-                        <div class="flex justify-end mt-1 text-xs">
+                        <div className="flex justify-end mt-1 text-xs">
                             <Link
                                 to="/forgot"
                                 className="text-gray-400 hover:text-white">
@@ -79,7 +79,7 @@ function SignIn(props) {
                         Login
                     </button>
                 </form>
-                <p class="mt-6 text-xs text-center font-light text-gray-400 ">
+                <p className="mt-6 text-xs text-center font-light text-gray-400 ">
                     {' '}
                     Don't have an account?{' '}
                     <Link

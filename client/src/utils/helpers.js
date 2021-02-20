@@ -2,13 +2,13 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
 export const getStoredUserAuth = () => {
-    const auth = window.localStorage.getItem('rmgid');
+    const auth = JSON.parse(window.localStorage.getItem('rmgid'));
     if (auth) {
-        const decoded = jwtDecode(auth);
+        const decoded = jwtDecode(auth.token);
         if (decoded.exp * 1000 < Date.now()) {
             window.localStorage.removeItem('rmgid');
         } else {
-            return decoded;
+            return auth;
         }
     }
     return null;

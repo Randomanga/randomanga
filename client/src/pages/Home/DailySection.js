@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import useDaily from '../../utils/hooks/useDaily';
 import { useState } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import DOMPurify from 'dompurify';
+
 const Banner = ({ banner }) => {
     return (
         <>
@@ -21,10 +21,9 @@ const Banner = ({ banner }) => {
 };
 const Cover = ({ cover }) => {
     return (
-        <LazyLoadImage
+        <img
             src={cover}
             alt="cover"
-            effect="blur"
             className="h-36 min-w-28 w-28 sm:min-w-36 sm:h-48 sm:w-36 md:h-52 md:w-40 md:min-w-40 flex-shrink-0 rounded-sm"
         />
     );
@@ -98,28 +97,37 @@ export default function DailySection(props) {
                                 {data.manga.title}
                             </h3>
                             <div className="flex items-center space-x-2 flex-wrap overflow-hidden max-w-sm max-h-5">
-                                <Pill text="Action" color="red" />
-                                <Pill text="Romance" color="yellow" />
-                                <Pill text="Adventure" color="green" />
-                                <Pill text="Comedy" color="pink" />
-                                <Pill text="Shounen" color="red" />
-                                <Pill text="Drama" color="red" />
+                                {data.manga.genre.map((genre) => {
+                                    return <Pill text={genre} color="red" />;
+                                })}
                             </div>
                             <Controls
                                 likesCount={data.manga.likes_count}
                                 likedStatus={data.manga.likedStatus}
                                 mobile
                             />
-                            <div className="mt-4 hidden md:block text-gray-400 text-sm hover:text-gray-300 leading-snug tracking-tight max-w-3xl  md:line-clamp-5">
-                                {data.manga.description}
-                            </div>
+                            <div
+                                className="mt-4 hidden md:block text-gray-400 text-sm hover:text-gray-300 leading-snug tracking-tight max-w-3xl  md:line-clamp-5"
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(
+                                        DOMPurify.sanitize(
+                                            data.manga.description
+                                        )
+                                    ),
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
             </DailyWrapper>
-            <div className="container md:hidden mx-auto p-5 my-2 text-gray-400 leading-snug tracking-tight text-sm">
-                {data.manga.description}
-            </div>
+            <div
+                className="container md:hidden mx-auto p-5 my-2 text-gray-400 leading-snug tracking-tight text-sm"
+                dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                        DOMPurify.sanitize(data.manga.description)
+                    ),
+                }}
+            />
         </section>
     );
 }

@@ -14,6 +14,7 @@ export default function useDaily() {
                     5000
                 );
             },
+            shouldRetryOnError: true,
         }
     );
     return {
