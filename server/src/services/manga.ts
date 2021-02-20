@@ -43,17 +43,20 @@ export default class MangaService {
     return manga;
   }
   public async getRandomDaily(): Promise<IManga> {
-    const mangaRecord = await this.dailyMangaModel
-      .findOne({ date: new Date().toISOString().split('T')[0] })
-      .populate('manga');
-    if (!mangaRecord) {
-      throw Error('Error in retriving daily manga');
-    }
+    try {
+      const mangaRecord = await this.dailyMangaModel
+        .find({})
+        .sort({ _id: -1 })
+        .limit(1)
+        .populate('manga');
+      let manga: IManga = { ...mangaRecord['0'].toObject().manga };
+      manga.likeStatus = false;
 
-    let manga: IManga = { ...mangaRecord.toObject().manga };
-    manga.likeStatus = false;
-    
-    return manga;
+      return manga;
+    } catch (e) {
+      this.logger.debug(e.message);
+      throw e;
+    }
   }
   public async getLikeStatus(manga: IManga, user: IUser): Promise<boolean> {
     return true;

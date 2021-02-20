@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { fetcher } from '../helpers';
 
 export default function useDaily() {
-    const { data, error } = useSWR(
+    const { data, error, mutate } = useSWR(
         'http://192.168.1.242:5000/api/manga/daily',
         fetcher,
         {
@@ -20,5 +20,6 @@ export default function useDaily() {
         data,
         isLoading: !error && !data,
         isError: error,
+        mutate: mutate,
     };
 }

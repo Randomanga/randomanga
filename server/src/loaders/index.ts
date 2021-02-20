@@ -31,6 +31,10 @@ export default async ({ expressApp }) => {
     name: 'dailyMangaModel',
     model: require('../models/daily-manga').default
   }
+  const mangaLikesModel = {
+    name: 'mangaLikesModel',
+    model: require('../models/manga-likes').default
+  }
 
   // It returns the agenda instance because it's needed in the subsequent loaders
   const { agenda } = await dependencyInjectorLoader({
@@ -38,7 +42,8 @@ export default async ({ expressApp }) => {
     models: [
       userModel,
       mangaModel,
-      dailyMangaModel
+      dailyMangaModel,
+      mangaLikesModel
     ],
   });
   Logger.info('✌️ Dependency Injector loaded');

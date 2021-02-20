@@ -55,4 +55,14 @@ export default (app: Router) => {
       return next(e);
     }
   });
+  route.post(
+    '/:al_id/like',
+    middlewares.isAuth,
+    middlewares.attachCurrentUser,
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+
+      res.sendStatus(500);
+    },
+  );
 };
