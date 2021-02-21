@@ -25,8 +25,9 @@ async function onJobFailureExponential(error: any, job: Agenda.Job<any>) {
  */
 async function onJobFailureConstant(error: any, job: Agenda.Job<any>) {
   const retryCount = job.attrs.failCount - 1;
+  const interval = process.env.NODE_ENV != 'production' ? config.agenda.retryInterval : 300;
   if (retryCount <= config.agenda.maxRetries) {
-    job.attrs.nextRunAt = moment().add('5', 'minutes').toDate();
+    job.attrs.nextRunAt = moment().add(interval, 'seconds').toDate();
     await job.save();
   }
 }

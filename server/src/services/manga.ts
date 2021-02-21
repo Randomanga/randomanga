@@ -3,9 +3,8 @@ import { Service, Inject } from 'typedi';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
 import { IManga, IMangaSearchDTO } from '../interfaces/IManga';
-import { Document } from 'mongoose';
 import { IUser } from '../interfaces/IUser';
-import { reject } from 'lodash';
+import { Document } from 'mongoose';
 
 @Service()
 export default class MangaService {
@@ -16,7 +15,7 @@ export default class MangaService {
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
-  public async getManga(search: IMangaSearchDTO): Promise<IManga> {
+  public async getManga(search: IMangaSearchDTO): Promise<IManga & Document> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { related: 0 });
     if (!mangaRecord) {
       throw new Error('Manga does not exist');
@@ -43,35 +42,102 @@ export default class MangaService {
     const manga = mangaRecord.toObject();
     return manga;
   }
-  public async getRandomDaily(): Promise<IManga> {
-    const mangaRecord = await this.dailyMangaModel
-      .find({})
-      .sort({ _id: -1 })
-      .limit(1)
-      .populate({
-        path: 'manga',
-        select: {
-          title: 1,
-          likes_count: 1,
-          al_id: 1,
-          coverImage: 1,
-          banner: 1,
-          description: 1,
-          genre: 1,
-          tags: 1,
-          _id: 0,
+  public async getRandomDaily(user: IUser = null): Promise<IManga> {
+    const mangaRecord = await this.dailyMangaModel.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $sort: { _id: -1 },
+      },
+      {
+        $lookup: {
+          from: 'mangas',
+          as: 'manga',
+          let: { id: '$manga' },
+          pipeline: [
+            {
+              $match: { $expr: { $eq: ['$_id', '$$id'] } },
+            },
+            {
+              $project: {
+                likes_count: {
+                  $size: '$likes',
+                },
+                title: 1,
+                banner: 1,
+                description: 1,
+                cover_image: 1,
+                genre: 1,
+                tags: 1,
+                al_id: 1,
+                _id: 0,
+                liked: {
+                  $in: [user ? user._id : null, '$likes'],
+                },
+              },
+            },
+          ],
         },
-      });
-    if (!mangaRecord) {
-      throw 'Error! 502,  Fetching daily manga from the database failed';
+      },
+
+      {
+        $unwind: '$manga',
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    if (mangaRecord.length === 0) {
+      throw Error('Error fetching daily manga from the database failed');
     }
 
-    let manga: IManga = { ...mangaRecord['0'].toObject().manga };
-    manga.likeStatus = false;
-
-    return manga;
+    return mangaRecord[0].manga;
   }
-  public async getLikeStatus(manga: IManga, user: IUser): Promise<boolean> {
-    return true;
+  public async getLikeStatus(manga: IMangaSearchDTO, user: IUser): Promise<boolean> {
+    try {
+      const result = await this.mangaModel.findOne(
+        {
+          al_id: manga.al_id,
+        },
+        {
+          likes: {
+            $elemMatch: { $eq: user._id },
+          },
+        },
+      );
+      if (!result) throw Error('Invalid manga ID. ');
+      if (result.likes.length === 0) return false;
+      else return true;
+    } catch (e) {
+      throw e;
+    }
+  }
+  public async likeManga(manga: IMangaSearchDTO, user: IUser): Promise<void> {
+    try {
+      await this.mangaModel.updateOne(
+        { al_id: manga.al_id },
+        {
+          $addToSet: { likes: user._id },
+        },
+      );
+    } catch (e) {
+      throw e;
+    }
+  }
+  public async unlikeManga(manga: IMangaSearchDTO, user: IUser): Promise<void> {
+    try {
+      await this.mangaModel.updateOne(
+        {
+          al_id: manga.al_id,
+        },
+        {
+          $pull: { likes: user._id },
+        },
+      );
+    } catch (e) {
+      throw e;
+    }
   }
 }

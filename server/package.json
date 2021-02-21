@@ -19,6 +19,7 @@
   "dependencies": {
     "@hapi/hapi": "^20.0.3",
     "@types/express-jwt": "^6.0.0",
+    "@types/mongoose": "^5.10.3",
     "agenda": "^3.1.0",
     "agendash2": "^0.8.2",
     "argon2": "^0.27.0",
@@ -43,6 +44,7 @@
     "node-fetch": "^2.6.1",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.8.0",
+    "typegoose": "^5.9.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -50,7 +52,6 @@
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.14",
     "@types/lodash": "^4.14.168",
-    "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.21",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",

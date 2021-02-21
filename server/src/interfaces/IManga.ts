@@ -1,4 +1,7 @@
-export interface IManga {
+import { Document } from 'mongoose';
+import { IUser } from './IUser';
+export interface IManga extends Document {
+  likes: Array<IUser['_id']>;
   al_id: Number;
   title: String;
   description: String;
@@ -7,15 +10,16 @@ export interface IManga {
   tags: [];
   related: IManga[];
   banner: String;
-  coverImage: {
+  cover_image: {
     extraLarge: String;
     large: String;
     medium: String;
   };
-  likes_count: Number;
-  likeStatus: Boolean;
+  likes_count: never;
+  like_status: Boolean;
+  al_url: String;
 }
 
 export interface IMangaSearchDTO {
-  al_id: any;
+  al_id: IManga['al_id'];
 }

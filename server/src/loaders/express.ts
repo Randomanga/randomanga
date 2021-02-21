@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../config';
+import { errors } from 'celebrate';
 export default ({ app }: { app: express.Application }) => {
   /**
    * Health Check endpoints
@@ -31,6 +32,8 @@ export default ({ app }: { app: express.Application }) => {
 
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser.json());
+  //celebrate error handling
+  app.use(errors());
   // Load API routes
   app.use(config.api.prefix, routes());
 
@@ -49,7 +52,7 @@ export default ({ app }: { app: express.Application }) => {
     if (err.name === 'UnauthorizedError') {
       return res
         .status(err.status)
-        .send({ message: err.message })
+        .send({ errors: { message: err.message } })
         .end();
     }
     return next(err);
