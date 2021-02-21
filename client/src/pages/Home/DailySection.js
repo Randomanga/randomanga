@@ -74,7 +74,7 @@ const Controls = ({ mobile }) => {
         <div
             className={`${
                 mobile ? 'inline-flex md:hidden' : 'hidden md:inline-flex'
-            } mt-1 items-center flex-row flex-nowrap space-x-1 lg:space-x-3 }`}>
+            } mt-2 items-center flex-row flex-nowrap space-x-1 lg:space-x-3 }`}>
             <button className="bg-blue-400 text-xs  hover:text-gray-200 text-gray-100 font-bold py-2 px-5  md:tracking-tighter md:px-2  rounded inline-flex items-center space-x-1 focus:outline-none">
                 <AlIcon />
                 <span className="text-xs">Add to list</span>
