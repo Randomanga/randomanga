@@ -1,14 +1,19 @@
+import { useContext } from 'react';
 import useSWR from 'swr';
+import { AuthContext } from '../../context/auth';
 import { fetcher } from '../helpers';
 
 export default function useDaily() {
+    const { user } = useContext(AuthContext);
     const { data, error, mutate } = useSWR(
-        'http://192.168.1.242:5000/api/manga/daily',
+        user
+            ? ['http://192.168.1.242:5000/api/manga/daily', user.token]
+            : 'http://192.168.1.242:5000/api/manga/daily',
         fetcher,
         {
             onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
                 if (error.status === 404) return;
-                if (retryCount >= 10) return;
+                if (retryCount >= 5) return;
                 setTimeout(
                     () => revalidate({ retryCount: retryCount + 1 }),
                     5000
@@ -20,7 +25,7 @@ export default function useDaily() {
     return {
         data,
         isLoading: !error && !data,
-        isError: error,
+        error: error,
         mutate: mutate,
     };
 }

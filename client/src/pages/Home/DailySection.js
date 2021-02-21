@@ -1,11 +1,13 @@
 import Pill from '../../components/Pill/Pill';
 import AlIcon from '../../components/Icons/AlIcon';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import useDaily from '../../utils/hooks/useDaily';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DOMPurify from 'dompurify';
 import IconButton from '../../components/Button/FontAwesomeIconButton';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { AuthContext } from '../../context/auth';
 
 const Banner = ({ banner }) => {
     return (
@@ -31,14 +33,43 @@ const DailyWrapper = ({ children }) => {
 
 const Motd = () => {
     return (
-        <h1 className="font-extrabold pl-3 text-2xl md:text-3xl text-white text-shadow-xl">
+        <h1 className="font-extrabold pl-3 text-3xl text-white text-shadow-xl">
             Random Manga For You
         </h1>
     );
 };
 
-const Controls = ({ likesCount, likedStatus, mobile, handleClick }) => {
-    const [liked, setLiked] = useState(likedStatus);
+const Controls = ({ mobile }) => {
+    const { data, mutate } = useDaily();
+    const { user } = useContext(AuthContext);
+    const [bounce, setBounce] = useState(false);
+
+    const onClick = async () => {
+        const liked = data.manga.liked;
+        try {
+            if (!user) {
+                toast.error('You need to be logged in to like', {
+                    toastId: 'error',
+                });
+                return;
+            }
+            await axios({
+                method: liked ? 'delete' : 'post',
+                url: `http://192.168.1.242:5000/api/manga/${data.manga.al_id}/likes`,
+                headers: { Authorization: `Bearer ${user.token}` },
+            });
+            if (liked)
+                toast.info('Added to liked manga.', { toastId: 'like-mangas' });
+            else
+                toast.info('Removed from liked manga.', {
+                    toastId: 'dislike-mangas',
+                });
+            mutate();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     return (
         <div
             className={`${
@@ -49,21 +80,25 @@ const Controls = ({ likesCount, likedStatus, mobile, handleClick }) => {
                 <span className="text-xs">Add to list</span>
             </button>
             <IconButton
-                text={likesCount}
-                fillColor={liked ? 'red' : 'white'}
+                text={data.manga.likes_count}
+                fillColor={data.manga.liked ? 'red' : 'white'}
                 icon={faHeart}
-                handleClick={handleClick}
+                handleClick={onClick}
             />
         </div>
     );
 };
 
 export default function DailySection(props) {
-    const { data, error, isLoading } = useDaily();
+    const { data, error, isLoading, mutate } = useDaily();
     if (isLoading) {
         return null;
-    } else {
-        console.log('%o', data);
+    }
+    if (error) {
+        toast.error(`${error.info}Please refresh or try again later.`, {
+            toastId: 'daily-error',
+        });
+        return null;
     }
     return (
         <section>
@@ -74,25 +109,22 @@ export default function DailySection(props) {
                     <div className="flex flex-col">
                         <div className="h-auto w-28 md:w-36   flex-none bg-cover rounded-sm text-center overflow-hidden">
                             <img
-                                src={data.manga.coverImage.large}
+                                src={data.manga.cover_image.large}
                                 title="Daily manga cover image"
                             />
                         </div>
-                        <Controls
-                            likesCount={data.manga.likesCount}
-                            likedStatus={data.manga.likeStatus}
-                        />
+                        <Controls />
                     </div>
                     <div className="px-3 flex flex-col  leading-normal max-w-3xl">
                         <h3 className="text-white font-bold text-lg md:text-xl mb-2 line-clamp-2">
                             {data.manga.title}
                         </h3>
                         <div className="flex h-5 space-x-1 flex-wrap overflow-hidden mb-8 md:mb-5 max-w-md">
-                            {data.manga.genre.map((genre) => (
-                                <Pill text={genre} color="red" />
+                            {data.manga.genre.map((genre, index) => (
+                                <Pill text={genre} color="red" key={index} />
                             ))}
-                            {data.manga.tags.map((tag) => (
-                                <Pill text={tag} color="blue" />
+                            {data.manga.tags.map((tag, index) => (
+                                <Pill text={tag} color="blue" key={index} />
                             ))}
                         </div>
                         <div
@@ -103,11 +135,7 @@ export default function DailySection(props) {
                                 ),
                             }}
                         />
-                        <Controls
-                            likesCount={data.manga.likesCount}
-                            likedStatus={data.manga.likeStatus}
-                            mobile
-                        />
+                        <Controls mobile />
                     </div>
                 </div>
             </DailyWrapper>

@@ -12,7 +12,7 @@ function App() {
             <RenderRoutes routes={routes} />
             <ToastContainer
                 position="top-center"
-                autoClose={2500}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
