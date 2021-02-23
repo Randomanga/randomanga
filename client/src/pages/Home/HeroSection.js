@@ -12,12 +12,15 @@ export const HeroSection = () => {
             <h1 className="text-gray-200 text-2xl md:text-3xl font-bold">
                 Welcome to RandoManga!
             </h1>
-            <span className="text-sm md:text-md text-gray-300">Find new manga to read, share them with others, track them and many more </span>
+            <span className="text-sm md:text-md text-gray-300">
+                Find new manga to read, share them with others, track them and
+                many more{' '}
+            </span>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-6 container max-w-lg md:max-w-5xl mx-auto mt-16 px-1 md:px-4">
                 <div className="p-7 flex items-center max-w-md space-x-4">
                     <FontAwesomeIcon
                         icon={faSync}
-                        className="text-7xl text-gray-500 opacity-60"
+                        className="text-7xl text-gray-700 "
                     />
                     <div className="pl-4 md:pl-0 text-left">
                         <h5 className="text-gray-200 text-base md:text-lg font-medium">
@@ -26,8 +29,7 @@ export const HeroSection = () => {
                         <p className="text-xs md:text-base text-gray-400">
                             Save anything you want to read for later with
                             Anilist.
-                            <span className="text-gray-500 text-xs">
-                                {' '}
+                            <span className="text-gray-700 text-xs">
                                 (requires Anilist account)
                             </span>
                         </p>
@@ -36,7 +38,7 @@ export const HeroSection = () => {
                 <div className="p-7 flex items-center max-w-md space-x-4">
                     <FontAwesomeIcon
                         icon={faRobot}
-                        className="text-7xl text-gray-500 opacity-60 h-20 w-24"
+                        className="text-7xl text-gray-700  h-20 w-24"
                     />
                     <div className="text-left">
                         <h5 className="text-gray-200 text-base md:text-lg font-medium">
@@ -50,7 +52,7 @@ export const HeroSection = () => {
                 <div className="p-7  flex items-center max-w-md space-x-4">
                     <FontAwesomeIcon
                         icon={faRandom}
-                        className="text-7xl text-gray-500 opacity-60 h-20 w-24"
+                        className="text-7xl text-gray-700  h-20 w-24"
                     />
                     <div className="pl-5 md:pl-0 text-left">
                         <h5 className="text-gray-200 text-base md:text-lg font-medium">
@@ -66,9 +68,9 @@ export const HeroSection = () => {
                 <div className="p-7 flex items-center  max-w-md space-x-4 ">
                     <FontAwesomeIcon
                         icon={faUserFriends}
-                        className="text-7xl text-gray-500 opacity-60 h-20 w-24"
+                        className="text-7xl text-gray-700  h-20 w-24"
                     />
-                    <div className="pl-2 md:pl-0 text-left" >
+                    <div className="pl-2 md:pl-0 text-left">
                         <h5 className="text-gray-200 text-base md:text-lg font-medium">
                             User recommendations
                         </h5>

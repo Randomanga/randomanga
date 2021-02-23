@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 
@@ -229,7 +229,7 @@ export default function Navbar() {
         setOpen(!open);
     };
     return (
-        <nav className="fixed top-0 w-full bg-darkGray-500 shadow-lg">
+        <nav className="fixed top-0 w-full bg-darkGray-500 shadow-lg z-50">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="relative flex items-center justify-between h-14">
                     {/* Hamburger menu */}

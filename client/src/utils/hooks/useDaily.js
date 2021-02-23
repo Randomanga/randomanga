@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import useSWR from 'swr';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../context/AuthContext';
 import { fetcher } from '../helpers';
 
 export default function useDaily() {

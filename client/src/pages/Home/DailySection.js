@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 import IconButton from '../../components/Button/FontAwesomeIconButton';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../context/AuthContext';
 
 const Banner = ({ banner }) => {
     return (
@@ -58,7 +58,7 @@ const Controls = ({ mobile }) => {
                 url: `http://192.168.1.242:5000/api/manga/${data.manga.al_id}/likes`,
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-            if (liked)
+            if (!liked)
                 toast.info('Added to liked manga.', { toastId: 'like-mangas' });
             else
                 toast.info('Removed from liked manga.', {

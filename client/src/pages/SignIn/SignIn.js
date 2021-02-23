@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../context/AuthContext';
 
 function SignIn(props) {
     const { register, errors, handleSubmit } = useForm();
