@@ -1,6 +1,14 @@
 import classnames from 'classnames';
 
-function Button({ size, bgColor, textColor, textShadow, children, hoverBgColor, onClick }) {
+function Button({
+    size,
+    bgColor,
+    textColor,
+    textShadow,
+    children,
+    hoverBgColor,
+    onClick,
+}) {
     return (
         <button
             onClick={onClick}

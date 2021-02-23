@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Switch } from '@headlessui/react';
-import { Select } from '../../../components/Select/Select';
 import { genres, tags } from '../../../utils/constants';
 import Button from '../../../components/Button/Button';
+import MultiSelect from '../../../components/Select/MultiSelect';
 
 export default function Generator() {
     const [switchValue, setSwitchValue] = useState(false);
@@ -44,10 +44,7 @@ export default function Generator() {
                         </Switch>
                     </Switch.Group>
                 </div>
-                <Select
-                    isMulti
-                    closeMenuOnSelect={false}
-                    name="select"
+                <MultiSelect
                     placeholder="Genres (All)"
                     options={genres.map((genre) => {
                         return {
@@ -56,12 +53,9 @@ export default function Generator() {
                         };
                     })}
                 />
-                <Select
-                    isMulti
-                    closeMenuOnSelect={false}
-                    closeMenuOnScroll={false}
-                    name="select"
+                <MultiSelect
                     placeholder="Tags (All)"
+                    
                     options={tags.map((tagCollection) => {
                         return {
                             label: tagCollection.category,
@@ -74,12 +68,13 @@ export default function Generator() {
                         };
                     })}
                 />
+
                 <Button
                     size="xl"
                     textColor="white"
-                    bgColor="bg-orange-600"
+                    bgColor="bg-orange-700"
                     textShadow="text-shadow-md"
-                    hoverBgColor="bg-orange-700">
+                    hoverBgColor="bg-orange-600">
                     Generate List
                 </Button>
             </div>

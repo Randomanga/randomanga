@@ -1,8 +1,10 @@
 import React from 'react';
-import BaseSelect, { createFilter } from 'react-select';
+import WindowedSelect, { createFilter } from 'react-windowed-select';
 import ThemeContext from '../../context/ThemeContext';
+import makeAnimated from 'react-select/animated';
+const animatedComponents = makeAnimated();
 
-export const Select = (props) => {
+const MultiSelect = (props) => {
     const theme = React.useContext(ThemeContext);
 
     const customStyles = {
@@ -75,15 +77,20 @@ export const Select = (props) => {
             },
         }),
     };
-
     return (
-        <BaseSelect
+        <WindowedSelect
+            options={props.options}
             styles={customStyles}
             classNamePrefix="select"
             filterOption={createFilter({ ignoreAccents: false })}
             menuShouldScrollIntoView={true}
             tabSelectsValue={false}
+            isMulti
+            components={animatedComponents}
+            closeMenuOnSelect={false}
             {...props}
         />
     );
 };
+
+export default MultiSelect;
