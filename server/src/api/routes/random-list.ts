@@ -25,8 +25,8 @@ export default (app: Router) => {
   route.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const randomServiceInstance = Container.get(RandomService);
-      await randomServiceInstance.getList(1, req.params.id);
-      res.sendStatus(200);
+      const list = await randomServiceInstance.getList(2, req.params.id);
+      res.json({ list });
     } catch (error) {
       res.sendStatus(404);
     }

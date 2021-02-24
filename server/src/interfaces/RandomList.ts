@@ -3,7 +3,7 @@ import { IManga } from './IManga';
 export interface RandomList extends Document {
   generated: IManga[];
   _id: ObjectId;
-  count: Number;
+  count: number;
   seed: String;
   includedGenres: [];
   includedTags: [];

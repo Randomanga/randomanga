@@ -1,6 +1,18 @@
+import { sortBy } from 'lodash';
 import { Inject, Service } from 'typedi';
 import { RandomListCreation, RandomList } from '../interfaces/RandomList';
-import { ObjectId } from 'mongoose';
+import { IManga } from '../interfaces/IManga';
+const SeededShuffle = require('seededshuffle');
+
+const { performance, PerformanceObserver } = require('perf_hooks');
+
+const perfObserver = new PerformanceObserver(items => {
+  items.getEntries().forEach(entry => {
+    console.log(entry);
+  });
+});
+
+perfObserver.observe({ entryTypes: ['measure'], buffer: true });
 
 @Service()
 export default class RandomService {
@@ -338,6 +350,28 @@ export default class RandomService {
     }
     return result;
   }
+  private async shuffle(array, seed) {
+    let currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    seed = seed || 1;
+    let random = function () {
+      var x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
+    };
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  }
+
   public async createList(data: RandomListCreation) {
     let { includedGenres, includedTags, excludedGenres, excludedTags } = data;
     if (includedGenres.length === 0) includedGenres = [...this.allGenres];
@@ -358,6 +392,11 @@ export default class RandomService {
           },
         },
       });
+
+      /**
+       * Add expiration index
+       */
+
       const list = await this.randomModel.create({
         count: listCount,
         includedGenres,
@@ -372,14 +411,86 @@ export default class RandomService {
       throw err;
     }
   }
-  public async getList(page: Number, listID: String) {
-    const listData = await this.randomModel.findOne({
+  public async getList(page: number, listID: String) {
+    const listData: RandomList = await this.randomModel.findOne({
       _id: listID,
     });
 
-    
+    /**
+     * Check if current page * 50 is less or equal to the length of generated
+     * If it is then retrieve it, if not:
+     * Gen 50 numbers, sort them. Use $gt _id and get each manga for given number
+     * Unsort numbers, push manga id's into generated
+     * Return the 50 manga
+     */
 
+    const arr = [...Array(listData.count - 1).keys()];
+    SeededShuffle.shuffle(arr, listData.seed);
+    let current = arr.slice(Math.max(1, page * 50 - 50), page * 50);
+    if (listData.generated.length === page * 50) {
+      /**
+       * populate and return
+       */
+    }
+    current.sort((a, b) => a - b);
+    let manga: IManga[] = [];
+    performance.mark('skip-start');
 
-    this.logger.debug(listData);
+    const first = await this.mangaModel
+      .find(
+        {
+          tags: {
+            $elemMatch: {
+              $in: listData.includedTags,
+              $nin: listData.excludedTags,
+            },
+          },
+          genre: {
+            $elemMatch: {
+              $in: listData.includedGenres,
+              $nin: listData.excludedGenres,
+            },
+          },
+        },
+        { al_id: 1 },
+      )
+      .skip(current[0])
+      .limit(1);
+    manga.push(first);
+    this.logger.debug(first.al_id);
+
+    let previous = first._id;
+    for (let i = 1; i < 50; i++) {
+      const found = await this.mangaModel
+        .find(
+          {
+            tags: {
+              $elemMatch: {
+                $in: listData.includedTags,
+                $nin: listData.excludedTags,
+              },
+            },
+            genre: {
+              $elemMatch: {
+                $in: listData.includedGenres,
+                $nin: listData.excludedGenres,
+              },
+            },
+            id: {
+              $gte: previous,
+            },
+          },
+          { al_id: 1 },
+        )
+        .skip(current[i])
+        .limit(1);
+      previous = found._id;
+      this.logger.debug(previous);
+      manga.push(found);
+    }
+    performance.mark('skip-end');
+    performance.measure('skip', 'skip-start', 'skip-end');
+    this.logger.debug('%o', manga);
+    return manga;
   }
 }
