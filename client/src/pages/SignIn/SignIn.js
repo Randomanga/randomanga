@@ -6,10 +6,17 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/AuthContext';
 
 function SignIn(props) {
-    const { register, errors, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm();
     const { user, login } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+
+    useEffect(() => {
+        //redirect if user is already logged in
+        if (user) {
+            history.push('/');
+        }
+    });
 
     const onSubmit = async (formData) => {
         try {

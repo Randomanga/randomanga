@@ -1,8 +1,6 @@
 import React from 'react';
-import WindowedSelect, { createFilter } from 'react-windowed-select';
+import Select, { createFilter } from 'react-select';
 import ThemeContext from '../../context/ThemeContext';
-import makeAnimated from 'react-select/animated';
-const animatedComponents = makeAnimated();
 
 const MultiSelect = (props) => {
     const theme = React.useContext(ThemeContext);
@@ -78,7 +76,7 @@ const MultiSelect = (props) => {
         }),
     };
     return (
-        <WindowedSelect
+        <Select
             options={props.options}
             styles={customStyles}
             classNamePrefix="select"
@@ -86,7 +84,6 @@ const MultiSelect = (props) => {
             menuShouldScrollIntoView={true}
             tabSelectsValue={false}
             isMulti
-            components={animatedComponents}
             closeMenuOnSelect={false}
             {...props}
         />

@@ -204,10 +204,10 @@ const LinksDesktop = () => {
     return (
         <div className="flex-1 flex items-center md:items-stretch md:justify-start select-none">
             <Link to="/" className="flex flex-shrink-0 items-center ml-1">
-                <span className="font-extrabold text-3xl tracking-tight text-white">
+                <span className="font-extrabold text-3xl tracking-tight  select-none text-white">
                     Rando
                 </span>
-                <span className="font-extrabold text-3xl tracking-tight text-blue-400">
+                <span className="font-extrabold text-3xl tracking-tight select-none text-blue-400">
                     Manga
                 </span>
             </Link>

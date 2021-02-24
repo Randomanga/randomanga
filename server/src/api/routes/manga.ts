@@ -4,6 +4,7 @@ import { Logger } from 'winston';
 import { Container } from 'typedi';
 import MangaService from '../../services/manga';
 import { IMangaSearchDTO } from '../../interfaces/IManga';
+import { isNumber } from 'lodash';
 
 const route = Router();
 
@@ -47,6 +48,13 @@ export default (app: Router) => {
     const logger: Logger = Container.get('logger');
     logger.silly(`Searching for manga with id: ${req.params.al_id}`);
     try {
+      if (!isNumber(req.params.al_id)) {
+        res.status(404).json({
+          errors: {
+            message: 'Invalid ID provided. Make sure the id is a number and is valid',
+          },
+        });
+      }
       const mangaServiceInstance = Container.get(MangaService);
       const manga = await mangaServiceInstance.getManga({ al_id: Number(req.params.al_id) } as IMangaSearchDTO);
 

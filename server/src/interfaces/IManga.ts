@@ -6,8 +6,8 @@ export interface IManga extends Document {
   title: String;
   description: String;
   demographic: [];
-  genre: [];
-  tags: [];
+  genre: String[];
+  tags: String[];
   related: IManga[];
   banner: String;
   cover_image: {

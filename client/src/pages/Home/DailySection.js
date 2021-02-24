@@ -2,7 +2,7 @@ import Pill from '../../components/Pill/Pill';
 import AlIcon from '../../components/Icons/AlIcon';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import useDaily from '../../utils/hooks/useDaily';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import DOMPurify from 'dompurify';
 import IconButton from '../../components/Button/FontAwesomeIconButton';
 import { toast } from 'react-toastify';
@@ -42,7 +42,6 @@ const Motd = () => {
 const Controls = ({ mobile }) => {
     const { data, mutate } = useDaily();
     const { user } = useContext(AuthContext);
-    const [bounce, setBounce] = useState(false);
 
     const onClick = async () => {
         const liked = data.manga.liked;
@@ -105,12 +104,13 @@ export default function DailySection(props) {
             <Banner banner={data.manga.banner} />
             <DailyWrapper>
                 <Motd />
-                <div className="w-full flex pl-1 md:pl-0 items-center">
+                <div className="w-full flex pl-2 md:pl-0 items-center">
                     <div className="flex flex-col">
                         <div className="h-auto w-28 md:w-36   flex-none bg-cover rounded-sm text-center overflow-hidden">
                             <img
                                 src={data.manga.cover_image.large}
                                 title="Daily manga cover image"
+                                alt="Daily manga"
                             />
                         </div>
                         <Controls />
