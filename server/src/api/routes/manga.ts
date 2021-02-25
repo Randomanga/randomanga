@@ -15,18 +15,13 @@ export default (app: Router) => {
     middlewares.isLogged,
     middlewares.attachCurrentUser,
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger: Logger = Container.get('logger');
+      //const logger: Logger = Container.get('logger');
       try {
         const mangaServiceInstance = Container.get(MangaService);
-        const manga = await mangaServiceInstance.getRandomDaily(req.currentUser ? req.currentUser : null);
+        const manga = await mangaServiceInstance.getRandomDaily(req.currentUser);
         res.json({ manga }).status(200);
       } catch (e) {
-        console.error(e);
-        res.status(502).json({
-          errors: {
-            message: 'A server error occured while fetching daily manga. ',
-          },
-        });
+        next(e);
       }
     },
   );
@@ -41,7 +36,7 @@ export default (app: Router) => {
       res.json({ manga }).status(200);
     } catch (e) {
       logger.error('🔥 error: %o', e);
-      return next(e);
+      next(e);
     }
   });
   route.get('/:al_id', async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +56,7 @@ export default (app: Router) => {
       res.json({ manga }).status(200);
     } catch (e) {
       logger.error('🔥 error: %o', e);
-      return next(e);
+      next(e);
     }
   });
   route.post(
@@ -69,7 +64,7 @@ export default (app: Router) => {
     middlewares.isAuth,
     middlewares.attachCurrentUser,
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger: Logger = Container.get('logger');
+      //const logger: Logger = Container.get('logger');
       //logger.silly(`Invoked like for manga with id: ${req.params.al_id}`);
       try {
         const al_id = Number(req.params.al_id);
@@ -77,13 +72,7 @@ export default (app: Router) => {
         await mangaServiceInstance.likeManga({ al_id: al_id }, req.currentUser);
         res.sendStatus(200);
       } catch (e) {
-        res
-          .json({
-            errors: {
-              messages: 'An error occured. Manga id is invalid',
-            },
-          })
-          .status(502);
+        next(e);
       }
     },
   );
@@ -92,20 +81,14 @@ export default (app: Router) => {
     middlewares.isAuth,
     middlewares.attachCurrentUser,
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger: Logger = Container.get('logger');
+      //const logger: Logger = Container.get('logger');
       try {
         const al_id = Number(req.params.al_id);
         const mangaServiceInstance = Container.get(MangaService);
         const status = await mangaServiceInstance.getLikeStatus({ al_id }, req.currentUser);
         res.json({ like_status: status }).status(200);
       } catch (e) {
-        res
-          .json({
-            errors: {
-              message: e.message,
-            },
-          })
-          .status(400);
+        next(e);
       }
     },
   );
@@ -114,7 +97,7 @@ export default (app: Router) => {
     middlewares.isAuth,
     middlewares.attachCurrentUser,
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger: Logger = Container.get('logger');
+      //const logger: Logger = Container.get('logger');
       //logger.silly(`Invoked unlike for manga with id: ${req.params.al_id}`);
       try {
         const al_id = Number(req.params.al_id);
@@ -122,13 +105,7 @@ export default (app: Router) => {
         await mangaServiceInstance.unlikeManga({ al_id: al_id }, req.currentUser);
         res.sendStatus(200);
       } catch (e) {
-        res
-          .json({
-            errors: {
-              messages: 'An error occured. Manga id is invalid',
-            },
-          })
-          .status(502);
+        next(e);
       }
     },
   );

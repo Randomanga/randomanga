@@ -1,24 +1,25 @@
-import { EventEmitter } from 'events';
+//import { EventEmitter } from 'events';
 import { Service, Inject } from 'typedi';
-import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
-import events from '../subscribers/events';
+//import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
+//import events from '../subscribers/events';
 import { IManga, IMangaSearchDTO } from '../interfaces/IManga';
 import { IUser } from '../interfaces/IUser';
 import { Document } from 'mongoose';
+import { Logger } from 'winston';
+import HttpException from '../errors/HttpException';
 
 @Service()
 export default class MangaService {
   constructor(
     @Inject('mangaModel') private mangaModel: Models.MangaModel,
-    @Inject('logger') private logger,
-    @Inject('dailyMangaModel') private dailyMangaModel: any,
-    @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
+    @Inject('logger') private logger: Logger,
+    @Inject('dailyMangaModel') private dailyMangaModel: any, // @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
   public async getManga(search: IMangaSearchDTO): Promise<IManga & Document> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { related: 0 });
     if (!mangaRecord) {
-      throw new Error('Manga does not exist');
+      throw new HttpException(404, 'Manga does not exist');
     }
     const manga = mangaRecord.toObject();
     return manga;
@@ -37,12 +38,12 @@ export default class MangaService {
       },
     });
     if (!mangaRecord) {
-      throw Error('Manga does not exist');
+      throw new HttpException(404, 'Manga does not exist');
     }
     const manga = mangaRecord.toObject();
     return manga;
   }
-  public async getRandomDaily(user: IUser = null): Promise<IManga> {
+  public async getRandomDaily(user?: IUser): Promise<IManga> {
     const mangaRecord = await this.dailyMangaModel.aggregate([
       {
         $match: {},
@@ -90,7 +91,8 @@ export default class MangaService {
     ]);
 
     if (mangaRecord.length === 0) {
-      throw Error('Error fetching daily manga from the database failed');
+      const err = new HttpException(502, 'Critical error! Daily manga not found! ');
+      throw err;
     }
 
     return mangaRecord[0].manga;
@@ -107,7 +109,7 @@ export default class MangaService {
           },
         },
       );
-      if (!result) throw Error('Invalid manga ID. ');
+      if (!result) throw new HttpException(404, 'Manga does not exist');
       if (result.likes.length === 0) return false;
       else return true;
     } catch (e) {
@@ -116,14 +118,14 @@ export default class MangaService {
   }
   public async likeManga(manga: IMangaSearchDTO, user: IUser): Promise<void> {
     try {
-      await this.mangaModel.updateOne(
+      const record = await this.mangaModel.updateOne(
         { al_id: manga.al_id },
         {
           $addToSet: { likes: user._id },
         },
       );
     } catch (e) {
-      throw e;
+      throw new HttpException(404, 'Manga does not exist');
     }
   }
   public async unlikeManga(manga: IMangaSearchDTO, user: IUser): Promise<void> {
@@ -137,8 +139,7 @@ export default class MangaService {
         },
       );
     } catch (e) {
-      throw e;
+      throw new HttpException(404, 'Manga does not exist');
     }
   }
-  
 }

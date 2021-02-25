@@ -4,6 +4,8 @@ import cors from 'cors';
 import routes from '../api';
 import config from '../config';
 import { errors } from 'celebrate';
+import { NextFunction, Request, Response } from 'express';
+import HttpException from '../errors/HttpException';
 export default ({ app }: { app: express.Application }) => {
   /**
    * Health Check endpoints
@@ -37,15 +39,15 @@ export default ({ app }: { app: express.Application }) => {
   // Load API routes
   app.use(config.api.prefix, routes());
 
+ 
   /// catch 404 and forward to error handler
-  app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err['status'] = 404;
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const err = new HttpException(404, 'Not Found!');
     next(err);
   });
 
   /// error handlers
-  app.use((err, req, res, next) => {
+  app.use((err: HttpException, req: Request, res: Response, next: NextFunction) => {
     /**
      * Handle 401 thrown by express-jwt library
      */
@@ -57,7 +59,7 @@ export default ({ app }: { app: express.Application }) => {
     }
     return next(err);
   });
-  app.use((err, req, res, next) => {
+  app.use((err: HttpException, req: Request, res: Response, next: NextFunction) => {
     res.status(err.status || 500);
     res.json({
       errors: {

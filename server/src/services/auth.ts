@@ -6,12 +6,13 @@ import { randomBytes } from 'crypto';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
+import { Logger } from 'winston';
 
 @Service()
 export default class AuthService {
   constructor(
     @Inject('userModel') private userModel: Models.UserModel,
-    @Inject('logger') private logger,
+    @Inject('logger') private logger: Logger,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
@@ -85,7 +86,7 @@ export default class AuthService {
     }
   }
 
-  private generateToken(user) {
+  private generateToken(user: IUser) {
     const today = new Date();
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);

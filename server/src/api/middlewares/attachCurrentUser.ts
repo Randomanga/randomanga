@@ -2,6 +2,7 @@ import { Container } from 'typedi';
 import mongoose from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
 import { Logger } from 'winston';
+import { Response, NextFunction, Request } from 'express';
 
 /**
  * Attach user to req.currentUser
@@ -9,7 +10,7 @@ import { Logger } from 'winston';
  * @param {*} res  Express res Object
  * @param {*} next  Express next Function
  */
-const attachCurrentUser = async (req, res, next) => {
+const attachCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.token) return next();
   const Logger: Logger = Container.get('logger');
   try {

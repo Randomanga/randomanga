@@ -1,5 +1,6 @@
 import jwt from 'express-jwt';
 import config from '../../config';
+import { Request } from 'express';
 
 /**
  * We are assuming that the JWT will come in a header with the form
@@ -10,7 +11,7 @@ import config from '../../config';
  * GET https://my-bulletproof-api.com/stats?apiKey=${JWT}
  * Luckily this API follow _common sense_ ergo a _good design_ and don't allow that ugly stuff
  */
-const getTokenFromHeader = req => {
+const getTokenFromHeader = (req: Request) => {
   /**
    * @TODO Edge and Internet Explorer do some weird things with the headers
    * So I believe that this should handle more 'edge' cases ;)
@@ -24,10 +25,9 @@ const getTokenFromHeader = req => {
   return null;
 };
 
-
 /**
  * Authorization with required credentials
- * 
+ *
  * Return 403 if credentials are absent
  */
 const isAuth = jwt({
@@ -37,17 +37,16 @@ const isAuth = jwt({
   getToken: getTokenFromHeader, // How to extract the JWT from the request
 });
 
-
 /**
  * Authorization without credentials
- * 
+ *
  * Attach user to request if he has credentials, if not just continue
  */
 const isLogged = jwt({
-  secret: config.jwtSecret, 
-  algorithms: [config.jwtAlgorithm], 
-  userProperty: 'token', 
-  getToken: getTokenFromHeader, 
+  secret: config.jwtSecret,
+  algorithms: [config.jwtAlgorithm],
+  userProperty: 'token',
+  getToken: getTokenFromHeader,
   credentialsRequired: false,
 });
 

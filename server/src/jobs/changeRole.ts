@@ -1,9 +1,10 @@
+import { Job } from 'agenda';
 import { Container } from 'typedi';
 import { Logger } from 'winston';
 import UserService from '../services/user';
 
 export default class UserRoleChangerJob {
-  public async handler(job, done): Promise<void> {
+  public async handler(job: Job, done: (err?: Error) => void): Promise<void> {
     const Logger: Logger = Container.get('logger');
     try {
       Logger.debug(' User Role Change Job triggered!');

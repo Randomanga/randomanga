@@ -1,6 +1,6 @@
 import { Document, ObjectId } from 'mongoose';
 import { IManga } from './IManga';
-export interface RandomList extends Document {
+export interface IRandomList extends Document {
   generated: IManga[];
   _id: ObjectId;
   count: number;

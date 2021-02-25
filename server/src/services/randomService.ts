@@ -1,25 +1,17 @@
-import { sortBy } from 'lodash';
 import { Inject, Service } from 'typedi';
-import { RandomListCreation, RandomList } from '../interfaces/RandomList';
-import { IManga } from '../interfaces/IManga';
+import { Logger } from 'winston';
+import { RandomListCreation, IRandomList } from '../interfaces/IRandomList';
+import { Redis } from 'ioredis';
 const SeededShuffle = require('seededshuffle');
-
-const { performance, PerformanceObserver } = require('perf_hooks');
-
-const perfObserver = new PerformanceObserver(items => {
-  items.getEntries().forEach(entry => {
-    console.log(entry);
-  });
-});
-
-perfObserver.observe({ entryTypes: ['measure'], buffer: true });
+import HttpException from '../errors/HttpException';
 
 @Service()
 export default class RandomService {
   constructor(
     @Inject('mangaModel') private mangaModel: Models.MangaModel,
-    @Inject('logger') private logger,
+    @Inject('logger') private logger: Logger,
     @Inject('randomListModel') private randomModel: Models.RandomModel,
+    @Inject('redis') private redisClient: Redis,
   ) {}
   private allTags = [
     '4-koma',
@@ -350,27 +342,6 @@ export default class RandomService {
     }
     return result;
   }
-  private async shuffle(array, seed) {
-    let currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-    seed = seed || 1;
-    let random = function () {
-      var x = Math.sin(seed++) * 10000;
-      return x - Math.floor(x);
-    };
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(random() * currentIndex);
-      currentIndex -= 1;
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
 
   public async createList(data: RandomListCreation) {
     let { includedGenres, includedTags, excludedGenres, excludedTags } = data;
@@ -378,7 +349,7 @@ export default class RandomService {
     if (includedTags.length === 0) includedTags = [...this.allTags];
 
     try {
-      const listCount = await this.mangaModel.countDocuments({
+      const filtered = await this.mangaModel.find({
         tags: {
           $elemMatch: {
             $in: [...includedTags],
@@ -393,12 +364,16 @@ export default class RandomService {
         },
       });
 
+      if (!filtered) {
+        const err = new HttpException(204, 'No mangas found with given filters');
+        throw err;
+      }
       /**
        * Add expiration index
        */
 
       const list = await this.randomModel.create({
-        count: listCount,
+        count: filtered.length,
         includedGenres,
         includedTags,
         excludedGenres,
@@ -411,10 +386,15 @@ export default class RandomService {
       throw err;
     }
   }
-  public async getList(page: number, listID: String) {
-    const listData: RandomList = await this.randomModel.findOne({
-      _id: listID,
+  public async getList(page: number, listID: string) {
+    const listData: IRandomList = await this.randomModel.findOne({
+      listID,
     });
+    if (!listData) {
+      const err = new HttpException(404, "List not found! List might have expire, or doesn't exist.");
+      throw err;
+    }
+    
 
     /**
      * Check if current page * 50 is less or equal to the length of generated
@@ -432,65 +412,7 @@ export default class RandomService {
        * populate and return
        */
     }
-    current.sort((a, b) => a - b);
-    let manga: IManga[] = [];
-    performance.mark('skip-start');
-
-    const first = await this.mangaModel
-      .find(
-        {
-          tags: {
-            $elemMatch: {
-              $in: listData.includedTags,
-              $nin: listData.excludedTags,
-            },
-          },
-          genre: {
-            $elemMatch: {
-              $in: listData.includedGenres,
-              $nin: listData.excludedGenres,
-            },
-          },
-        },
-        { al_id: 1 },
-      )
-      .skip(current[0])
-      .limit(1);
-    manga.push(first);
-    this.logger.debug(first.al_id);
-
-    let previous = first._id;
-    for (let i = 1; i < 50; i++) {
-      const found = await this.mangaModel
-        .find(
-          {
-            tags: {
-              $elemMatch: {
-                $in: listData.includedTags,
-                $nin: listData.excludedTags,
-              },
-            },
-            genre: {
-              $elemMatch: {
-                $in: listData.includedGenres,
-                $nin: listData.excludedGenres,
-              },
-            },
-            id: {
-              $gte: previous,
-            },
-          },
-          { al_id: 1 },
-        )
-        .skip(current[i])
-        .limit(1);
-      previous = found._id;
-      this.logger.debug(previous);
-      manga.push(found);
-    }
-    performance.mark('skip-end');
-    performance.measure('skip', 'skip-start', 'skip-end');
-    this.logger.debug('%o', manga);
-    return manga;
+    await this.redisClient.set('hello', 'key');
+    return 1;
   }
 }

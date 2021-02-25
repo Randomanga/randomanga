@@ -1,12 +1,13 @@
 import { Inject, Service, Container } from 'typedi';
+import { Logger } from 'winston';
 const fetch = require('node-fetch');
 
 @Service()
 export default class DailyGeneratorService {
   constructor(
-    @Inject('logger') private logger,
+    @Inject('logger') private logger: Logger,
     @Inject('mangaModel') private mangaModel: Models.MangaModel,
-    @Inject('dailyMangaModel') private dailyMangaModel,
+    @Inject('dailyMangaModel') private dailyMangaModel: Models.DailyModel,
   ) {}
   private query = `
     query($page: Int){
@@ -44,7 +45,7 @@ export default class DailyGeneratorService {
     const body = await response.json();
     return body['data']['Page']['pageInfo']['lastPage'];
   }
-  private async requestAL(mIndex) {
+  private async requestAL(mIndex: number) {
     const options = {
       method: 'POST',
       headers: {

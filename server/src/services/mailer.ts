@@ -1,13 +1,12 @@
+import { Mailgun } from 'mailgun-js';
 import { Service, Inject } from 'typedi';
 import { IUser } from '../interfaces/IUser';
 
 @Service()
 export default class MailerService {
-  constructor(
-    @Inject('emailClient') private emailClient
-  ) { }
+  constructor(@Inject('emailClient') private emailClient: Mailgun) {}
 
-  public async SendWelcomeEmail(email) {
+  public async SendWelcomeEmail(email: string) {
     /**
      * @TODO Call Mailchimp/Sendgrid or whatever
      */
@@ -16,7 +15,7 @@ export default class MailerService {
       from: 'Excited User <me@samples.mailgun.org>',
       to: email, //your email address
       subject: 'Hello',
-      text: 'Testing some Mailgun awesomness!'
+      text: 'Testing some Mailgun awesomness!',
     };
 
     this.emailClient.messages().send(data);

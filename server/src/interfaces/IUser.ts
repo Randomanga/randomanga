@@ -5,6 +5,7 @@ export interface IUser {
   password: string;
   avatar: string;
   salt: string;
+  role: string;
 }
 
 export interface IUserInputDTO {

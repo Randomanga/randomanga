@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import { Document } from 'mongoose';
 import Schema from 'mongoose';
-import { RandomList } from '../interfaces/RandomList';
+import { IRandomList } from '../interfaces/IRandomList';
 
 const RandomList = new mongoose.Schema({
   generated: [
@@ -40,4 +39,4 @@ const RandomList = new mongoose.Schema({
   },
 });
 
-export default mongoose.model<RandomList>('RandomList', RandomList);
+export default mongoose.model<IRandomList>('RandomList', RandomList);

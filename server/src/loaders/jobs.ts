@@ -4,13 +4,15 @@ import moment from 'moment';
 import EmailSequenceJob from '../jobs/emailSequence';
 import DailyGenerationJob from '../jobs/dailyGeneration';
 import UserRoleChangerJob from '../jobs/changeRole';
+import { Job } from 'agenda';
 
 /**
  * Reschedules a job upon failure expontentially, each failures creates
  * a bigger interval between calls. Used as to not overload
  *
  */
-async function onJobFailureExponential(error: any, job: Agenda.Job<any>) {
+async function onJobFailureExponential(error: Error, job: Job) {
+  console.log('here');
   const retryCount = job.attrs.failCount - 1;
   if (retryCount <= config.agenda.maxRetries) {
     job.attrs.nextRunAt = calcExponentialBackoff(retryCount);

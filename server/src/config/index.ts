@@ -14,18 +14,18 @@ export default {
   /**
    * Your favorite port
    */
-  port: parseInt(process.env.PORT, 10),
+  port: parseInt(process.env.PORT as string, 10),
 
   /**
    * That long string from mlab
    */
-  databaseURL: process.env.MONGODB_URI,
+  databaseURL: process.env.MONGODB_URI as string,
 
   /**
    * Your secret sauce
    */
-  jwtSecret: process.env.JWT_SECRET,
-  jwtAlgorithm: process.env.JWT_ALGO,
+  jwtSecret: process.env.JWT_SECRET as string,
+  jwtAlgorithm: process.env.JWT_ALGO as string,
 
   /**
    * Used by winston logger
@@ -40,9 +40,9 @@ export default {
   agenda: {
     dbCollection: process.env.AGENDA_DB_COLLECTION,
     pooltime: process.env.AGENDA_POOL_TIME,
-    concurrency: parseInt(process.env.AGENDA_CONCURRENCY, 10),
+    concurrency: parseInt(process.env.AGENDA_CONCURRENCY as string, 10),
     maxRetries: 19,
-    retryInterval: '1'
+    retryInterval: '1',
   },
 
   /**
