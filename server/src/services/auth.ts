@@ -39,7 +39,7 @@ export default class AuthService {
       //await this.mailer.SendWelcomeEmail(userRecord);
 
       this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
-
+      
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
@@ -57,6 +57,7 @@ export default class AuthService {
 
   public async SignIn(username: string, password: string): Promise<{ user: IUser; token: string }> {
     const userRecord = await this.userModel.findOne({ username });
+    
     if (!userRecord) {
       throw new Error('User not registered');
     }

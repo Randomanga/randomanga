@@ -9,6 +9,7 @@
     "allowJs": false /* Allow javascript files to be compiled. */,
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     "outDir": "dist" /* Redirect output structure to the directory. */,
+   
     "rootDirs": [
       "src",
       "server/tests"

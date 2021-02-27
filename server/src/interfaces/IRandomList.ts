@@ -1,8 +1,7 @@
 import { Document, ObjectId } from 'mongoose';
 import { IManga } from './IManga';
-export interface IRandomList extends Document {
+export interface IRandomList {
   generated: IManga[];
-  _id: ObjectId;
   count: number;
   seed: String;
   includedGenres: [];

@@ -18,6 +18,7 @@ export default class MangaService {
 
   public async getManga(search: IMangaSearchDTO): Promise<IManga & Document> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { related: 0 });
+    
     if (!mangaRecord) {
       throw new HttpException(404, 'Manga does not exist');
     }

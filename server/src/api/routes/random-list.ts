@@ -2,6 +2,7 @@ import { Router, Response, Request, NextFunction } from 'express';
 import { Logger } from 'winston';
 import { Container } from 'typedi';
 import RandomService from '../../services/randomService';
+import { ObjectID } from 'mongodb';
 
 const route = Router();
 
@@ -19,12 +20,12 @@ export default (app: Router) => {
     }
   });
 
-  route.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  route.get('/:id/:page?', async (req: Request, res: Response, next: NextFunction) => {
     const logger: Logger = Container.get('logger');
     try {
       const randomServiceInstance = Container.get(RandomService);
-      const list = await randomServiceInstance.getList(2, req.params.id);
-      res.json({ list });
+      const data = await randomServiceInstance.getList(Number(req.params.page) || 1, req.params.id);
+      res.json(data);
     } catch (error) {
       logger.error('%o', error);
       next(error);

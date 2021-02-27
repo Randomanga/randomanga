@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { IUser } from './IUser';
-export interface IManga extends Document {
+export interface IManga {
   likes: Array<IUser['_id']>;
   al_id: Number;
   title: String;

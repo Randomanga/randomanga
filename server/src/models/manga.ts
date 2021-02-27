@@ -38,4 +38,4 @@ const Manga = new mongoose.Schema({
     },
   ],
 });
-export default mongoose.model<IManga>('manga', Manga, 'mangas');
+export default mongoose.model<IManga & mongoose.Document>('manga', Manga, 'mangas');

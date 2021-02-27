@@ -4,6 +4,9 @@ import { RandomListCreation, IRandomList } from '../interfaces/IRandomList';
 import { Redis } from 'ioredis';
 const SeededShuffle = require('seededshuffle');
 import HttpException from '../errors/HttpException';
+import { IManga } from '../interfaces/IManga';
+import { Document } from 'mongoose';
+import { parse } from 'dotenv/types';
 
 @Service()
 export default class RandomService {
@@ -349,28 +352,36 @@ export default class RandomService {
     if (includedTags.length === 0) includedTags = [...this.allTags];
 
     try {
-      const filtered = await this.mangaModel.find({
-        tags: {
-          $elemMatch: {
-            $in: [...includedTags],
-            $nin: [...excludedTags],
+      const filtered = await this.mangaModel.find(
+        {
+          tags: {
+            $elemMatch: {
+              $in: [...includedTags],
+              $nin: [...excludedTags],
+            },
+          },
+          genre: {
+            $elemMatch: {
+              $in: [...includedGenres],
+              $nin: [...excludedGenres],
+            },
           },
         },
-        genre: {
-          $elemMatch: {
-            $in: [...includedGenres],
-            $nin: [...excludedGenres],
-          },
+        {
+          al_id: 1,
         },
-      });
+      );
 
       if (!filtered) {
         const err = new HttpException(204, 'No mangas found with given filters');
         throw err;
       }
-      /**
-       * Add expiration index
-       */
+
+      const seed = await this.makeSeed();
+
+      const generated = filtered.map((manga: IManga & Document) => manga._id);
+      let cached = filtered.map((manga: IManga & Document) => manga.al_id);
+      SeededShuffle.shuffle(cached, seed);
 
       const list = await this.randomModel.create({
         count: filtered.length,
@@ -378,41 +389,60 @@ export default class RandomService {
         includedTags,
         excludedGenres,
         excludedTags,
-        seed: await this.makeSeed(),
+        seed: seed,
+        generated: generated,
       });
+
+      await this.redisClient.set(String(list._id), JSON.stringify(cached));
+
       return list._id;
     } catch (err) {
       this.logger.error(err);
       throw err;
     }
   }
-  public async getList(page: number, listID: string) {
-    const listData: IRandomList = await this.randomModel.findOne({
-      listID,
+
+  private async findList(listID: string) {
+    const listCached = await this.redisClient.get(listID);
+
+    if (listCached) {
+      const parsed = JSON.parse(listCached);
+      return { source: 'cache', data: parsed } as const;
+    }
+
+    const list = await this.randomModel.findOne({ _id: listID }, { seed: 1, generated: 1 }).populate({
+      path: 'generated',
+      select: {
+        al_id: 1,
+        _id: 0,
+      },
     });
-    if (!listData) {
-      const err = new HttpException(404, "List not found! List might have expire, or doesn't exist.");
-      throw err;
-    }
-    
 
-    /**
-     * Check if current page * 50 is less or equal to the length of generated
-     * If it is then retrieve it, if not:
-     * Gen 50 numbers, sort them. Use $gt _id and get each manga for given number
-     * Unsort numbers, push manga id's into generated
-     * Return the 50 manga
-     */
-
-    const arr = [...Array(listData.count - 1).keys()];
-    SeededShuffle.shuffle(arr, listData.seed);
-    let current = arr.slice(Math.max(1, page * 50 - 50), page * 50);
-    if (listData.generated.length === page * 50) {
-      /**
-       * populate and return
-       */
+    if (list) {
+      let al_ids = await this.recacheList(list.generated, list._id, list.seed);
+      return { source: 'db', data: al_ids } as const;
     }
-    await this.redisClient.set('hello', 'key');
-    return 1;
+
+    return null;
+  }
+
+  private async recacheList(list: Array<IManga>, listID: string, seed: string) {
+    let al_ids = list.map(manga => manga.al_id);
+    SeededShuffle.shuffle(al_ids, seed);
+    await this.redisClient.set(String(listID), JSON.stringify(al_ids), 'ex', 7200);
+    return al_ids;
+  }
+  public async getList(page: number, listID: string) {
+    const list = await this.findList(listID);
+    if (!list) {
+      throw 'Error';
+    }
+    const mangaCount = Number(list.data.length);
+    const hasNextPage = page * 50 < mangaCount ? true : false;
+    const totalPages = Math.ceil(mangaCount / 50);
+    if (page > totalPages) {
+      
+    }
+    return { list: list.data.slice(Math.max(1, page * 50 - 50), page * 50), hasNextPage, totalPages };
   }
 }
