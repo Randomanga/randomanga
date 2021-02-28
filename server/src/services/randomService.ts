@@ -350,7 +350,9 @@ export default class RandomService {
     let { includedGenres, includedTags, excludedGenres, excludedTags } = data;
     if (includedGenres.length === 0) includedGenres = [...this.allGenres];
     if (includedTags.length === 0) includedTags = [...this.allTags];
-
+    if (!excludedTags) excludedGenres = [];
+    if (!excludedGenres) excludedGenres = [];
+    
     try {
       const filtered = await this.mangaModel.find(
         {
@@ -370,7 +372,7 @@ export default class RandomService {
         {
           al_id: 1,
         },
-      );
+      ).lean();
 
       if (!filtered) {
         const err = new HttpException(204, 'No mangas found with given filters');
@@ -441,7 +443,6 @@ export default class RandomService {
     const hasNextPage = page * 50 < mangaCount ? true : false;
     const totalPages = Math.ceil(mangaCount / 50);
     if (page > totalPages) {
-      
     }
     return { list: list.data.slice(Math.max(1, page * 50 - 50), page * 50), hasNextPage, totalPages };
   }

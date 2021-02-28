@@ -5,8 +5,8 @@ const Manga = new mongoose.Schema({
   title: String,
   description: String,
   demographic: Array,
-  genre: Array,
-  tags: Array,
+  genre: { type: Array, index: true },
+  tags: { type: Array, index: true },
   related: [
     {
       type: Schema.Types.ObjectId,
@@ -24,6 +24,8 @@ const Manga = new mongoose.Schema({
   al_id: {
     type: Number,
     required: true,
+    index: true,
+    unique: true,
   },
   al_url: String,
   likes_count: {
@@ -31,6 +33,7 @@ const Manga = new mongoose.Schema({
     min: 0,
     default: 0,
   },
+
   likes: [
     {
       type: Schema.Types.ObjectId,
