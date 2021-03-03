@@ -1,12 +1,11 @@
 import { Inject, Service } from 'typedi';
 import { Logger } from 'winston';
 import { RandomListCreation, IRandomList } from '../interfaces/IRandomList';
-import { Redis } from 'ioredis';
-const SeededShuffle = require('seededshuffle');
-import HttpException from '../errors/HttpException';
+import { shuffle } from 'seededshuffle';
 import { IManga } from '../interfaces/IManga';
 import { Document } from 'mongoose';
-import { parse } from 'dotenv/types';
+import NotFound from '../errors/NotFound';
+import ServerError from '../errors/ServerError';
 
 @Service()
 export default class RandomService {
@@ -14,7 +13,6 @@ export default class RandomService {
     @Inject('mangaModel') private mangaModel: Models.MangaModel,
     @Inject('logger') private logger: Logger,
     @Inject('randomListModel') private randomModel: Models.RandomModel,
-    @Inject('redis') private redisClient: Redis,
   ) {}
   private allTags = [
     '4-koma',
@@ -350,40 +348,41 @@ export default class RandomService {
     let { includedGenres, includedTags, excludedGenres, excludedTags } = data;
     if (includedGenres.length === 0) includedGenres = [...this.allGenres];
     if (includedTags.length === 0) includedTags = [...this.allTags];
-    if (!excludedTags) excludedGenres = [];
-    if (!excludedGenres) excludedGenres = [];
-    
+
     try {
-      const filtered = await this.mangaModel.find(
-        {
-          tags: {
-            $elemMatch: {
-              $in: [...includedTags],
-              $nin: [...excludedTags],
+      const filtered = await this.mangaModel
+        .find(
+          {
+            tags: {
+              $elemMatch: {
+                $in: [...includedTags],
+                $nin: [...excludedTags],
+              },
+            },
+            genre: {
+              $elemMatch: {
+                $in: [...includedGenres],
+                $nin: [...excludedGenres],
+              },
             },
           },
-          genre: {
-            $elemMatch: {
-              $in: [...includedGenres],
-              $nin: [...excludedGenres],
-            },
+          {
+            al_id: 1,
           },
-        },
-        {
-          al_id: 1,
-        },
-      ).lean();
+        )
+        .lean();
 
       if (!filtered) {
-        const err = new HttpException(204, 'No mangas found with given filters');
-        throw err;
+        throw new ServerError('An error occured while creating your list. Please try again later');
+      }
+      if (filtered.length === 0) {
+        throw new NotFound('No manga found with your filters. Remove some filters and try again');
       }
 
       const seed = await this.makeSeed();
 
-      const generated = filtered.map((manga: IManga & Document) => manga._id);
-      let cached = filtered.map((manga: IManga & Document) => manga.al_id);
-      SeededShuffle.shuffle(cached, seed);
+      const al_ids = filtered.map((manga: IManga & Document) => manga.al_id);
+      const generated = shuffle(al_ids, seed, true);
 
       const list = await this.randomModel.create({
         count: filtered.length,
@@ -395,8 +394,6 @@ export default class RandomService {
         generated: generated,
       });
 
-      await this.redisClient.set(String(list._id), JSON.stringify(cached));
-
       return list._id;
     } catch (err) {
       this.logger.error(err);
@@ -405,40 +402,19 @@ export default class RandomService {
   }
 
   private async findList(listID: string) {
-    const listCached = await this.redisClient.get(listID);
-
-    if (listCached) {
-      const parsed = JSON.parse(listCached);
-      return { source: 'cache', data: parsed } as const;
-    }
-
-    const list = await this.randomModel.findOne({ _id: listID }, { seed: 1, generated: 1 }).populate({
-      path: 'generated',
-      select: {
-        al_id: 1,
-        _id: 0,
-      },
-    });
-
+    const list = await this.randomModel.findOne({ _id: listID }, { seed: 1, generated: 1 });
     if (list) {
-      let al_ids = await this.recacheList(list.generated, list._id, list.seed);
-      return { source: 'db', data: al_ids } as const;
+      return { data: list.generated } as const;
     }
-
     return null;
   }
 
-  private async recacheList(list: Array<IManga>, listID: string, seed: string) {
-    let al_ids = list.map(manga => manga.al_id);
-    SeededShuffle.shuffle(al_ids, seed);
-    await this.redisClient.set(String(listID), JSON.stringify(al_ids), 'ex', 7200);
-    return al_ids;
-  }
   public async getList(page: number, listID: string) {
     const list = await this.findList(listID);
     if (!list) {
-      throw 'Error';
+      throw new NotFound('List not found');
     }
+
     const mangaCount = Number(list.data.length);
     const hasNextPage = page * 50 < mangaCount ? true : false;
     const totalPages = Math.ceil(mangaCount / 50);

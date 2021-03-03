@@ -10,9 +10,10 @@ export default (app: Router) => {
   app.use('/random-lists', route);
 
   route.post('/', async (req: Request, res: Response, next: NextFunction) => {
-    //const logger: Logger = Container.get('logger');
+    const logger: Logger = Container.get('logger');
     try {
       const randomServiceInstance = Container.get(RandomService);
+      logger.debug('%o', req.body);
       const listID = await randomServiceInstance.createList(req.body);
       res.json({ listID });
     } catch (err) {

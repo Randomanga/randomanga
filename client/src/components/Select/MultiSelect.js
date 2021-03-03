@@ -80,7 +80,10 @@ const MultiSelect = (props) => {
             options={props.options}
             styles={customStyles}
             classNamePrefix="select"
-            filterOption={createFilter({ ignoreAccents: false })}
+            filterOption={createFilter({
+                ignoreAccents: false,
+                ignoreCase: true,
+            })}
             menuShouldScrollIntoView={true}
             tabSelectsValue={false}
             isMulti

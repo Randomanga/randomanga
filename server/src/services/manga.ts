@@ -7,6 +7,8 @@ import { IUser } from '../interfaces/IUser';
 import { Document } from 'mongoose';
 import { Logger } from 'winston';
 import HttpException from '../errors/HttpException';
+import NotFound from '../errors/NotFound';
+import ServerError from '../errors/ServerError';
 
 @Service()
 export default class MangaService {
@@ -18,9 +20,9 @@ export default class MangaService {
 
   public async getManga(search: IMangaSearchDTO): Promise<IManga & Document> {
     const mangaRecord = await this.mangaModel.findOne({ al_id: search.al_id }, { related: 0 });
-    
+
     if (!mangaRecord) {
-      throw new HttpException(404, 'Manga does not exist');
+      throw new NotFound('Manga does not exist');
     }
     const manga = mangaRecord.toObject();
     return manga;
@@ -39,7 +41,7 @@ export default class MangaService {
       },
     });
     if (!mangaRecord) {
-      throw new HttpException(404, 'Manga does not exist');
+      throw new NotFound('Manga does not exist');
     }
     const manga = mangaRecord.toObject();
     return manga;
@@ -92,7 +94,7 @@ export default class MangaService {
     ]);
 
     if (mangaRecord.length === 0) {
-      const err = new HttpException(502, 'Critical error! Daily manga not found! ');
+      const err = new ServerError('Critical error! Daily manga not found! ');
       throw err;
     }
 
@@ -110,7 +112,7 @@ export default class MangaService {
           },
         },
       );
-      if (!result) throw new HttpException(404, 'Manga does not exist');
+      if (!result) throw new NotFound('Manga does not exist');
       if (result.likes.length === 0) return false;
       else return true;
     } catch (e) {
@@ -126,7 +128,7 @@ export default class MangaService {
         },
       );
     } catch (e) {
-      throw new HttpException(404, 'Manga does not exist');
+      throw new NotFound('Manga does not exist');
     }
   }
   public async unlikeManga(manga: IMangaSearchDTO, user: IUser): Promise<void> {
@@ -140,7 +142,7 @@ export default class MangaService {
         },
       );
     } catch (e) {
-      throw new HttpException(404, 'Manga does not exist');
+      throw new NotFound('Manga does not exist');
     }
   }
 }

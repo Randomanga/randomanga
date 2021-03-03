@@ -2,12 +2,10 @@ import mongoose from 'mongoose';
 import Schema from 'mongoose';
 import { IRandomList } from '../interfaces/IRandomList';
 
-
 const RandomList = new mongoose.Schema({
   generated: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'manga',
+      type: Number,
     },
   ],
   includedGenres: [

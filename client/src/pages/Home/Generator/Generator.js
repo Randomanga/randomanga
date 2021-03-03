@@ -1,13 +1,44 @@
 import React, { useState } from 'react';
-import { genresList, tagsList } from '../../../utils/constants';
+import { tagsList } from '../../../utils/constants';
 import Button from '../../../components/Button/Button';
 import MultiSelect from '../../../components/Select/MultiSelect';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 export default function Generator() {
     const [included, setIncluded] = useState([]);
     const [excluded, setExcluded] = useState([]);
-
-    const onGenerate = () => {};
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+    const onGenerate = async () => {
+        setLoading(true);
+        const payload = {
+            includedGenres: included
+                .filter((item) => item.category === 'Genres')
+                .map((item) => item.label),
+            includedTags: included
+                .filter((item) => item.category !== 'Genres')
+                .map((item) => item.label),
+            excludedGenres: excluded
+                .filter((item) => item.category === 'Genres')
+                .map((item) => item.label),
+            excludedTags: excluded
+                .filter((item) => item.category !== 'Genres')
+                .map((item) => item.label),
+        };
+        try {
+            const res = await axios.post(
+                'http://192.168.1.242:5000/api/random-lists/',
+                payload
+            );
+            setLoading(false);
+            history.push(`/custom-lists/${res.data.listID}`)
+        } catch (error) {
+            toast.error(error.response.data.errors.message);
+            setLoading(false);
+        }
+    };
 
     return (
         <section className="container mx-auto max-w-2xl flex flex-col  items-center mt-24 h-screen  p-2 sm:p-5">
@@ -30,6 +61,7 @@ export default function Generator() {
                                 return {
                                     value: tag['id'],
                                     label: tag['name'],
+                                    category: tagCollection.category,
                                 };
                             }),
                         };
@@ -42,16 +74,11 @@ export default function Generator() {
                         return {
                             label: tagCollection.category,
                             options: tagCollection.tags.map((tag) => {
-                                if (
-                                    !included.some(
-                                        (genre) => genre['id'] === tag['id']
-                                    )
-                                ) {
-                                    return {
-                                        value: tag['id'],
-                                        label: tag['name'],
-                                    };
-                                }
+                                return {
+                                    value: tag['id'],
+                                    label: tag['name'],
+                                    category: tagCollection.category,
+                                };
                             }),
                         };
                     })}
@@ -63,7 +90,8 @@ export default function Generator() {
                     textColor="white"
                     bgColor="bg-orange-700"
                     textShadow="text-shadow-md"
-                    hoverBgColor="bg-orange-600">
+                    hoverBgColor="bg-orange-600"
+                    loading={loading}>
                     Generate List
                 </Button>
             </div>
