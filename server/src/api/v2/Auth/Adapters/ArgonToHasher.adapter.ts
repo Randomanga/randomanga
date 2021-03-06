@@ -7,4 +7,7 @@ export class ArgonToHasherAdapter implements IHasher {
   async hash(password: string, options: any) {
     return argon2.hash(password, options);
   }
+  async verify(hash: string, plain: string | Buffer, options?: any) {
+    return argon2.verify(hash, plain, options);
+  }
 }

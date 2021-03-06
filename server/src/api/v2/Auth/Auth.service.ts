@@ -1,5 +1,9 @@
+import { LoginRequestDTO, ResponseDTO, UserDTO, RegisterRequestDto } from './Auth.dtos';
+import { IHasher } from './Adapters/IHasher';
 import { IAuthRepository } from './IAuthRepository';
 import { IAuthService } from './IAuthService';
+import jwt from 'jsonwebtoken';
+import config from '../../../config';
 
 // The service will handle all the business logic
 export class AuthService implements IAuthService {
@@ -8,37 +12,57 @@ export class AuthService implements IAuthService {
   constructor(
     private readonly authRepo: IAuthRepository,
     private readonly hasher: IHasher,
-    private readonly randomBytes: (total: number) => string,
+    private readonly randomBytes: (total: number) => Buffer,
   ) {}
 
   // This should be typed with the expected RequestDto
-  async register(data: any) {
-    // The repository *might* return its own DTO. It really depends on how far you wanna go.
-    // But in this case it's fine to use the Model type. Remember, this means we are "coupled" to mongoose.
+  async register(data: RegisterRequestDto) {
     const hashedPassword = await this.hasher.hash(data.password, {
       salt: this.createSalt(32),
     });
 
-    const token = this.generateToken();
-
-    // You *should* map the RequestDto into a User domain entity
-    // Others would say that you should create yet another DTO, I'm not 100% sure
-    // It's up to you.
     const createdUser = await this.authRepo.save(data, hashedPassword);
+    if (!createdUser) {
+      throw Error('Am occured while creating user. User might already be registered');
+    }
+    const token = this.generateToken(createdUser);
 
     return {
       createdUser,
       token,
     };
   }
+  async login(data: LoginRequestDTO) {
+    const user = await this.authRepo.findUser(data);
+    if (!user) {
+      throw new Error('User not registered');
+    }
 
+    const validPassword = await this.hasher.verify(user.password, data.password);
+    if (validPassword) {
+      const userDTO = new UserDTO(user);
+      const token = this.generateToken(userDTO);
+      return { userDTO, token };
+    } else {
+      throw new Error('Invalid passowrd');
+    }
+  }
   private createSalt(total = 32) {
     return this.randomBytes(total);
   }
 
-  private generateToken() {
-    // Create your jwt..
+  private generateToken(user: UserDTO) {
+    const today = new Date();
+    const exp = new Date(today);
+    exp.setDate(today.getDate() + 60);
 
-    return 'asodkoaskdoaskdsaoqwoqwoekqwoaskodkastoken';
+    return jwt.sign(
+      {
+        _id: user._id,
+        role: user.role,
+        exp: exp.getTime() / 1000,
+      },
+      config.jwtSecret,
+    );
   }
 }

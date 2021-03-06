@@ -14,7 +14,7 @@ export default (app: Router) => {
     '/daily',
     middlewares.isLogged,
     middlewares.attachCurrentUser,
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req, res, next) => {
       //const logger: Logger = Container.get('logger');
       try {
         const mangaServiceInstance = Container.get(MangaService);
@@ -25,7 +25,7 @@ export default (app: Router) => {
       }
     },
   );
-  route.get('/:al_id/related', async (req: Request, res: Response, next: NextFunction) => {
+  route.get('/:al_id/related', async (req, res, next) => {
     const logger: Logger = Container.get('logger');
     logger.silly('Searching for related manga');
     try {
@@ -39,7 +39,7 @@ export default (app: Router) => {
       next(e);
     }
   });
-  route.get('/:al_id', async (req: Request, res: Response, next: NextFunction) => {
+  route.get('/:al_id', async (req, res, next) => {
     const logger: Logger = Container.get('logger');
     logger.silly(`Searching for manga with id: ${req.params.al_id}`);
     try {

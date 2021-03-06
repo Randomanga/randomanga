@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import authController from '.';
 import { CatchExceptions } from '../Lib/CatchExceptions';
-import { registerValidator } from './Auth.validators';
+import { registerValidator, loginValidator } from './Auth.validators';
 
 const router = Router();
+router.use('/auth', router);
 
-router.post('/', registerValidator, CatchExceptions(authController.store));
-
+router.post('/signup', registerValidator, CatchExceptions(authController.register));
+router.post('/signin', loginValidator, CatchExceptions(authController.login));
 export default router;
