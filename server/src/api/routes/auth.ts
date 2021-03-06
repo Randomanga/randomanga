@@ -5,13 +5,10 @@ import { IUserInputDTO } from '../../interfaces/IUser';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import { Logger } from 'winston';
-import apiRouter from '../v2/Routes';
 
 const route = Router();
 
 export default (app: Router) => {
-  app.use('/v2', apiRouter);
-
   app.use('/auth', route);
   route.post(
     '/signup',
