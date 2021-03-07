@@ -86,6 +86,7 @@ export default function Random(props) {
               description={description}
               cover={coverImage.large}
               genres={genres}
+              key={title}
             />
           );
         })}

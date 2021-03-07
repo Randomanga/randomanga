@@ -53,6 +53,7 @@ module.exports = {
         height: "height",
       },
       lineClamp: {
+        7: "7",
         8: "8",
         9: "9",
       },
@@ -65,6 +66,7 @@ module.exports = {
       opacity: ["disabled"],
       overflow: ["hover", "focus"],
       lineClamp: ["hover", "focus"],
+      scrollbar: ["hover", "dark","focus"],
     },
   },
   plugins: [
