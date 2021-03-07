@@ -3,6 +3,10 @@ import useSWR from 'swr';
 import { AuthContext } from '../../context/AuthContext';
 import { fetcher } from '../helpers';
 
+
+
+
+
 export default function useDaily() {
     const { user } = useContext(AuthContext);
     const { data, error, mutate } = useSWR(

@@ -53,15 +53,20 @@ module.exports = {
         height: "height",
       },
       lineClamp: {
+        7: "7",
         8: "8",
         9: "9",
       },
     },
   },
   variants: {
+    scrollbar: ["hover", "focus"],
     extend: {
       pointerEvents: ["hover"],
       opacity: ["disabled"],
+      overflow: ["hover", "focus"],
+      lineClamp: ["hover", "focus"],
+      scrollbar: ["hover", "dark","focus"],
     },
   },
   plugins: [
