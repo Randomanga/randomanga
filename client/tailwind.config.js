@@ -59,9 +59,12 @@ module.exports = {
     },
   },
   variants: {
+    scrollbar: ["hover", "focus"],
     extend: {
       pointerEvents: ["hover"],
       opacity: ["disabled"],
+      overflow: ["hover", "focus"],
+      lineClamp: ["hover", "focus"],
     },
   },
   plugins: [

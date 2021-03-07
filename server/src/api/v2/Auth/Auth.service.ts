@@ -1,36 +1,33 @@
-import { LoginRequestDTO, ResponseDTO, UserDTO, RegisterRequestDto } from './Auth.dtos';
+import { LoginRequestDTO, UserDTO, RegisterRequestDto } from './Auth.dtos';
 import { IHasher } from './Adapters/IHasher';
 import { IAuthRepository } from './IAuthRepository';
 import { IAuthService } from './IAuthService';
 import jwt from 'jsonwebtoken';
 import config from '../../../config';
 
-// The service will handle all the business logic
 export class AuthService implements IAuthService {
-  // Notice the interface, now the AuthService doesn't care about the implementation of the repository.
-  // naming if tough haha.
   constructor(
     private readonly authRepo: IAuthRepository,
     private readonly hasher: IHasher,
     private readonly randomBytes: (total: number) => Buffer,
   ) {}
 
-  // This should be typed with the expected RequestDto
   async register(data: RegisterRequestDto) {
     const hashedPassword = await this.hasher.hash(data.password, {
       salt: this.createSalt(32),
     });
+    try {
+      const createdUser = await this.authRepo.save(data, hashedPassword);
+      const token = this.generateToken(createdUser);
 
-    const createdUser = await this.authRepo.save(data, hashedPassword);
-    if (!createdUser) {
-      throw Error('Am occured while creating user. User might already be registered');
+      const user = new UserDTO(createdUser);
+      return {
+        ...user,
+        token,
+      };
+    } catch (err) {
+      throw new Error('User already registered');
     }
-    const token = this.generateToken(createdUser);
-
-    return {
-      createdUser,
-      token,
-    };
   }
   async login(data: LoginRequestDTO) {
     const user = await this.authRepo.findUser(data);
@@ -42,9 +39,9 @@ export class AuthService implements IAuthService {
     if (validPassword) {
       const userDTO = new UserDTO(user);
       const token = this.generateToken(userDTO);
-      return { userDTO, token };
+      return { ...userDTO, token };
     } else {
-      throw new Error('Invalid passowrd');
+      throw new Error('Invalid password');
     }
   }
   private createSalt(total = 32) {

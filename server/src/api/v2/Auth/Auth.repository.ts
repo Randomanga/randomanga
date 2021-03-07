@@ -10,12 +10,13 @@ export class AuthRepository implements IAuthRepository {
   constructor(private readonly model: Models.UserModel) {}
 
   async save(payload: UserDTO, hashedPassword: Buffer) {
-    return this.model.create({
+    const user = await this.model.create({
       ...payload,
       hashedPassword,
     });
+    return user.toObject();
   }
   async findUser(payload: LoginRequestDTO) {
-    return this.model.findOne({ username: payload.username });
+    return this.model.findOne({ username: payload.username }).lean();
   }
 }

@@ -25,6 +25,7 @@ export class UserDTO {
   public role: string;
   public _id: ObjectId;
   constructor(payload: any) {
-    Object.assign(this, payload);
+    const { username, avatar, role, _id } = payload;
+    Object.assign(this, { username, avatar, role, _id });
   }
 }
