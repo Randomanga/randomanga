@@ -5,26 +5,20 @@ import { Container } from 'typedi';
 import MangaService from '../../services/manga';
 import { IMangaSearchDTO } from '../../interfaces/IManga';
 import { isNumber } from 'lodash';
-
 const route = Router();
 
 export default (app: Router) => {
   app.use('/manga', route);
-  route.get(
-    '/daily',
-    middlewares.isLogged,
-    middlewares.attachCurrentUser,
-    async (req, res, next) => {
-      //const logger: Logger = Container.get('logger');
-      try {
-        const mangaServiceInstance = Container.get(MangaService);
-        const manga = await mangaServiceInstance.getRandomDaily(req.currentUser);
-        res.json({ manga }).status(200);
-      } catch (e) {
-        next(e);
-      }
-    },
-  );
+  route.get('/daily', middlewares.isLogged, middlewares.attachCurrentUser, async (req, res, next) => {
+    //const logger: Logger = Container.get('logger');
+    try {
+      const mangaServiceInstance = Container.get(MangaService);
+      const manga = await mangaServiceInstance.getRandomDaily(req.currentUser);
+      res.json({ manga }).status(200);
+    } catch (e) {
+      next(e);
+    }
+  });
   route.get('/:al_id/related', async (req, res, next) => {
     const logger: Logger = Container.get('logger');
     logger.silly('Searching for related manga');

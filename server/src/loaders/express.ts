@@ -7,10 +7,10 @@ import { NextFunction, Request, Response } from 'express';
 import NotFound from '../errors/NotFound';
 import HttpException from '../errors/HttpException';
 import ServerError from '../errors/ServerError';
-import mongoose from 'mongoose';
 import session from 'express-session';
-import connectStore from 'connect-mongo';
 import MongoStore from 'connect-mongo';
+import v2Router from '../api/v2/Routes';
+
 export default ({ app }: { app: express.Application }) => {
   /**
    * Health Check endpoints
@@ -61,6 +61,7 @@ export default ({ app }: { app: express.Application }) => {
   app.use(errors());
   // Load API routes
   app.use(config.api.prefix, routes());
+  app.use('/api/v2', v2Router);
 
   /// catch 404 and forward to error handler
   app.use((req: Request, res: Response, next: NextFunction) => {

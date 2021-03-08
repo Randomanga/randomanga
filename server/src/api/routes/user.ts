@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import middlewares from '../middlewares';
+
 const route = Router();
 
 export default (app: Router) => {
@@ -14,18 +15,17 @@ export default (app: Router) => {
 
   //AVATAR CRUD
   route.get('/:username/avatar', (req: Request, res: Response) => {
-    
     res.sendStatus(204);
   });
   route.post('/:username/avatar', middlewares.isAuth, middlewares.attachCurrentUser, (req: Request, res: Response) => {
-    
     res.sendStatus(204);
   });
-  route.delete('/:username/avatar', middlewares.isAuth, middlewares.attachCurrentUser, (req: Request, res: Response) => {
-    res.sendStatus(204);
-  });
-
-  
-
-
+  route.delete(
+    '/:username/avatar',
+    middlewares.isAuth,
+    middlewares.attachCurrentUser,
+    (req: Request, res: Response) => {
+      res.sendStatus(204);
+    },
+  );
 };

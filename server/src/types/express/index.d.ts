@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { session } from 'expr';
-import { Document, Model } from 'mongoose';
+import { Document, Model, ObjectId } from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
 import { IManga } from '../../interfaces/IManga';
 import { IRandomList } from '../../interfaces/IRandomList';
@@ -12,10 +12,8 @@ declare global {
       token: {
         _id: string;
       };
-      session: {
-        uid: any;
-      };
     }
+    export interface SessionData {}
     export interface Response {}
   }
 
@@ -24,5 +22,12 @@ declare global {
     export type MangaModel = Model<IManga & Document>;
     export type RandomModel = Model<IRandomList & Document>;
     export type DailyModel = Model<IManga & Document>;
+  }
+}
+import session = require('express-session');
+
+declare module 'express-session' {
+  interface SessionData {
+    uid: ObjectId;
   }
 }

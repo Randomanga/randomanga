@@ -1,5 +1,5 @@
-import { LoginRequestDTO, RegisterRequestDto } from './Auth.dtos';
+import { LoginRequestDTO, RegisterRequestDto, UserDTO } from './Auth.dtos';
 export interface IAuthService {
-  register(data: RegisterRequestDto): Promise<unknown>;
-  login(data: LoginRequestDTO): Promise<unknown>;
+  register(data: RegisterRequestDto): Promise<UserDTO>;
+  login(data: LoginRequestDTO): Promise<UserDTO>;
 }

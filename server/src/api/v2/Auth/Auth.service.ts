@@ -18,13 +18,9 @@ export class AuthService implements IAuthService {
     });
     try {
       const createdUser = await this.authRepo.save(data, hashedPassword);
-      const token = this.generateToken(createdUser);
 
       const user = new UserDTO(createdUser);
-      return {
-        ...user,
-        token,
-      };
+      return user;
     } catch (err) {
       throw new Error('User already registered');
     }
@@ -38,28 +34,12 @@ export class AuthService implements IAuthService {
     const validPassword = await this.hasher.verify(user.password, data.password);
     if (validPassword) {
       const userDTO = new UserDTO(user);
-      const token = this.generateToken(userDTO);
-      return { ...userDTO, token };
+      return userDTO;
     } else {
       throw new Error('Invalid password');
     }
   }
   private createSalt(total = 32) {
     return this.randomBytes(total);
-  }
-
-  private generateToken(user: UserDTO) {
-    const today = new Date();
-    const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    return jwt.sign(
-      {
-        _id: user._id,
-        role: user.role,
-        exp: exp.getTime() / 1000,
-      },
-      config.jwtSecret,
-    );
   }
 }
