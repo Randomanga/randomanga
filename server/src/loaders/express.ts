@@ -1,14 +1,16 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../config';
 import { errors } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 import NotFound from '../errors/NotFound';
-import { Http } from 'winston/lib/winston/transports';
 import HttpException from '../errors/HttpException';
 import ServerError from '../errors/ServerError';
+import mongoose from 'mongoose';
+import session from 'express-session';
+import connectStore from 'connect-mongo';
+import MongoStore from 'connect-mongo';
 export default ({ app }: { app: express.Application }) => {
   /**
    * Health Check endpoints
@@ -35,8 +37,26 @@ export default ({ app }: { app: express.Application }) => {
   // Maybe not needed anymore ?
   app.use(require('method-override')());
 
+  app.use(
+    session({
+      name: 'sid',
+      secret: 'cat',
+      saveUninitialized: false,
+      resave: false,
+      store: new MongoStore({
+        mongoUrl: config.databaseURL,
+        collectionName: 'session',
+        ttl: parseInt('1000000') / 1000,
+      }),
+      cookie: {
+        sameSite: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: parseInt('1000000'),
+      },
+    }),
+  );
   // Middleware that transforms the raw string of req.body into json
-  app.use(bodyParser.json());
+  app.use(express.json());
   //celebrate error handling
   app.use(errors());
   // Load API routes

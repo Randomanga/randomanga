@@ -1,3 +1,5 @@
+import { Response } from 'express';
+import { session } from 'expr';
 import { Document, Model } from 'mongoose';
 import { IUser } from '../../interfaces/IUser';
 import { IManga } from '../../interfaces/IManga';
@@ -10,7 +12,11 @@ declare global {
       token: {
         _id: string;
       };
+      session: {
+        uid: any;
+      };
     }
+    export interface Response {}
   }
 
   namespace Models {

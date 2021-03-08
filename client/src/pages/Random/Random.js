@@ -6,7 +6,7 @@ import { useSWRInfinite } from "swr";
 import { AuthContext } from "../../context/AuthContext";
 import MangaCard from "../../components/MangaCard/MangaCard";
 
-const anilistFetch = async (ids) => {
+const anilistFetch = async (ids, user) => {
   const query = `
   query ($ids: [Int]) { # Define which variables will be used in the query (id)
     Page(perPage: 50){
@@ -18,6 +18,7 @@ const anilistFetch = async (ids) => {
       description
       coverImage{
         large
+        medium
       }
       genres
     }
@@ -50,7 +51,7 @@ const anilistFetch = async (ids) => {
 const listFetch = async (url, user) => {
   try {
     const { data } = await axios.get(url);
-    const list = await anilistFetch(data.list);
+    const list = await anilistFetch(data.list, user);
     return list;
   } catch (error) {
     console.log(error.response.data.errors.message);
@@ -75,9 +76,14 @@ export default function Random(props) {
   if (!data) {
     return "loading";
   }
+
   return (
-    <main className="mt-32">
-      <section className="px-2 container max-w-7xl grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 auto-cols-fr gap-x-2 gap-y-4 mx-auto">
+    <main className="mt-14 container max-w-7xl mx-auto">
+      <div className="px-2 py-5 text-left">
+        <h1 className="text-white font-semibold text-3xl">Random list</h1>
+        <p className="text-xs text-gray-600">ID: {props.match.params.id}</p>
+      </div>
+      <section className="px-2 py-20 container max-w-7xl grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 auto-cols-fr gap-x-4 gap-y-6 mx-auto">
         {list.map((manga) => {
           const { title, description, coverImage, genres } = manga;
           return (
