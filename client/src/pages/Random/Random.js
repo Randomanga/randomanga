@@ -78,12 +78,24 @@ export default function Random(props) {
   }
 
   return (
+<<<<<<< Updated upstream
     <main className="mt-14 container max-w-7xl mx-auto">
+=======
+<<<<<<< Updated upstream
+    <main className="mt-32">
+      <section className="px-2 container max-w-7xl grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 auto-cols-fr gap-x-2 gap-y-4 mx-auto">
+=======
+    <main className="mt-14 container max-w-7xl mx-auto flex flex-col items-center">
+>>>>>>> Stashed changes
       <div className="px-2 py-5 text-left">
         <h1 className="text-white font-semibold text-3xl">Random list</h1>
         <p className="text-xs text-gray-600">ID: {props.match.params.id}</p>
       </div>
       <section className="px-2 py-20 container max-w-7xl grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 auto-cols-fr gap-x-4 gap-y-6 mx-auto">
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         {list.map((manga) => {
           const { title, description, coverImage, genres } = manga;
           return (
@@ -97,7 +109,12 @@ export default function Random(props) {
           );
         })}
       </section>
-      <button onClick={() => setSize(size + 1)}>Load more</button>
+      <button
+        className="px-5 py-2 bg-orange-600 text-white rounded-sm text-shadow-md font-medium mb-20"
+        onClick={() => setSize(size + 1)}
+      >
+        Load more
+      </button>
     </main>
   );
 }

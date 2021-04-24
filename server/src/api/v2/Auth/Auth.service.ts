@@ -2,8 +2,7 @@ import { LoginRequestDTO, UserDTO, RegisterRequestDto } from './Auth.dtos';
 import { IHasher } from './Adapters/IHasher';
 import { IAuthRepository } from './IAuthRepository';
 import { IAuthService } from './IAuthService';
-import jwt from 'jsonwebtoken';
-import config from '../../../config';
+
 
 export class AuthService implements IAuthService {
   constructor(
