@@ -43,6 +43,20 @@ export class MangaRepository implements IMangaRepository {
     return result.likes.length > 0;
   }
   async findRelated(id: number) {
-    return [];
+    const manga = await this._manga
+      .findOne({ al_id: id }, { al_id: 1 })
+      .populate('related', {
+        al_id: 1,
+        title: 1,
+        description: 1,
+        genre: 1,
+        tags: 1,
+        cover_image: 1,
+        banner: 1,
+        _id: 0,
+      })
+      .orFail();
+      
+    return manga.related;
   }
 }

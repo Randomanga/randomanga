@@ -21,3 +21,16 @@ export class RequestLikeDto {
   user: IUserModel;
   status: boolean;
 }
+export class RequestLikeStatusDto {
+  id: string;
+  user: IUserModel;
+}
+export class ResponseLikeStatusDto {
+  id: number | string;
+  liked: boolean;
+}
+
+export class ResponseRelatedDto {
+  id: string;
+  related: IMangaModel[];
+}

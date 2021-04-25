@@ -1,4 +1,8 @@
-import { RequestLikeDto } from './../../Core/Dtos/Manga/Manga.dtos';
+import {
+  RequestLikeDto,
+  RequestLikeStatusDto,
+  ResponseLikeStatusDto,
+} from './../../Core/Dtos/Manga/Manga.dtos';
 import { IMangaModel } from 'Data/Models/Manga.model';
 import { RequestDailyDto, ResponseDailyDto } from 'Core/Dtos/Manga/Manga.dtos';
 
@@ -26,5 +30,33 @@ export class MangaMapper {
       user: data.user,
       id: data.id,
     } as RequestLikeDto;
+  }
+  public static toLikeStatusRequestDto(data: RequestLikeStatusDto) {
+    return {
+      id: data.id,
+      user: data.user,
+    } as RequestLikeStatusDto;
+  }
+  public static toLikeStatusResponseDto(data: ResponseLikeStatusDto) {
+    return {
+      id: data.id,
+      liked: data.liked,
+    };
+  }
+
+  public static toWeb(data: IMangaModel) {
+    return {
+      title: data.title,
+      al_id: data.al_id,
+      cover_image: data.cover_image,
+      banner: data.banner,
+      description: data.description,
+      genre: data.genre,
+      tags: data.tags,
+    } as IMangaModel;
+  }
+
+  public static manyToweb(data: IMangaModel[]) {
+    return data.map((entry) => MangaMapper.toWeb(entry));
   }
 }

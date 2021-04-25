@@ -3,7 +3,11 @@ import { MangaMapper } from './../../../Config/Mappers/Manga.mapper.dto';
 import { BaseHttpController } from './../../Lib/BaseHttp.controller';
 import { IMangaService } from 'Core/Ports/IManga.service';
 import { Request, Response } from 'express';
-import { ResponseDailyDto } from 'Core/Dtos/Manga/Manga.dtos';
+import {
+  ResponseDailyDto,
+  ResponseLikeStatusDto,
+  ResponseRelatedDto,
+} from 'Core/Dtos/Manga/Manga.dtos';
 
 export interface IMangaControllerOptions {
   mangaService: IMangaService;
@@ -45,6 +49,27 @@ export class MangaController extends BaseHttpController {
     res.sendStatus(200);
   }
   async likeStatus(req: Request, res: Response) {
-    return true;
+    const data = MangaMapper.toLikeStatusRequestDto({
+      id: req.params.id,
+      ...req,
+    });
+    const status = await this._mangaService.getLikeStatus(data);
+    this.toJson<ResponseLikeStatusDto>(res, {
+      statusCode: 200,
+      data: {
+        id: req.params.id,
+        liked: status,
+      },
+    });
+  }
+  async related(req: Request, res: Response) {
+    const relatedList = await this._mangaService.getRelated(req.params.id);
+    const response = MangaMapper.manyToweb(relatedList);
+    this.toJson<ResponseRelatedDto>(res, {
+      data: {
+        id: req.params.id,
+        related: response,
+      },
+    });
   }
 }

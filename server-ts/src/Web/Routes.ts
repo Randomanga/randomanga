@@ -22,7 +22,7 @@ browter.group(`/api`, (browter) => {
     browter.post('/:id/likes', 'MangaController.like', [AuthCredentials]);
     browter.delete('/:id/likes', 'MangaController.unlike', [AuthCredentials]);
     browter.get('/:id/likes', 'MangaController.likeStatus', [AuthCredentials]);
-    browter.get('/:id', 'MangaController.find');
+    browter.get('/:id/related', 'MangaController.related');
   });
 });
 

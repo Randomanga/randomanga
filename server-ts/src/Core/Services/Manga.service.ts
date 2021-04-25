@@ -23,12 +23,17 @@ export class MangaService implements IMangaService {
     console.log(manga);
     return manga;
   }
-  async getRelated(data: any) {
-    return [];
-  }
   async setLikeStatus(data: RequestLikeDto) {
     data.status
       ? await this._mangaRepo.likeManga(data.id, data.user._id)
       : await this._mangaRepo.dislikeManga(data.id, data.user._id);
+  }
+  async getLikeStatus(data: { id: number | string; user: IUserModel }) {
+    const status = await this._mangaRepo.getLikeStatus(data.id, data.user._id);
+    return status;
+  }
+  async getRelated(id: number) {
+    const list = await this._mangaRepo.findRelated(id);
+    return list;
   }
 }

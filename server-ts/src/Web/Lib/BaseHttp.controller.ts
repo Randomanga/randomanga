@@ -12,7 +12,7 @@ export class BaseHttpController {
   ) {
     return res.status(statusCode).json({
       error,
-      data,
+      ...data,
     } as HttpResponseDto<T>);
   }
 
