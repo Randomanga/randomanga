@@ -47,7 +47,7 @@ const mangaSchema = new Schema<IMangaModel>({
   related: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Manga',
+      ref: 'manga',
     },
   ],
   cover_image: {
@@ -69,4 +69,4 @@ const mangaSchema = new Schema<IMangaModel>({
   ],
 });
 
-export default mongoose.model<IMangaModel>('Mangas', mangaSchema);
+export default mongoose.model<IMangaModel>('manga', mangaSchema, 'mangas');

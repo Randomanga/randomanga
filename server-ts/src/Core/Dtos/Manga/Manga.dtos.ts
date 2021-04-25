@@ -1,5 +1,5 @@
+import { IUserModel } from './../../../Data/Models/User.model';
 import { IMangaModel } from './../../../Data/Models/Manga.model';
-import { IUserModel } from 'Data/Models/User.model';
 
 export class RequestDailyDto {
   user: IUserModel | null;
@@ -14,4 +14,10 @@ export class ResponseDailyDto {
   cover_image: IMangaModel['cover_image'];
   likes_count: number;
   liked: boolean;
+}
+
+export class RequestLikeDto {
+  id: number;
+  user: IUserModel;
+  status: boolean;
 }

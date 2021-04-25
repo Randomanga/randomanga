@@ -1,3 +1,5 @@
+import { RequestLikeDto } from './../Dtos/Manga/Manga.dtos';
+import { IUserModel } from './../../Data/Models/User.model';
 import { RequestDailyDto } from 'Core/Dtos/Manga/Manga.dtos';
 import { IMangaRepository } from 'Core/Ports/IMangas.repository';
 import { IMangaService } from 'Core/Ports/IManga.service';
@@ -18,8 +20,15 @@ export class MangaService implements IMangaService {
   }
   async getDaily(data: RequestDailyDto) {
     const manga = await this._mangaRepo.getDaily(data.user);
+    console.log(manga);
     return manga;
   }
-  async getRelated(data: any) {}
-  async setLikeStatus(data: any) {}
+  async getRelated(data: any) {
+    return [];
+  }
+  async setLikeStatus(data: RequestLikeDto) {
+    data.status
+      ? await this._mangaRepo.likeManga(data.id, data.user._id)
+      : await this._mangaRepo.dislikeManga(data.id, data.user._id);
+  }
 }

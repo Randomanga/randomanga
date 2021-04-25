@@ -6,10 +6,7 @@ export interface IMangaRepository {
   findRelated(id: number): Promise<any[] | null>;
   likeManga(id: number, userID: IUserModel['_id']): Promise<void>;
   dislikeManga(id: number, userID: IUserModel['_id']): Promise<void>;
-  getLikeStatus(
-    id: number,
-    userID: IUserModel['_id']
-  ): Promise<null | (IMangaModel & { liked: boolean })>;
+  getLikeStatus(id: number, userID: IUserModel['_id']): Promise<boolean>;
   getDaily(
     user?: any
   ): Promise<IMangaModel & { likes_count: number; liked: boolean }>;

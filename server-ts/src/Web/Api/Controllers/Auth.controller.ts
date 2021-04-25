@@ -18,7 +18,7 @@ export class AuthController extends BaseHttpController {
   async login(req: Request, res: Response) {
     const requestData = AuthMapper.toLoginRequestDto(req.body);
     const user = await this._authService.login(requestData);
-
+    req.session.uid = user._id;
     this.toJson<AuthResponseDto>(res, {
       statusCode: 200,
       data: user,
@@ -27,7 +27,7 @@ export class AuthController extends BaseHttpController {
   async register(req: Request, res: Response) {
     const requestData = AuthMapper.toRegisterRequestDto(req.body);
     const user = await this._authService.register(requestData);
-
+    req.session.uid = user._id;
     this.toJson<AuthResponseDto>(res, {
       statusCode: 201,
       data: user,

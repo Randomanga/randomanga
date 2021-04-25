@@ -9,7 +9,7 @@ export interface IDailyMangaModel {
 const DailyMangaModel: Schema = new Schema({
   manga: {
     type: Schema.Types.ObjectId,
-    ref: 'Manga',
+    ref: 'manga',
   },
   date: {
     type: Schema.Types.Date,

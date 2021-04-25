@@ -10,74 +10,37 @@ export class MangaRepository implements IMangaRepository {
     return await this._manga.findOne({ al_id: id });
   }
   public async getDaily(user?: IUserModel) {
-    const result = await this._daily.aggregate([
-      {
-        $match: {},
-      },
-      {
-        $sort: { _id: -1 },
-      },
-      {
-        $lookup: {
-          from: 'mangas',
-          as: 'manga',
-          let: { id: '$manga' },
-          pipeline: [
-            {
-              $match: { $expr: { $eq: ['$_id', '$$id'] } },
-            },
-            {
-              $project: {
-                likes_count: {
-                  $size: '$likes',
-                },
-                title: 1,
-                banner: 1,
-                description: 1,
-                cover_image: 1,
-                genre: 1,
-                tags: 1,
-                al_id: 1,
-                _id: 0,
-                liked: {
-                  $in: [user ? user._id : null, '$likes'],
-                },
-              },
-            },
-          ],
-        },
-      },
-
-      {
-        $unwind: '$manga',
-      },
-      {
-        $limit: 1,
-      },
-    ]);
-    return result[0].manga;
+    const [{ manga }]: any = await this._daily
+      .find({}, {}, { sort: { _id: -1 }, limit: 1 })
+      .populate('manga');
+    return {
+      ...manga.toObject(),
+      liked: await this.getLikeStatus(manga.al_id, user ? user._id : undefined),
+      likes_count: manga.likes.length,
+    };
   }
   async likeManga(id: number, userID: IUserModel['_id']) {
-    await this._manga.updateOne(
-      { al_id: id },
-      { $addToSet: { likes: userID } }
-    );
+    await this._manga
+      .updateOne({ al_id: id }, { $addToSet: { likes: userID } })
+      .orFail(Error('Manga not found'));
   }
   async dislikeManga(id: number, userID: IUserModel['_id']) {
-    await this._manga.updateOne({ al_id: id }, { $pull: { likes: userID } });
+    await this._manga
+      .updateOne({ al_id: id }, { $pull: { likes: userID } })
+      .orFail(Error('Manga not found'));
   }
-  async getLikeStatus(id: number, userID: IUserModel['_id']) {
-    const result = await this._manga.findOne(
-      { al_id: id },
-      {
-        likes: {
-          $elemMatch: { $eq: userID },
-        },
-      }
-    );
-    if (!result) throw Error('Manga not found');
-    const status = result.likes.length === 0 ? false : true;
-    return status;
+  async getLikeStatus(id: number, userID?: IUserModel['_id']) {
+    const result = await this._manga
+      .findOne(
+        { al_id: id },
+        {
+          likes: {
+            $elemMatch: { $eq: userID },
+          },
+        }
+      )
+      .orFail(Error('Manga not found'));
+    return result.likes.length > 0;
   }
   async findRelated(id: number) {
     return [];
