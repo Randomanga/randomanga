@@ -12,7 +12,7 @@ const browter = new Browter<ExpressRouter>(expressAdapter, {
   controllersDir: Path.resolve('./src/Web/Api/Controllers'),
 });
 
-browter.group(`/api`, (browter) => {
+browter.group('/api', (browter) => {
   browter.group('/auth', (browter) => {
     browter.post('/login', 'AuthController.login');
     browter.post('/register', 'AuthController.register');

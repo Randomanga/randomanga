@@ -1,10 +1,10 @@
 import {
-  AuthResponseDto,
-  LoginRequestDto,
-  RegisterRequestDto,
-} from './../Dtos/Auth/Auth.dto';
+  CreateUserRequestDto,
+  LoginUserRequestDto,
+} from 'Core/Dtos/User/User.dtos';
+import { IUserModel } from 'Data/Models/User.model';
 
 export interface IAuthService {
-  login(data: LoginRequestDto): Promise<AuthResponseDto>;
-  register(data: RegisterRequestDto): Promise<AuthResponseDto>;
+  login(data: LoginUserRequestDto): Promise<IUserModel>;
+  register(data: CreateUserRequestDto): Promise<IUserModel>;
 }

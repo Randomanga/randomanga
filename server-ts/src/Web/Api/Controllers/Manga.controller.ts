@@ -24,7 +24,10 @@ export class MangaController extends BaseHttpController {
     const requestData = MangaMapper.toDailyRequestDto(req);
     const daily = await this._mangaService.getDaily(requestData);
     const manga = MangaMapper.toDailyResponseDto(daily);
-    this.toJson<ResponseDailyDto>(res, { statusCode: 200, data: manga });
+    this.toJson<{ manga: ResponseDailyDto }>(res, {
+      statusCode: 200,
+      data: { manga: manga },
+    });
   }
   async find(req: Request, res: Response) {
     const manga = await this._mangaService.find(req.params.id);

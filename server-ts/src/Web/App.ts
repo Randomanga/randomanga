@@ -23,7 +23,7 @@ class App extends Application {
   private catchExceptions() {
     this.server.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {
-        res.json({
+        res.status(400).json({
           error: err.message,
         });
       }

@@ -1,9 +1,12 @@
 import { randomBytes } from 'crypto';
-import { AuthMapper } from 'Config/Mappers/Auth.mapper';
-import { LoginRequestDto, RegisterRequestDto } from './../Dtos/Auth/Auth.dto';
 import { IHasher } from '../Adapters/IHasher';
 import { IAuthService } from './../Ports/IAuth.service';
 import { IUsersRepository } from 'Core/Ports/IUsers.repository';
+import {
+  CreateUserRequestDto,
+  LoginUserRequestDto,
+} from 'Core/Dtos/User/User.dtos';
+import { UserMapper } from 'Config/Mappers/User.mapper';
 export interface IAuthServiceOptions {
   usersRepository: IUsersRepository;
   hasher: IHasher;
@@ -15,7 +18,7 @@ export class AuthService implements IAuthService {
     this._usersRepo = usersRepository;
     this._hasher = hasher;
   }
-  async login(data: LoginRequestDto) {
+  async login(data: LoginUserRequestDto) {
     const user = await this._usersRepo.findOneByUsername(data.username);
     if (!user) {
       throw new Error('User not registered');
@@ -25,9 +28,9 @@ export class AuthService implements IAuthService {
       data.password
     );
     if (!validPassword) throw new Error('Invalid password');
-    return AuthMapper.toWeb(user);
+    return UserMapper.toWeb(user);
   }
-  async register(data: RegisterRequestDto) {
+  async register(data: CreateUserRequestDto) {
     const hashedPassword = await this._hasher.hash(data.password, {
       salt: this.createSalt(),
       raw: false,
@@ -37,7 +40,7 @@ export class AuthService implements IAuthService {
       ...data,
       password: hashedPassword,
     });
-    return AuthMapper.toWeb(user);
+    return UserMapper.toWeb(user);
   }
   private createSalt(total = 32) {
     return randomBytes(total);

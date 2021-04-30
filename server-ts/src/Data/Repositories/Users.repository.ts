@@ -9,6 +9,10 @@ export class UsersRepository implements IUsersRepository {
   }
   public async save(data: Omit<IUserModel, '_id' | ' avatar' | 'role'>) {
     const user = new this._model(data);
+    const exists = await this._model.findOne({
+      $or: [{ username: user.username }, { email: user.email }],
+    });
+    if (exists) throw new Error('Username or email already taken');
     return user.save();
   }
   public async delete(id: string) {
@@ -17,5 +21,17 @@ export class UsersRepository implements IUsersRepository {
   }
   public async findOneByUsername(username: string) {
     return UserModel.findOne({ username: username });
+  }
+  public async saveToken(token: string, user: IUserModel) {
+    const record = await this._model
+      .findByIdAndUpdate(
+        user._id,
+        {
+          token,
+        },
+        { new: true }
+      )
+      .orFail();
+    return record;
   }
 }

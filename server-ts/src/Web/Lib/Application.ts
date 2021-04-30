@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import session from 'express-session';
@@ -18,7 +18,24 @@ export abstract class Application {
   private async run() {
     this._server.use(morgan('dev'));
     this._server.use(express.json());
-    this._server.use(cors());
+    this._server.use(express.urlencoded({ extended: true }));
+    this.initCors();
+    this.initSession();
+
+    await this.setup();
+
+    this._server.listen(Application.PORT, this.onSuccessListen.bind(this));
+  }
+  private initCors() {
+    this._server.use(
+      cors({
+        origin: ['http://192.168.1.242:3000', 'http://localhost:3000'],
+        credentials: true,
+        preflightContinue: true,
+      })
+    );
+  }
+  private initSession() {
     this._server.use(
       session({
         name: 'sid',
@@ -28,19 +45,15 @@ export abstract class Application {
         store: new MongoStore({
           mongoUrl: process.env.DB_URI,
           collectionName: 'session',
-          ttl: parseInt('1000000') / 1000,
+          ttl: parseInt('100000000') / 1000,
         }),
         cookie: {
           sameSite: true,
           secure: process.env.NODE_ENV === 'production',
-          maxAge: parseInt('1000000'),
+          maxAge: parseInt('100000000'),
         },
       })
     );
-
-    await this.setup();
-
-    this._server.listen(Application.PORT, this.onSuccessListen.bind(this));
   }
 
   private onSuccessListen() {
