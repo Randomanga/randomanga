@@ -24,7 +24,7 @@ export class UserService implements IUserService {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: '1h',
+        expiresIn: '1min',
       }
     );
     return UserMapper.toIdentityResponseDto({
