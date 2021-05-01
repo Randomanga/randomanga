@@ -21,7 +21,7 @@ function SignIn(props) {
     const onSubmit = async (formData) => {
         try {
             setLoading(true);
-            const userData = await axios.post('api/auth/signin', {
+            const userData = await axios.post('api/auth/login', {
                 username: formData.username,
                 password: formData.password,
             });
@@ -29,7 +29,7 @@ function SignIn(props) {
             history.push('/');
         } catch (err) {
             setLoading(false);
-            const message = err.response.data.errors.message;
+            const message = err.response.data.error;
             toast.error(`⚠️ Error! ${message}.`);
         }
     };

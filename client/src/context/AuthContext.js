@@ -2,7 +2,7 @@ import React, { useReducer, createContext } from 'react';
 import { getStoredUserAuth } from '../utils/helpers';
 
 const initialState = {
-    user: getStoredUserAuth(),
+    user: null,
 };
 
 const AuthContext = createContext({
