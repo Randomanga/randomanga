@@ -8,7 +8,10 @@ export interface IUserModel {
   password: string;
   role: string;
   createdAt: Date;
-  token: string;
+  alAuth: {
+    token: string;
+    refreshToken: string;
+  };
 }
 const UserModel: Schema = new Schema({
   username: {
@@ -35,10 +38,15 @@ const UserModel: Schema = new Schema({
     type: String,
     required: true,
   },
-  token: {
-    type: String,
-    required: false,
-    default: null,
+  alAuth: {
+    token: {
+      type: String,
+      default: null,
+    },
+    refreshToken: {
+      type: String,
+      default: null,
+    },
   },
   createdAt: {
     type: Date,

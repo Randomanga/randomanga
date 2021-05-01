@@ -10,6 +10,8 @@ import { SubscribersService } from 'Core/Services/Subscribers.service';
 import { AuthService } from 'Core/Services/Auth.service';
 import { AuthController } from 'Web/Api/Controllers/Auth.controller';
 import { ArgonToHasherAdapter } from 'Core/Adapters/ArgonToHasher.adapter';
+import { UserService } from 'Core/Services/User.service';
+import { UserController } from 'Web/Api/Controllers/User.controller';
 
 export const container = Awilix.createContainer();
 
@@ -27,4 +29,7 @@ container.register({
   mangaService: Awilix.asClass(MangaService).singleton(),
   mangaController: Awilix.asClass(MangaController).singleton(),
   mangaRepository: Awilix.asClass(MangaRepository).singleton(),
+
+  userService: Awilix.asClass(UserService).singleton(),
+  userController: Awilix.asClass(UserController).singleton(),
 });

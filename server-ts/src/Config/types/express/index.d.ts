@@ -5,14 +5,9 @@ import { Document, Model, ObjectId } from 'mongoose';
 declare global {
   namespace Express {
     export interface Request {
-      user: IUserModel;
+      token: {
+        id: string;
+      };
     }
-  }
-}
-import session = require('express-session');
-
-declare module 'express-session' {
-  interface SessionData {
-    uid: string;
   }
 }

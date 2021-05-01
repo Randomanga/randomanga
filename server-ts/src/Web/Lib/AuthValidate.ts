@@ -1,5 +1,6 @@
 import { UsersRepository } from 'Data/Repositories/Users.repository';
 import { Request, Response, NextFunction } from 'express';
+import { container } from 'Config/DI/Container';
 
 const AuthCredentials = async (
   req: Request,
@@ -8,7 +9,7 @@ const AuthCredentials = async (
 ) => {
   if (!req.session.uid) return res.sendStatus(403);
   try {
-    const userRepo = new UsersRepository();
+    const userRepo = container.resolve<UsersRepository>('usersRepository');
     const userRecord = await userRepo.findOneUser(req.session.uid);
     if (!userRecord) return res.sendStatus(401);
     req.user = userRecord.toObject();
@@ -24,7 +25,7 @@ const AuthNoCredentials = async (
 ) => {
   if (!req.session.uid) return next();
   try {
-    const userRepo = new UsersRepository();
+    const userRepo = container.resolve<UsersRepository>('usersRepository');
     const userRecord = await userRepo.findOneUser(req.session.uid);
     if (!userRecord) return res.sendStatus(401);
     req.user = userRecord.toObject();

@@ -1,9 +1,12 @@
 import {
+  CreateIdentityDto,
+  IdentityResponseDto,
   UpdateALTokenRequestDto,
-  UserInfoResponse,
+  UserTokensResponse,
 } from 'Core/Dtos/User/User.dtos';
+import { IUserModel } from 'Data/Models/User.model';
 
 export interface IUserService {
-  updateToken(data: UpdateALTokenRequestDto): Promise<UserInfoResponse>;
-  retrieveJWT(code: string): Promise<string>;
+  updateToken(data: UpdateALTokenRequestDto): Promise<UserTokensResponse>;
+  createAlIdentity(data: CreateIdentityDto): Promise<IdentityResponseDto>;
 }

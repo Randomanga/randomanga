@@ -1,10 +1,9 @@
 import { IUserModel } from 'Data/Models/User.model';
 
-export class UserInfoResponse {
+export class UserTokensResponse {
   _id: IUserModel['_id'];
-  avatar: IUserModel['avatar'];
-  token: IUserModel['token'];
   username: IUserModel['username'];
+  alToken: IUserModel['alAuth']['token'];
 }
 export class UpdateALTokenRequestDto {
   code: string;
@@ -23,4 +22,11 @@ export class CreateUserResponseDto {
 export class LoginUserRequestDto {
   username: IUserModel['username'];
   password: IUserModel['password'];
+}
+export class CreateIdentityDto {
+  user: IUserModel;
+}
+export class IdentityResponseDto {
+  _id: IUserModel['_id'];
+  identity: string;
 }

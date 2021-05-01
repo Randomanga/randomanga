@@ -20,7 +20,6 @@ export class MangaService implements IMangaService {
   }
   async getDaily(data: RequestDailyDto) {
     const manga = await this._mangaRepo.getDaily(data.user);
-    console.log(manga);
     return manga;
   }
   async setLikeStatus(data: RequestLikeDto) {

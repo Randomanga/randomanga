@@ -22,12 +22,18 @@ export class UsersRepository implements IUsersRepository {
   public async findOneByUsername(username: string) {
     return UserModel.findOne({ username: username });
   }
-  public async saveToken(token: string, user: IUserModel) {
+  public async saveAnilistAuth(
+    data: { access_token: string; refresh_token: string },
+    user: IUserModel
+  ) {
     const record = await this._model
       .findByIdAndUpdate(
         user._id,
         {
-          token,
+          alAuth: {
+            token: data.access_token,
+            refreshToken: data.refresh_token,
+          },
         },
         { new: true }
       )

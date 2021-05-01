@@ -1,8 +1,11 @@
 import {
+  CreateIdentityDto,
   CreateUserRequestDto,
   CreateUserResponseDto,
+  IdentityResponseDto,
   LoginUserRequestDto,
   UpdateALTokenRequestDto,
+  UserTokensResponse,
 } from 'Core/Dtos/User/User.dtos';
 import { IUserModel } from 'Data/Models/User.model';
 
@@ -34,6 +37,24 @@ export class UserMapper {
       username: data.username,
       password: data.password,
     } as LoginUserRequestDto;
+  }
+  public static toCreateAlIdentityRequestDto(data: CreateIdentityDto) {
+    return {
+      user: data.user,
+    } as CreateIdentityDto;
+  }
+  public static toIdentityResponseDto(data: IdentityResponseDto) {
+    return {
+      _id: data._id,
+      identity: data.identity,
+    } as IdentityResponseDto;
+  }
+  public static toUserTokensResponse(data: IUserModel) {
+    return {
+      _id: data._id,
+      username: data.username,
+      alToken: data.alAuth.token,
+    } as UserTokensResponse;
   }
   /**
    * A generic response

@@ -6,5 +6,8 @@ export interface IUsersRepository {
   findOneByUsername(username: string): Promise<IUserModel | null>;
   save(data: CreateUserRequestDto): Promise<IUserModel>;
   delete(id: string): Promise<boolean>;
-  saveToken(token: string, user: IUserModel): Promise<IUserModel>;
+  saveAnilistAuth(
+    data: { access_token: string; refresh_token: string },
+    user: IUserModel
+  ): Promise<IUserModel>;
 }
