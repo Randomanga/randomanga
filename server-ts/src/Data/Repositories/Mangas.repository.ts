@@ -1,3 +1,4 @@
+import { FindFilteredRequestDto } from 'Core/Dtos/Manga/Manga.dtos';
 import { IMangaRepository } from 'Core/Ports/IMangas.repository';
 import DailyMangaModel from 'Data/Models/DailyManga.model';
 import MangaModel from 'Data/Models/Manga.model';
@@ -56,7 +57,27 @@ export class MangaRepository implements IMangaRepository {
         _id: 0,
       })
       .orFail();
-      
+
     return manga.related;
+  }
+
+  private validateFilters(data: FindFilteredRequestDto) {
+    return Object.fromEntries(
+      Object.entries(data).flatMap(([filterType, filters]) =>
+        Object.entries(filters)
+          .filter(([, values]) => values.length)
+          .map(([key, value]) =>
+            filterType === 'includeFilters'
+              ? [key, { $elemMatch: { $in: [...value] } }]
+              : [key, { $elemMatch: { $nin: [...value] } }]
+          )
+      )
+    );
+  }
+
+  async findFiltered(data: FindFilteredRequestDto) {
+    const filters = this.validateFilters(data);
+    const results = await this._manga.find(filters, { al_id: 1 }).orFail();
+    return results;
   }
 }

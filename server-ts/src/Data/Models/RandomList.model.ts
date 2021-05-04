@@ -6,30 +6,35 @@ export interface IRandomListModel {
   count: number;
   seed: string;
   generated: Array<IMangaModel['al_id']>;
-
-  includedGenres: Array<string>;
-  includedTags: Array<string>;
-  includedDemographics: Array<string>;
-
-  excludedGenres: Array<string>;
-  excludedTags: Array<string>;
-  excludedDemographics: Array<string>;
+  includeFilters: {
+    genre: Array<string>;
+    tags: Array<string>;
+    demographic: Array<string>;
+  };
+  excludeFilters: {
+    genre: Array<string>;
+    tags: Array<string>;
+    demographic: Array<string>;
+  };
 }
 const RandomListModel: Schema = new Schema({
   generated: [{ type: Number }],
-  seed: String,
+  seed: { type: String, required: true },
   count: Number,
 
-  includedGenres: [{ type: String }],
-  includedTags: [{ type: String }],
-  includedDemographics: [{ type: String }],
-
-  excludedGenres: [{ type: String }],
-  excludedTags: [{ type: String }],
-  excludedDemographics: [{ type: String }],
+  includeFilters: {
+    genres: [{ type: String }],
+    tags: [{ type: String }],
+    demographics: [{ type: String }],
+  },
+  excludeFilters: {
+    genres: [{ type: String }],
+    tags: [{ type: String }],
+    demographics: [{ type: String }],
+  },
 });
 
 export default mongoose.model<IRandomListModel & Document>(
-  'RandomLists',
+  'RandomList',
   RandomListModel
 );

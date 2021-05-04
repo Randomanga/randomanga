@@ -1,8 +1,9 @@
 import { IUserModel } from './../../../Data/Models/User.model';
 import { IMangaModel } from './../../../Data/Models/Manga.model';
+import { IRandomListModel } from 'Data/Models/RandomList.model';
 
 export class RequestDailyDto {
-  user: IUserModel | null;
+  user?: IUserModel;
 }
 export class ResponseDailyDto {
   al_id: IMangaModel['al_id'];
@@ -34,3 +35,8 @@ export class ResponseRelatedDto {
   id: string;
   related: IMangaModel[];
 }
+
+export type FindFilteredRequestDto = Pick<
+  IRandomListModel,
+  'includeFilters' | 'excludeFilters'
+>;

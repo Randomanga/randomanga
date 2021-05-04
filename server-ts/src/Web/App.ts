@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Database } from 'Data/Database';
 import { Application } from 'Web/Lib/Application';
-
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 import Routes from 'Web/Routes';
 
 class App extends Application {
@@ -13,8 +14,12 @@ class App extends Application {
   public async setup() {
     if (process.env.NODE_ENV != 'test') {
       await Database.connect();
+      await this.initSentry();
     }
+    this._server.use(Sentry.Handlers.requestHandler());
+    this.server.use(Sentry.Handlers.tracingHandler());
     await this.registerRoutes();
+    this.server.use(Sentry.Handlers.errorHandler());
     this.catchExceptions();
   }
   private async registerRoutes() {
@@ -28,6 +33,25 @@ class App extends Application {
         });
       }
     );
+  }
+  private async initSentry() {
+    Sentry.init({
+      dsn:
+        'https://8ec227c7c9184f9782e84ce5023786d0@o551277.ingest.sentry.io/5745686',
+      integrations: [
+        // enable HTTP calls tracing
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Sentry.Integrations.OnUncaughtException(),
+        new Sentry.Integrations.OnUnhandledRejection(),
+        // enable Express.js middleware tracing
+        new Tracing.Integrations.Express({ app: this._server }),
+      ],
+
+      // Set tracesSampleRate to 1.0 to capture 100%
+      // of transactions for performance monitoring.
+      // We recommend adjusting this value in production
+      tracesSampleRate: 1.0,
+    });
   }
 }
 

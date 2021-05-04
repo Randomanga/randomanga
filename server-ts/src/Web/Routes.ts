@@ -40,6 +40,9 @@ browter.group('/api', (browter) => {
       AuthCredentials,
     ]);
   });
+  browter.group('/random-lists', (browter) => {
+    browter.post('/', 'RandomListController.create');
+  });
 });
 
 export default browter.build();

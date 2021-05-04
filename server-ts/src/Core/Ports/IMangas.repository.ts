@@ -1,3 +1,4 @@
+import { FindFilteredRequestDto } from 'Core/Dtos/Manga/Manga.dtos';
 import { IMangaModel } from 'Data/Models/Manga.model';
 import { IUserModel } from './../../Data/Models/User.model';
 
@@ -13,4 +14,5 @@ export interface IMangaRepository {
   getDaily(
     user?: any
   ): Promise<IMangaModel & { likes_count: number; liked: boolean }>;
+  findFiltered(data: FindFilteredRequestDto): Promise<IMangaModel[]>;
 }

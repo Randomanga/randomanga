@@ -21,6 +21,7 @@ export class MangaMapper {
       genre: data.genre,
       tags: data.tags,
       liked: data.liked,
+      al_id: data.al_id,
       likes_count: data.likes_count,
     } as ResponseDailyDto;
   }

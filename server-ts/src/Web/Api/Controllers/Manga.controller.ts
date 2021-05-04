@@ -35,18 +35,18 @@ export class MangaController extends BaseHttpController {
   }
   async like(req: Request, res: Response) {
     const data = MangaMapper.toLikeRequestDto({
-      ...req,
       status: true,
       id: Number(req.params.id),
+      user: req.user!,
     });
     await this._mangaService.setLikeStatus(data);
     res.sendStatus(200);
   }
   async unlike(req: Request, res: Response) {
     const data = MangaMapper.toLikeRequestDto({
-      ...req,
       status: false,
       id: Number(req.params.id),
+      user: req.user!,
     });
     await this._mangaService.setLikeStatus(data);
     res.sendStatus(200);
@@ -54,7 +54,7 @@ export class MangaController extends BaseHttpController {
   async likeStatus(req: Request, res: Response) {
     const data = MangaMapper.toLikeStatusRequestDto({
       id: req.params.id,
-      ...req,
+      user: req.user!,
     });
     const status = await this._mangaService.getLikeStatus(data);
     this.toJson<ResponseLikeStatusDto>(res, {
