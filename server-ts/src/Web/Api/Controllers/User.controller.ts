@@ -27,8 +27,4 @@ export class UserController extends BaseHttpController {
     await this._userService.updateToken(data);
     res.redirect('http://192.168.1.242:3000/');
   }
-  async test(req: Request, res: Response) {
-    console.log(req.body);
-    res.redirect('http://192.168.1.242:3000/');
-  }
 }

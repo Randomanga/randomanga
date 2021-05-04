@@ -34,15 +34,19 @@ export class RandomListService implements IRandomListService {
       mangaResults.map((manga) => manga.al_id)
     );
     const randomList = await this._listRepo.save({
-      includeFilters: data.includeFilters,
-      excludeFilters: data.excludeFilters,
       generated: list,
       seed: seed,
+      ...data,
     });
     return RandomListMapper.toCreateResponseDto(randomList);
   }
   public async find(data: FindListRequestDto) {
-    
-
+    const list = await this._listRepo.find(data);
+    return {
+      count: list.count,
+      lastPage: Math.ceil(list.count / 50),
+      hasNextPage: (data.page ?? 1) < Math.ceil(list.count / 50),
+      list: list.generated,
+    };
   }
 }

@@ -9,5 +9,5 @@ export type FindListResponse = Pick<
 >;
 export interface IRandomListRepository {
   save(data: CreateListRequestDto): Promise<IRandomListModel>;
-  find(data: FindListRequestDto): Promise<FindListResponse[]>;
+  find(data: FindListRequestDto): Promise<FindListResponse>;
 }

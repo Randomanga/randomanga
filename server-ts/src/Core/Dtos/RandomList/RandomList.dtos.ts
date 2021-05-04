@@ -4,13 +4,14 @@ export type CreateListRequestDto = Omit<IRandomListModel, '_id' | 'count'>;
 
 export type CreateListResponseDto = Pick<IRandomListModel, '_id' | 'count'>;
 
-export type FindListRequestDto = Pick<IRandomListModel, '_id'> & {
-  page?: number | string;
+export type FindListRequestDto = {
+  id: string;
+  page: number;
 };
 
 export class FindListResponseDto {
-  seed: string;
+  count: number;
   list: Array<string | number>;
-  currentPage: number | string;
   lastPage: number | string;
+  hasNextPage: boolean;
 }

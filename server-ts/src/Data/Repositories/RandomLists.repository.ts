@@ -20,37 +20,17 @@ export class RandomListRepository implements IRandomListRepository {
   }
 
   public async find(data: FindListRequestDto) {
-    const skipValue = Number(data.page ?? 0) * 50;
-    const limitValue = 50;
-    const list = await this._listsModel.aggregate<FindListResponse>([
-      {
-        $match: {
-          _id: data._id,
-        },
-      },
-      {
-        $unwind: '$generated',
-      },
-      {
-        $group: {
-          count: '$count',
-          seed: '$seed',
-          generated: {
-            $push: '$generated',
-          },
-        },
-      },
-      {
-        $project: {
-          generated: {
-            $slice: ['$generated'],
-            skipValue,
-            limitValue,
-          },
-        },
-      },
-    ]);
-    console.log(list);
-    return list;
+    const perPage = 50;
+    const offset = (Math.max(1, data.page) - 1) * perPage;
+    try {
+      const list = await this._listsModel
+        .findOne({ _id: data.id }, { generated: { $slice: [offset, perPage] } })
+        .orFail(new Error('List not found. '));
+      return list;
+    } catch (err) {
+      throw new Error(
+        'There was an error, make sure all provided data is in correct format.'
+      );
+    }
   }
 }
