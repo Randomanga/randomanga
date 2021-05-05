@@ -11,7 +11,7 @@ export interface RandomListControllerOptions {
   randomListService: IRandomListService;
 }
 
-export class RandomListController extends BaseHttpController {
+export  class RandomListController extends BaseHttpController {
   private readonly _listService: IRandomListService;
   constructor({ randomListService }: RandomListControllerOptions) {
     super();

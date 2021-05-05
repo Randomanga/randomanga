@@ -1,5 +1,11 @@
-import { FindFilteredRequestDto } from 'Core/Dtos/Manga/Manga.dtos';
+import {
+  CreateDailyMangaDto,
+  FindDailyDto,
+  FindFilteredRequestDto,
+} from 'Core/Dtos/Manga/Manga.dtos';
+import { IDailyMangaModel } from 'Data/Models/DailyManga.model';
 import { IMangaModel } from 'Data/Models/Manga.model';
+import { FilterQuery } from 'mongoose';
 import { IUserModel } from './../../Data/Models/User.model';
 
 export interface IMangaRepository {
@@ -11,8 +17,11 @@ export interface IMangaRepository {
     id: number | string,
     userID: IUserModel['_id']
   ): Promise<boolean>;
+  saveDaily(data: CreateDailyMangaDto): Promise<IDailyMangaModel>;
   getDaily(
     user?: any
   ): Promise<IMangaModel & { likes_count: number; liked: boolean }>;
   findFiltered(data: FindFilteredRequestDto): Promise<IMangaModel[]>;
+  countCustomFiltered(filter: FilterQuery<IMangaModel>): Promise<number>;
+  findDaily(data: FindDailyDto): Promise<IMangaModel[]>;
 }

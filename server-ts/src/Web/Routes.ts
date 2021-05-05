@@ -22,14 +22,16 @@ browter.group('/api', (browter) => {
     browter.post('/login', 'AuthController.login');
     browter.post('/register', 'AuthController.register');
   });
+  browter.group('/users', (browter) => {});
   browter.group('/manga', (browter) => {
     browter.get('/daily', 'MangaController.daily', [AuthNoCredentials]);
+
+    browter.get('/:id/likes', 'MangaController.likeStatus', [AuthCredentials]);
     browter.post('/:id/likes', 'MangaController.like', [AuthCredentials]);
     browter.delete('/:id/likes', 'MangaController.unlike', [AuthCredentials]);
-    browter.get('/:id/likes', 'MangaController.likeStatus', [AuthCredentials]);
+
     browter.get('/:id/related', 'MangaController.related');
   });
-  browter.group('/users', (browter) => {});
   browter.group('/oauth', (browter) => {
     browter.get('/token', 'UserController.authorizeAniList', [
       checkForRevoke,
@@ -41,8 +43,8 @@ browter.group('/api', (browter) => {
     ]);
   });
   browter.group('/random-lists', (browter) => {
-    browter.post('/', 'RandomListController.create');
     browter.get('/:id/:page', 'RandomListController.find');
+    browter.post('/', 'RandomListController.create');
   });
 });
 

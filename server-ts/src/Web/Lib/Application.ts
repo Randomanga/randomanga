@@ -23,7 +23,7 @@ export abstract class Application {
     this.initSession();
 
     await this.setup();
-
+    
     this._server.listen(Application.PORT, this.onSuccessListen.bind(this));
   }
   private initCors() {
@@ -57,6 +57,6 @@ export abstract class Application {
   }
 
   private onSuccessListen() {
-    console.log(`💹 Server is running on http://localhost:5000`);
+    console.log(`🔥 Server is running on http://localhost:5000`);
   }
 }

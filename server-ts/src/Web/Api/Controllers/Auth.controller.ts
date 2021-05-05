@@ -3,6 +3,7 @@ import { BaseHttpController } from 'Web/Lib/BaseHttp.controller';
 import { Request, Response } from 'express';
 import { UserMapper } from 'Config/Mappers/User.mapper';
 import { IUserModel } from 'Data/Models/User.model';
+import { RESOLVER } from 'awilix';
 
 export interface IAuthControllerOptions {
   authService: IAuthService;

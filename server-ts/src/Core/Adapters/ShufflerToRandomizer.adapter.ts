@@ -3,7 +3,7 @@ import { shuffle } from 'seededshuffle';
 import crypto from 'crypto';
 import { IArrayRandomizer } from './IRandomizer';
 
-export class ShufflerToRandomizerAdapter implements IArrayRandomizer {
+export class Randomizer implements IArrayRandomizer {
   private generateSeed() {
     return crypto.randomBytes(8).toString('hex');
   }

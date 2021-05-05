@@ -1,14 +1,23 @@
-import { FindFilteredRequestDto } from 'Core/Dtos/Manga/Manga.dtos';
+import {
+  CreateDailyMangaDto,
+  FindDailyDto,
+  FindFilteredRequestDto,
+} from 'Core/Dtos/Manga/Manga.dtos';
 import { IMangaRepository } from 'Core/Ports/IMangas.repository';
 import DailyMangaModel from 'Data/Models/DailyManga.model';
-import MangaModel from 'Data/Models/Manga.model';
+import MangaModel, { IMangaModel } from 'Data/Models/Manga.model';
 import { IUserModel } from 'Data/Models/User.model';
+import { FilterQuery } from 'mongoose';
 
 export class MangaRepository implements IMangaRepository {
   private _manga = MangaModel;
   private _daily = DailyMangaModel;
   public async findOneManga(id: number) {
     return await this._manga.findOne({ al_id: id });
+  }
+  public async saveDaily(data: CreateDailyMangaDto) {
+    const dailyManga = new this._daily({ manga: data._id });
+    return dailyManga.save();
   }
   public async getDaily(user?: IUserModel) {
     const [{ manga }]: any = await this._daily
@@ -79,5 +88,21 @@ export class MangaRepository implements IMangaRepository {
     const filters = this.validateFilters(data);
     const results = await this._manga.find(filters, { al_id: 1 }).orFail();
     return results;
+  }
+  async countCustomFiltered(filter: FilterQuery<IMangaModel>) {
+    return this._manga.countDocuments(filter);
+  }
+  async findDaily(data: FindDailyDto) {
+    const manga = await this._manga.find({
+      tags: {
+        $elemMatch: {
+          $nin: data.excludeFilters.tags,
+        },
+      },
+      banner: {
+        $ne: null,
+      },
+    });
+    return manga;
   }
 }

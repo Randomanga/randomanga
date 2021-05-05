@@ -1,6 +1,7 @@
 import { IUserModel } from './../../../Data/Models/User.model';
 import { IMangaModel } from './../../../Data/Models/Manga.model';
 import { IRandomListModel } from 'Data/Models/RandomList.model';
+import { IDailyMangaModel } from 'Data/Models/DailyManga.model';
 
 export class RequestDailyDto {
   user?: IUserModel;
@@ -40,3 +41,6 @@ export type FindFilteredRequestDto = Pick<
   IRandomListModel,
   'includeFilters' | 'excludeFilters'
 >;
+
+export type CreateDailyMangaDto = Pick<IMangaModel, '_id'>;
+export type FindDailyDto = Pick<IRandomListModel, 'excludeFilters'>;

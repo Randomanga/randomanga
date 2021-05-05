@@ -4,6 +4,10 @@ import { Application } from 'Web/Lib/Application';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import Routes from 'Web/Routes';
+import { container } from 'Config/DI/Container';
+import { IScheduler } from 'Core/Adapters/IScheduler';
+// @ts-expect-error
+import agendash from 'agendash';
 
 class App extends Application {
   // Needed for testing
@@ -14,6 +18,7 @@ class App extends Application {
   public async setup() {
     if (process.env.NODE_ENV != 'test') {
       await Database.connect();
+      this.startAgenda();
       await this.initSentry();
     }
     this._server.use(Sentry.Handlers.requestHandler());
@@ -52,6 +57,11 @@ class App extends Application {
       // We recommend adjusting this value in production
       tracesSampleRate: 1.0,
     });
+  }
+  private startAgenda() {
+    const scheduler = container.resolve<IScheduler>('scheduler');
+    this._server.use('/dash', agendash(scheduler.getAgendaInstance()));
+    console.log(`🔥 Job dashboard running at: http://localhost:5000/dash`);
   }
 }
 

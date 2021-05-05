@@ -1,4 +1,6 @@
 import {
+  CreateDailyMangaDto,
+  FindFilteredRequestDto,
   RequestLikeDto,
   RequestLikeStatusDto,
   ResponseLikeStatusDto,
@@ -43,6 +45,17 @@ export class MangaMapper {
       id: data.id,
       liked: data.liked,
     };
+  }
+  public static toFindFiltered(data: FindFilteredRequestDto) {
+    return {
+      includeFilters: data.includeFilters,
+      excludeFilters: data.excludeFilters,
+    } as FindFilteredRequestDto;
+  }
+  public static toCreateDailyMangaDto(data: CreateDailyMangaDto) {
+    return {
+      _id: data._id,
+    } as CreateDailyMangaDto;
   }
 
   public static toWeb(data: IMangaModel) {
