@@ -4,21 +4,13 @@ import { Database } from 'Data/Database';
 import { IDailyMangaHandler } from 'Core/Jobs/DailyManga';
 import { captureException } from '@sentry/node';
 
-type SendMailData = {
-  to: string;
-  body: string;
-};
-
 interface AgendaToSchedulerOptions {
   dailyMangaHandler: IDailyMangaHandler;
 }
 export enum JobTypes {
   GEN_DAILY = 'generate daily manga',
-  SEND_MAIL = 'send mail',
 }
-export type JobMap =
-  | { JobType: JobTypes.GEN_DAILY; data: undefined }
-  | { JobType: JobTypes.SEND_MAIL; data: SendMailData };
+export type JobMap = { JobType: JobTypes.GEN_DAILY; data?: {} | undefined };
 
 export class Scheduler implements IScheduler {
   private readonly _agenda: Agenda;
