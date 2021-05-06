@@ -8,6 +8,7 @@ import { container } from 'Config/DI/Container';
 import { IScheduler } from 'Core/Adapters/IScheduler';
 // @ts-expect-error
 import agendash from 'agendash';
+import AuthValidate from './Lib/AuthValidate';
 
 class App extends Application {
   // Needed for testing
@@ -60,7 +61,11 @@ class App extends Application {
   }
   private startAgenda() {
     const scheduler = container.resolve<IScheduler>('scheduler');
-    this._server.use('/dash', agendash(scheduler.getAgendaInstance()));
+    this._server.use(
+      '/dash',
+      AuthValidate({ adminOnly: true }),
+      agendash(scheduler.getAgendaInstance())
+    );
     console.log(`🔥 Job dashboard running at: http://localhost:5000/dash`);
   }
 }

@@ -5,7 +5,7 @@ import { Browter } from '@donnyroufs/browter';
 import { ExpressToBrowterAdapter } from '@donnyroufs/express-to-browter-adapter';
 import { createValidator } from 'express-joi-validation';
 import { SubscribersValidation } from './Api/Validators/Subscribers.validator';
-import { AuthCredentials, AuthNoCredentials } from './Lib/AuthValidate';
+import AuthValidate from './Lib/AuthValidate';
 import {
   attachUserFromIdentity,
   validateJwt,
@@ -24,11 +24,13 @@ browter.group('/api', (browter) => {
   });
   browter.group('/users', (browter) => {});
   browter.group('/manga', (browter) => {
-    browter.get('/daily', 'MangaController.daily', [AuthNoCredentials]);
+    browter.get('/daily', 'MangaController.daily', [
+      AuthValidate({ noCredentials: true }),
+    ]);
 
-    browter.get('/:id/likes', 'MangaController.likeStatus', [AuthCredentials]);
-    browter.post('/:id/likes', 'MangaController.like', [AuthCredentials]);
-    browter.delete('/:id/likes', 'MangaController.unlike', [AuthCredentials]);
+    browter.get('/:id/likes', 'MangaController.likeStatus', [AuthValidate({})]);
+    browter.post('/:id/likes', 'MangaController.like', [AuthValidate({})]);
+    browter.delete('/:id/likes', 'MangaController.unlike', [AuthValidate({})]);
 
     browter.get('/:id/related', 'MangaController.related');
   });
@@ -39,7 +41,7 @@ browter.group('/api', (browter) => {
       attachUserFromIdentity,
     ]);
     browter.get('/identity', 'UserController.alIdentityToken', [
-      AuthCredentials,
+      AuthValidate({}),
     ]);
   });
   browter.group('/random-lists', (browter) => {
