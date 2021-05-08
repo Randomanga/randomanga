@@ -36,7 +36,8 @@ export class RandomListService implements IRandomListService {
     const randomList = await this._listRepo.save({
       generated: list,
       seed: seed,
-      ...data,
+      includeFilters: data.includeFilters,
+      excludeFilters: data.excludeFilters,
     });
     return RandomListMapper.toCreateResponseDto(randomList);
   }

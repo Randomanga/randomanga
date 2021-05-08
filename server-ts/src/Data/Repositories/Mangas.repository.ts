@@ -8,7 +8,10 @@ import DailyMangaModel from 'Data/Models/DailyManga.model';
 import MangaModel, { IMangaModel } from 'Data/Models/Manga.model';
 import { IUserModel } from 'Data/Models/User.model';
 import { FilterQuery } from 'mongoose';
-
+type FilterFormat = Record<
+  string,
+  Record<'$elemMatch', Partial<Record<'$in' | '$nin', string[]>>>
+>;
 export class MangaRepository implements IMangaRepository {
   private _manga = MangaModel;
   private _daily = DailyMangaModel;
@@ -71,16 +74,29 @@ export class MangaRepository implements IMangaRepository {
   }
 
   private validateFilters(data: FindFilteredRequestDto) {
-    return Object.fromEntries(
-      Object.entries(data).flatMap(([filterType, filters]) =>
-        Object.entries(filters)
-          .filter(([, values]) => values.length)
-          .map(([key, value]) =>
-            filterType === 'includeFilters'
-              ? [key, { $elemMatch: { $in: [...value] } }]
-              : [key, { $elemMatch: { $nin: [...value] } }]
-          )
-      )
+    return Object.entries(data).reduce<FilterFormat>(
+      (prev, [filterType, keys]) => {
+        Object.entries(keys).forEach(([key, values]) => {
+          if (!values.length) {
+            return;
+          }
+
+          if (!prev[key]) {
+            prev[key] = { $elemMatch: {} };
+          }
+
+          const inOrExclude = filterType === 'includeFilters' ? '$in' : '$nin';
+
+          if (!prev[key].$elemMatch[inOrExclude]) {
+            prev[key].$elemMatch[inOrExclude] = values;
+          } else {
+            prev[key].$elemMatch[inOrExclude]!.concat(values);
+          }
+        });
+
+        return prev;
+      },
+      {}
     );
   }
 

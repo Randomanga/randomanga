@@ -18,7 +18,6 @@ export default function AuthValidate(options: AuthOptions) {
     if (!req.session.uid && options.noCredentials) return next();
     if (!req.session.uid) return res.sendStatus(401);
     try {
-      console.log('here');
       const userRepo = container.resolve<UsersRepository>('usersRepository');
       const user = await userRepo.findOneUser(req.session.uid);
       if (!user) return res.sendStatus(401);

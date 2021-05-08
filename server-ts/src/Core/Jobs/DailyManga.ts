@@ -34,9 +34,8 @@ export class DailyMangaHandler implements IDailyMangaHandler {
   }
   public async generate(job: Job, done: () => void): Promise<void> {
     const payload = await this.createPayload();
-    const count = await this._mangaRepo.countCustomFiltered(payload);
     const manga = await this._mangaRepo.findDaily(payload);
-    const randomManga = manga[random.int(1, count)];
+    const randomManga = manga[random.int(1, manga.length)];
     const data = MangaMapper.toCreateDailyMangaDto(randomManga);
     await this._mangaRepo.saveDaily(data);
     done();

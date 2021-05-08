@@ -14,28 +14,47 @@ export default function Generator() {
     const onGenerate = async () => {
         setLoading(true);
         const payload = {
-            includedGenres: included
-                .filter((item) => item.category === 'Genres')
-                .map((item) => item.label),
-            includedTags: included
-                .filter((item) => item.category !== 'Genres')
-                .map((item) => item.label),
-            excludedGenres: excluded
-                .filter((item) => item.category === 'Genres')
-                .map((item) => item.label),
-            excludedTags: excluded
-                .filter((item) => item.category !== 'Genres')
-                .map((item) => item.label),
+            includeFilters: {
+                genre: included
+                    .filter((item) => item.category === 'Genres')
+                    .map((item) => item.label),
+                tags: included
+                    .filter(
+                        (item) =>
+                            item.category !== 'Genres' &&
+                            item.category !== 'Demographic'
+                    )
+                    .map((item) => item.label),
+                demographic: included
+                    .filter((item) => item.category === 'Demographic')
+                    .map((item) => item.label),
+            },
+            excludeFilters: {
+                genre: excluded
+                    .filter((item) => item.category === 'Genres')
+                    .map((item) => item.label),
+                tags: excluded
+                    .filter(
+                        (item) =>
+                            item.category !== 'Genres' &&
+                            item.category !== 'Demographic'
+                    )
+                    .map((item) => item.label),
+                demographic: excluded
+                    .filter((item) => item.category === 'Demographic')
+                    .map((item) => item.label),
+            },
         };
+
         try {
             const res = await axios.post(
                 'http://192.168.1.242:5000/api/random-lists/',
                 payload
             );
             setLoading(false);
-            history.push(`/custom-lists/${res.data.listID}`)
+            history.push(`/custom-lists/${res.data._id}`);
         } catch (error) {
-            toast.error(error.response.data.errors.message);
+            toast.error(error.response.data.error);
             setLoading(false);
         }
     };
