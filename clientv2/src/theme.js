@@ -18,4 +18,10 @@ export default extendTheme({
             900: '#111115',
         },
     },
+    space: {
+        100: '26rem',
+        102: '28rem',
+        104: '30rem',
+        106: '35rem',
+    },
 });

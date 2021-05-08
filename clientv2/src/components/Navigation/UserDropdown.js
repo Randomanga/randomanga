@@ -19,7 +19,8 @@ const Item = ({ icon: Icon, placeholder, href, close }) => {
                 icon={<Icon size="15" />}
                 _hover={{ bg: 'gray.700', color: 'white' }}
                 _active={{ bg: 'gray.700' }}
-                _focus={{ bg: 'gray.700' }}>
+                _focus={{ bg: 'gray.700' }}
+            >
                 {placeholder}
             </MenuItem>
         </Link>
@@ -35,7 +36,8 @@ export const UserDropdown = ({ closeNavigation }) => {
                 color={'gray.400'}
                 _focus={{ bg: 'transparent' }}
                 _hover={{ bg: 'transparent', color: 'white' }}
-                _active={{ bg: 'transparent' }}>
+                _active={{ bg: 'transparent' }}
+            >
                 <HStack spacing={1}>
                     <Avatar
                         size={'sm'}
@@ -46,7 +48,8 @@ export const UserDropdown = ({ closeNavigation }) => {
                     <Text
                         fontSize="sm"
                         fontWeight="semibold"
-                        fontFamily="sans-serif">
+                        fontFamily="sans-serif"
+                    >
                         Wiz1991
                     </Text>
                     <ChevronDownIcon fontSize={'xl'} />
@@ -57,7 +60,8 @@ export const UserDropdown = ({ closeNavigation }) => {
                 color="gray.400"
                 border="none"
                 fontSize={'0.9rem'}
-                fontWeight={'normal'}>
+                fontWeight={'normal'}
+            >
                 <Item
                     icon={FaUserAlt}
                     placeholder="Profile"

@@ -18,7 +18,8 @@ const NavbarContainer = ({ children, ...props }) => {
             pr={['3', '2', 0, 0]}
             py="1"
             color={['white', 'white', 'primary.700', 'primary.700']}
-            {...props}>
+            {...props}
+        >
             {children}
         </Flex>
     );
@@ -34,7 +35,15 @@ export const Navigation = (props) => {
     const toggle = () => setIsOpen(!isOpen);
 
     return (
-        <Box bg="dark.400" boxShadow="lg" ref={ref}>
+        <Box
+            bg="dark.400"
+            boxShadow="lg"
+            position="fixed"
+            top="0"
+            w="full"
+            zIndex="banner"
+            ref={ref}
+        >
             <NavbarContainer maxW="7xl">
                 <Logo
                     color={['white', 'white', 'primary.500', 'primary.500']}

@@ -10,8 +10,7 @@ const MenuItem = ({ children, to = '/', close, ...rest }) => {
                 fontSize="sm"
                 fontWeight="semibold"
                 fontFamily="sans-serif"
-                userSelect="none"
-                userSelect="-moz-none"
+                userSelect="none -moz-none"
                 _hover={{ color: 'white' }}
                 {...rest}>
                 {children}
