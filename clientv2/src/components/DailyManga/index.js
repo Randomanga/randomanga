@@ -1,5 +1,11 @@
-import { Banner } from './banner';
-
+import { Banner } from './banner'
+import React from 'react'
+import Card from './Card'
 export const Daily = (props) => {
-    return <Banner />;
-};
+  return (
+    <React.Fragment>
+      <Banner />  
+      <Card />
+    </React.Fragment>
+  )
+}

@@ -21,13 +21,14 @@ const Banner = ({ manga }) => {
       })}
       position="relative"
       marginTop="53px"
+      zIndex="-5"
     >
       <Image
         w="full"
         h="full"
         objectFit="cover"
         objectPosition="center"
-        src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/101233-4Q41vXLKrjhe.jpg"
+        src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/46686-4m2RTKwIUV8S.jpg"
       />
       <Box
         bgGradient="linear(to-t, dark.800,transparent)"
@@ -41,8 +42,10 @@ const Banner = ({ manga }) => {
         position="absolute"
         top={16}
         color="white"
+        fontWeight="bold"
+        fontFamily="body"
         textShadow="1px 1px 3px rgb(0 0 0 / 29%), 2px 4px 7px rgb(73 64 125 / 35%);"
-        pl={['5%', '10%']}
+        pl={['5%', '12%']}
       >
         Random Manga For You
       </Heading>

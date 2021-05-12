@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/layout';
 import { useRef, useState } from 'react';
-import Logo from './Logo';
+import Logo from '../Logo';
 import MenuToggle from './MenuToggle';
 import { Box } from '@chakra-ui/react';
 import { useOutsideClick } from '@chakra-ui/react';

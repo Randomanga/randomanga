@@ -87,8 +87,7 @@ const MultiSelect = (props) => {
       menuShouldScrollIntoView={true}
       tabSelectsValue={false}
       isMulti
-      closeMenuOnSelect={false}
-      closeMenuOnScroll={false}
+      
       {...props}
     />
   );
