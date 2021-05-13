@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
 import { SWRConfig } from 'swr';
 import axios from 'axios';
+import Login from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -17,14 +19,17 @@ function App() {
       <SWRConfig
         value={{
           refreshInterval: 3000,
-          fetcher: url => axios.get(url).then(res => res.data),
+          fetcher: url =>
+            axios.get(url, { withCredentials: true }).then(res => res.data),
         }}
       >
         <ColorModeSwitcher />
         <Router>
           <Navigation />
           <Switch>
-            <Route exact path="" component={() => <Home />} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/sign-up" component={SignUp} />
           </Switch>
           <Footer />
           <ToastContainer

@@ -13,15 +13,29 @@ import Description from '../MangaDescription';
 import AlIcon from '../al.svg';
 import { useState } from 'react';
 import useSWR from 'swr';
+import { toggleLikeManga } from '../../adapters/api';
+import { toast } from 'react-toastify';
+
+import axios from 'axios';
+
 const Controls = ({ manga, ...props }) => {
-  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily',{
-    refreshInterval: 0,
-  });
-  const [liked, setLiked] = useState(data?.manga.liked);
+  const { data, error, mutate } = useSWR(
+    'http://192.168.1.242:5000/api/manga/daily',
+    {
+      refreshInterval: 0,
+    }
+  );
 
   const onAddToList = () => {};
-  const onLike = () => {
-    setLiked(!liked);
+  const onLike = async () => {
+    try {
+      await toggleLikeManga(data.manga.al_id, data.manga.liked);
+      mutate();
+    } catch (e) {
+      toast.error('You need to be logged in to like manga.', {
+        toastId: 'likeerr',
+      });
+    }
   };
   if (!data) return <Skeleton />;
   return (
@@ -44,7 +58,12 @@ const Controls = ({ manga, ...props }) => {
         px={0}
         _focus={{ borderColor: '' }}
         leftIcon={
-          <FaHeart color={liked ? 'red' : 'white'} tra size={20} pr={0} />
+          <FaHeart
+            color={data?.manga.liked ? 'red' : 'white'}
+            tra
+            size={20}
+            pr={0}
+          />
         }
         variant="regular"
         onClick={onLike}
@@ -59,13 +78,11 @@ function Card(props) {
   const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily', {
     refreshInterval: 0,
   });
-  console.log(!(!data && !error));
-  if (error) console.log(error);
   return (
     <Box mt={['-28', '-40']} pl={['2%', '3%', '1%', '12%']}>
       <HStack align="left" spacing={['2', '4']}>
         <Skeleton isLoaded={!(!data && !error)}>
-          <VStack align="left">
+          <VStack align="left" w="full">
             <Image
               w={['24', '36', '40', '36']}
               rounded="sm"
@@ -79,14 +96,27 @@ function Card(props) {
             />
           </VStack>
         </Skeleton>
-        <VStack align="left" pt={['9']} color="white" spacing={2} pr={4}>
+        <VStack
+          align="left"
+          pt={['4', '9']}
+          color="white"
+          spacing={2}
+          pr={4}
+          flex="1"
+          maxW="2xl"
+        >
           <SkeletonText noOfLines={1} isLoaded={!(!data && !error)}>
-            <Heading fontSize={['md', 'xl']} fontFamily="body">
-              Gokshoku
+            <Heading fontSize={['md', 'xl']} fontFamily="body" noOfLines={2}>
+              {data?.manga.title}
             </Heading>
           </SkeletonText>
           <SkeletonText noOfLines={1} isLoaded={!(!data && !error)}>
-            <HStack>
+            <HStack
+              maxW={['44', '56', 'container.xl']}
+              overflow="hidden"
+              flexWrap="wrap"
+              maxH="1.1rem"
+            >
               {data?.manga.genre.map(genre => (
                 <Badge
                   rounded="full"
@@ -97,6 +127,18 @@ function Card(props) {
                   bg="orange.500"
                 >
                   {genre}
+                </Badge>
+              ))}
+              {data?.manga.tags.map(tag => (
+                <Badge
+                  rounded="full"
+                  px="2"
+                  fontSize="xs"
+                  textTransform="capitalize"
+                  color="white"
+                  bg="orange.500"
+                >
+                  {tag}
                 </Badge>
               ))}
             </HStack>
@@ -115,9 +157,7 @@ function Card(props) {
           <Description
             pt={4}
             display={['-webkit-box', '-webkit-box', 'none']}
-            text={`Aute in adipisicing consectetur consequat anim qui magna enim voluptate dolor eu exercitation. Incididunt ipsum quis in nisi officia incididunt culpa minim tempor ullamco duis laboris sint proident. Ipsum commodo deserunt voluptate ad sunt ut minim veniam sit consectetur irure velit. Incididunt nulla magna amet ipsum sit est id Lorem proident magna dolor elit irure veniam. Eiusmod ea pariatur Lorem do voluptate. Laboris sit ipsum nulla id proident minim officia nulla occaecat.
-          
-          In consectetur enim ad ullamco sint ullamco adipisicing labore culpa. Minim sit commodo voluptate ad. Quis proident cupidatat pariatur Lorem enim. Laboris minim est voluptate eu anim id consequat aute consequat commodo. Amet do aliquip irure nostrud irure. `}
+            text={data?.manga.description}
           />
         </SkeletonText>
       </Box>

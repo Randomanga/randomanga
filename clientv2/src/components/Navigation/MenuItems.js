@@ -55,7 +55,7 @@ const NoAccount = ({ closeNavigation }) => {
 };
 
 const MenuLinks = ({ isOpen, toggle }) => {
-    const enabled = true;
+    const enabled = false;
     return (
         <Box
             maxH={{ base: isOpen ? '3xl' : '0', md: '3xl' }}

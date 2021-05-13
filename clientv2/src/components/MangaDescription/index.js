@@ -16,7 +16,7 @@ const Description = ({ text, ...rest }) => {
   }, []);
   useEffect(() => {
     setTruncated(isBeingTruncated(desc.current));
-  }, [width, height]);
+  }, [width, height, text]);
   return (
     <React.Fragment>
       <Text
