@@ -1,17 +1,17 @@
 import {
-  Stack,
-  Flex,
-  Button,
-  Text,
-  VStack,
   useBreakpointValue,
   Box,
   Image,
   Heading,
-} from '@chakra-ui/react'
-import React from 'react'
+  Skeleton,
+} from '@chakra-ui/react';
+import React from 'react';
+import useSWR from 'swr';
 //https://s4.anilist.co/file/anilistcdn/media/manga/banner/101233-4Q41vXLKrjhe.jpg
 const Banner = ({ manga }) => {
+  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily',{
+    refreshInterval: 0,
+  });
   return (
     <Box
       w="full"
@@ -28,7 +28,7 @@ const Banner = ({ manga }) => {
         h="full"
         objectFit="cover"
         objectPosition="center"
-        src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/46686-4m2RTKwIUV8S.jpg"
+        src={data?.manga.banner}
       />
       <Box
         bgGradient="linear(to-t, dark.800,transparent)"
@@ -50,6 +50,6 @@ const Banner = ({ manga }) => {
         Random Manga For You
       </Heading>
     </Box>
-  )
-}
-export { Banner }
+  );
+};
+export { Banner };

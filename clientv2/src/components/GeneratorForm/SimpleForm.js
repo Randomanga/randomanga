@@ -1,19 +1,64 @@
-import { Text } from '@chakra-ui/react'
-import React from 'react'
-import MultiSelect from '../MultiSelect'
-import options from '../MultiSelect/options'
-const SimpleForm = (props) => {
+import React, { useState } from 'react';
+import { VStack } from '@chakra-ui/react';
+import MultiSelect from '../MultiSelect';
+import { GenerateButton } from './GenerateButton';
+import { safeTags } from '../MultiSelect/options';
+import { toast } from 'react-toastify';
+import {
+  validateExcludeTags,
+  validateIncludeTags,
+} from '../../utils/validateTags';
+import { createRandomList } from '../../adapters/api';
+import { useHistory } from 'react-router';
+const SimpleForm = props => {
+  const [included, setIncluded] = useState([]);
+  const [excluded, setExcluded] = useState([]);
+  const [loading, setIsLoading] = useState(false);
+  const history = useHistory();
+
+  const onSubmit = async () => {
+    setIsLoading(true);
+    const includeFilters = validateIncludeTags(included);
+    const excludeFilters = validateExcludeTags(excluded);
+    try {
+      const listID = await createRandomList({
+        includeFilters,
+        excludeFilters,
+      });
+      toast.info(listID);
+      setIsLoading(false);
+      history.push(`/random-lists/${listID}`);
+    } catch (err) {
+      toast.error(err.response.data.error);
+    }
+  };
+
+  const onIncludedChange = changes => {
+    setIncluded(changes);
+  };
+  const onExcludedChange = changes => {
+    setExcluded(changes);
+  };
+
   return (
-    <React.Fragment>
+    <VStack alignItems={'center'} spacing={5}>
       <MultiSelect
-        name="Included tags and genres"
-        options={options}
-        placeholder="Included(All)"
-        isSearchable={true}
-        closeMenuOnSelect={false}
-        isMulti
+        as="select"
+        name="Included genres"
+        options={safeTags}
+        placeholder="Select a genre(s) you like"
+        noOptionsMessage={() => 'No genres found'}
+        onChange={onIncludedChange}
       />
-    </React.Fragment>
-  )
-}
-export default SimpleForm
+      <MultiSelect
+        name="Excluded genres"
+        options={safeTags}
+        placeholder="Select a genre(s) you dislike"
+        noOptionsMessage={() => 'No genres found'}
+        onChange={onExcludedChange}
+      />
+      <GenerateButton isLoading={loading} onClick={onSubmit} />
+    </VStack>
+  );
+};
+export default SimpleForm;

@@ -9,14 +9,14 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-} from '@chakra-ui/react'
-import SimpleForm from './SimpleForm'
-import AdvancedForm from './AdvancedForm'
+} from '@chakra-ui/react';
+import SimpleForm from './SimpleForm';
+import AdvancedForm from './AdvancedForm';
 
-const GeneratorForm = (props) => {
+const GeneratorForm = props => {
   return (
     <Center>
-      <VStack w={['full', 'full', '2xl']}>
+      <VStack w={['full', 'full', '2xl']} alignItems="center">
         <Heading
           fontWeight={'bold'}
           fontFamily={'body'}
@@ -33,12 +33,28 @@ const GeneratorForm = (props) => {
           variant="soft-rounded"
           colorScheme="whiteAlpha"
           w={'full'}
-          align="center"
           size="sm"
         >
-          <TabList>
-            <Tab fontSize={'xs'}>Simple</Tab>
-            <Tab fontSize={'xs'}>Advanced</Tab>
+          <TabList
+            w="full"
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
+          >
+            <Tab
+              fontSize={'xs'}
+              _selected={{ bg: 'dark.400', color: 'white' }}
+              _focus
+            >
+              Simple
+            </Tab>
+            <Tab
+              fontSize={'xs'}
+              _selected={{ bg: 'dark.400', color: 'white' }}
+              _focus
+            >
+              Advanced
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -51,6 +67,6 @@ const GeneratorForm = (props) => {
         </Tabs>
       </VStack>
     </Center>
-  )
-}
-export default GeneratorForm
+  );
+};
+export default GeneratorForm;

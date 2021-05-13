@@ -1,8 +1,8 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../context/AuthContext';
 import routes, { RenderRoutes } from '../routes';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer } from 'react-toastify';
 import Navbar from './Navbar/Navbar';
 import theme from '../theme';
 import ThemeContext from '../context/ThemeContext';

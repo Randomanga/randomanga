@@ -134,7 +134,7 @@ export default function DailySection(props) {
                             dangerouslySetInnerHTML={{
                                 __html: DOMPurify.sanitize(
                                     DOMPurify.sanitize(data.manga.description)
-                                ),
+                                ),npm
                             }}
                         />
                         <Controls mobile />

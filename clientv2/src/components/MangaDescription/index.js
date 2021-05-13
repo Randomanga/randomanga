@@ -1,21 +1,22 @@
-import { Button } from '@chakra-ui/button'
-import { Text } from '@chakra-ui/layout'
-import React, { useEffect, useRef, useState } from 'react'
-import useWindowSize from '../../hooks/useWindowSize'
+import { Button } from '@chakra-ui/button';
+import { Text } from '@chakra-ui/layout';
+import React, { useEffect, useRef, useState } from 'react';
+import useWindowSize from '../../hooks/useWindowSize';
+import DOMPurify from 'dompurify';
 const Description = ({ text, ...rest }) => {
-  const desc = useRef(null)
-  const [width, height] = useWindowSize()
-  const [truncated, setTruncated] = useState(false)
-  const [expanded, setExpanded] = useState(false)
+  const desc = useRef(null);
+  const [width, height] = useWindowSize();
+  const [truncated, setTruncated] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   function isBeingTruncated(e) {
-    return e.offsetHeight < e.scrollHeight || e.offsetWwidth < e.scrollWidth
+    return e.offsetHeight < e.scrollHeight || e.offsetWwidth < e.scrollWidth;
   }
   useEffect(() => {
-    setTruncated(isBeingTruncated(desc.current))
-  },[])
+    setTruncated(isBeingTruncated(desc.current));
+  }, []);
   useEffect(() => {
-    setTruncated(isBeingTruncated(desc.current))
-  }, [width, height])
+    setTruncated(isBeingTruncated(desc.current));
+  }, [width, height]);
   return (
     <React.Fragment>
       <Text
@@ -30,9 +31,10 @@ const Description = ({ text, ...rest }) => {
         letterSpacing="tight"
         {...rest}
         ref={desc}
-      >
-        {text}
-      </Text>
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(DOMPurify.sanitize(text)),
+        }}
+      ></Text>
       {truncated || expanded ? (
         <Button
           size="xs"
@@ -47,6 +49,6 @@ const Description = ({ text, ...rest }) => {
         </Button>
       ) : null}
     </React.Fragment>
-  )
-}
-export default Description
+  );
+};
+export default Description;

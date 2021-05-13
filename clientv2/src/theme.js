@@ -1,10 +1,20 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 export default extendTheme({
+  styles: {
+    global: {
+      body: {
+        color: 'white',
+        background: 'dark.800',
+      },
+      '.Toastify__toast-container': {
+        top: 'var(--chakra-space-16)',
+      },
+    },
+  },
   initialColorMode: 'dark',
   fonts: {
     heading: 'ui-serif, Georgia, Cambria, Times New Roman, Times, serif',
-    body:
-      'ui-sans-serif,system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
+    body: 'ui-sans-serif,system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
   },
   colors: {
     dark: {
@@ -19,6 +29,7 @@ export default extendTheme({
       800: '#12181b',
       900: '#111115',
     },
+    background: '#12181b',
   },
   space: {
     100: '26rem',
@@ -26,4 +37,4 @@ export default extendTheme({
     104: '30rem',
     106: '35rem',
   },
-})
+});

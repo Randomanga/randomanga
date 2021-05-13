@@ -1,9 +1,9 @@
-import { Box, Stack, StackDivider } from '@chakra-ui/react'
-import * as React from 'react'
-import { Copyright } from './Copyright'
-import { LinkGrid } from './LinkGrid'
-import Logo from '../Logo'
-import { SocialMediaLinks } from './SocialMediaLinks'
+import { Box, Stack } from '@chakra-ui/react';
+import * as React from 'react';
+import { Copyright } from './Copyright';
+import { LinkGrid } from './LinkGrid';
+import Logo from '../Logo';
+import { SocialMediaLinks } from './SocialMediaLinks';
 
 export const Footer = () => (
   <Box
@@ -40,4 +40,4 @@ export const Footer = () => (
       </Stack>
     </Stack>
   </Box>
-)
+);

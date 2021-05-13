@@ -23,13 +23,17 @@ export abstract class Application {
     this.initSession();
 
     await this.setup();
-    
+
     this._server.listen(Application.PORT, this.onSuccessListen.bind(this));
   }
   private initCors() {
     this._server.use(
       cors({
-        origin: ['http://192.168.1.242:3000', 'http://localhost:3000'],
+        origin: [
+          'http://192.168.1.242:3000',
+          'http://localhost:3000',
+          'http://192.168.1.242:3001',
+        ],
         credentials: true,
         preflightContinue: true,
       })
