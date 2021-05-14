@@ -14,5 +14,11 @@ async function toggleLikeManga(id, flag) {
     withCredentials: true,
   });
 }
+async function login(data) {
+  return axios.post('api/auth/login', data);
+}
+async function signup(data) {
+  return axios.post('api/auth/register', data);
+}
 
-export { createRandomList, toggleLikeManga };
+export { createRandomList, toggleLikeManga, login };

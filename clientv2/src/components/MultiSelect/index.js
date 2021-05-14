@@ -107,6 +107,7 @@ const MultiSelect = ({ name = '', styles = {}, ...props }) => {
         isMulti
         blurInputOnSelect={false}
         closeMenuOnSelect={false}
+        menuShouldScrollIntoView={true}
         {...props}
       />
     </Box>

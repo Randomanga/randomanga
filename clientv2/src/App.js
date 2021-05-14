@@ -12,6 +12,7 @@ import { SWRConfig } from 'swr';
 import axios from 'axios';
 import Login from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import { RandomList } from './pages/Random/List';
 
 function App() {
   return (
@@ -28,8 +29,11 @@ function App() {
           <Navigation />
           <Switch>
             <Route exact path="/" component={Home} />
+
             <Route exact path="/login" component={Login} />
             <Route exact path="/sign-up" component={SignUp} />
+
+            <Route exact path="/random-lists/:id" component={RandomList} />
           </Switch>
           <Footer />
           <ToastContainer
