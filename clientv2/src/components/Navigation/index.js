@@ -12,11 +12,12 @@ const NavbarContainer = ({ children, ...props }) => {
       align="center"
       mx="auto"
       justify="space-between"
+      h="full"
       wrap="wrap"
       w="100%"
       px={[2, 4, 8]}
       pr={['3', '2', 0, 0]}
-      py="1"
+      py={['1', '3']}
       color={['white', 'white', 'primary.700', 'primary.700']}
       {...props}
     >
@@ -45,7 +46,7 @@ export const Navigation = props => {
       ref={ref}
     >
       <NavbarContainer maxW="7xl">
-        <Logo color={['white', 'white', 'primary.500', 'primary.500']} />
+        <Logo />
         <MenuToggle toggle={toggle} isOpen={isOpen} />
         <MenuLinks isOpen={isOpen} toggle={toggle} />
       </NavbarContainer>

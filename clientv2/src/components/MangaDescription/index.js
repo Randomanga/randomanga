@@ -26,8 +26,8 @@ const Description = ({ text, ...rest }) => {
         _hover={{ color: 'gray.300' }}
         _focus={{ color: 'gray.300' }}
         _active={{ color: 'gray.300' }}
-        lineHeight="1.375"
-        fontSize={'sm'}
+        lineHeight="1.575"
+        fontSize={'md'}
         letterSpacing="tight"
         {...rest}
         ref={desc}

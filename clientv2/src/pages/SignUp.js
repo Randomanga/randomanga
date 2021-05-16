@@ -18,7 +18,7 @@ export default function SignUp() {
   const { register, handleSubmit } = useForm();
   return (
     <Flex minH="60vh" align={'center'} justify={'center'} mt={16}>
-      <Stack spacing={8} mx={'auto'} maxW={'sm'} py={12} px={2}>
+      <Stack spacing={8} w="full" maxW={['90%', 'sm']} py={12} px={2}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} fontFamily="body">
             Sign up
@@ -70,7 +70,7 @@ export default function SignUp() {
                   border: 'none',
                 }}
               >
-                Sign in
+                Sign up
               </Button>
               <Link as={RouterLink} to="/login">
                 <Text

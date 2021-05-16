@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Cunia';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Cunia'),
+    url('https://fonts.cdnfonts.com/s/19412/Cunia.woff') format('woff');
+}

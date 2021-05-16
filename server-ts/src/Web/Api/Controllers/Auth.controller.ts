@@ -37,4 +37,9 @@ export class AuthController extends BaseHttpController {
       data: user,
     });
   }
+  async status(req: Request, res: Response) {
+    //@ts-ignore
+    const response = UserMapper.toWeb(req.user);
+    this.toJson<IUserModel>(res, { statusCode: 200, data: response });
+  }
 }

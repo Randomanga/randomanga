@@ -21,4 +21,8 @@ async function signup(data) {
   return axios.post('api/auth/register', data);
 }
 
-export { createRandomList, toggleLikeManga, login };
+async function authStatus() {
+  return axios.get('api/auth/status', { withCredentials: true });
+}
+
+export { createRandomList, toggleLikeManga, login, authStatus };

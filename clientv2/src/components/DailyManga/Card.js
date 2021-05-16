@@ -79,7 +79,7 @@ function Card(props) {
     refreshInterval: 0,
   });
   return (
-    <Box mt={['-28', '-40']} pl={['2%', '3%', '1%', '12%']}>
+    <Box mt={['-28', '-36']} pl={['2%', '3%', '1%', '12%']}>
       <HStack align="left" spacing={['2', '4']}>
         <Skeleton isLoaded={!(!data && !error)}>
           <VStack align="left" w="full">
@@ -87,6 +87,7 @@ function Card(props) {
               w={['24', '36', '40', '36']}
               rounded="sm"
               boxShadow="dark-lg"
+              alt="daily manga cover"
               src={data?.manga.cover_image.large}
             />
             <Controls
@@ -98,7 +99,7 @@ function Card(props) {
         </Skeleton>
         <VStack
           align="left"
-          pt={['4', '9']}
+          // pt={['4', '9']}
           color="white"
           spacing={2}
           pr={4}

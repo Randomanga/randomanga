@@ -17,13 +17,16 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login } from '../adapters/api';
 import axios from 'axios';
+import useUser from '../hooks/data/useUser';
 
 export default function Login() {
   const { register, handleSubmit, formState } = useForm();
+  const { mutate } = useUser();
   const history = useHistory();
   const onSubmit = async data => {
     try {
       const res = await login(data);
+      mutate(res, true);
       history.push('/');
     } catch (err) {
       toast.error(err.response.data.error);

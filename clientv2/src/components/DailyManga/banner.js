@@ -9,7 +9,7 @@ import React from 'react';
 import useSWR from 'swr';
 //https://s4.anilist.co/file/anilistcdn/media/manga/banner/101233-4Q41vXLKrjhe.jpg
 const Banner = ({ manga }) => {
-  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily',{
+  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily', {
     refreshInterval: 0,
   });
   return (
@@ -20,13 +20,14 @@ const Banner = ({ manga }) => {
         md: 'var(--chakra-space-104)',
       })}
       position="relative"
-      marginTop="53px"
+      marginTop={['44px', '61px']}
       zIndex="-5"
     >
       <Image
         w="full"
         h="full"
         objectFit="cover"
+        alt="daily manga banner"
         objectPosition="center"
         src={data?.manga.banner}
       />

@@ -33,6 +33,7 @@ export abstract class Application {
           'http://192.168.1.242:3000',
           'http://localhost:3000',
           'http://192.168.1.242:3001',
+          'http://192.168.1.242:43765',
         ],
         credentials: true,
         preflightContinue: true,

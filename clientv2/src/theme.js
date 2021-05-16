@@ -13,7 +13,8 @@ export default extendTheme({
   },
   initialColorMode: 'dark',
   fonts: {
-    heading: 'ui-serif, Georgia, Cambria, Times New Roman, Times, serif',
+    brand: 'cunia',
+    heading: 'ui-sans-serif, Georgia, Cambria, Times New Roman, Times, serif',
     body: 'ui-sans-serif,system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
   },
   colors: {
