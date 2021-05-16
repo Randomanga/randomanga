@@ -24,5 +24,8 @@ async function signup(data) {
 async function authStatus() {
   return axios.get('api/auth/status', { withCredentials: true });
 }
+async function logout() {
+  return axios.delete('api/auth/logout', { withCredentials: true });
+}
 
 export { createRandomList, toggleLikeManga, login, authStatus };

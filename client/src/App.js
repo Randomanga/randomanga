@@ -18,7 +18,7 @@ function App() {
   const { user, mutate } = useUser();
   useEffect(() => {
     authStatus()
-      .then(data => mutate(data, false))
+      .then(data => mutate(data, true))
       .catch(err => mutate(null, false));
   }, []);
 

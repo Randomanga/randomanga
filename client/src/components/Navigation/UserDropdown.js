@@ -8,9 +8,14 @@ import {
   Avatar,
   HStack,
   Button,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FaCog, FaSignOutAlt, FaUserAlt } from 'react-icons/fa';
+import useUser from '../../hooks/data/useUser';
+
 import { Link } from 'react-router-dom';
 const Item = ({ icon: Icon, placeholder, href, close }) => {
   return (
@@ -28,6 +33,8 @@ const Item = ({ icon: Icon, placeholder, href, close }) => {
 };
 
 export const UserDropdown = ({ closeNavigation }) => {
+  const { user, mutate, isLoading } = useUser();
+  const onLogout = () => {};
   return (
     <Menu closeOnBlur={true} closeOnSelect={true} autoSelect={false}>
       <MenuButton
@@ -39,14 +46,9 @@ export const UserDropdown = ({ closeNavigation }) => {
         _active={{ bg: 'transparent' }}
       >
         <HStack spacing={1}>
-          <Avatar
-            size={'sm'}
-            src={
-              'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-            }
-          />
+          <Avatar size={'sm'} src={user.avatar} />
           <Text fontSize="sm" fontWeight="semibold" fontFamily="sans-serif">
-            Wiz1991
+            {user.username}
           </Text>
           <ChevronDownIcon fontSize={'xl'} />
         </HStack>
