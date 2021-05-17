@@ -13,6 +13,7 @@ import SignUp from './pages/SignUp';
 import { RandomList } from './pages/Random/List';
 import useUser from './hooks/data/useUser';
 import { authStatus } from './adapters/api';
+import { ScrollToTop } from './components/ScrollToTop';
 
 function App() {
   const { user, mutate } = useUser();
@@ -26,6 +27,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <ColorModeSwitcher />
       <Router>
+        <ScrollToTop />
         <Navigation />
         <Switch>
           <Route exact path="/" component={Home} />

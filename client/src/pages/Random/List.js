@@ -46,7 +46,6 @@ export const RandomList = props => {
     getRandomListInfo(ID).then(res => {
       setListInfo(res.data);
     });
-    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
