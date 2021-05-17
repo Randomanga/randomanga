@@ -55,6 +55,7 @@ export const Card = ({ manga }) => {
           w={[28, 32, 36]}
           objectFit="cover"
           src={manga.coverImage.large}
+          loading="lazy"
         />
 
         <Flex direction="column" w={'full'} h={'full'} maxH="">
@@ -83,6 +84,7 @@ export const Card = ({ manga }) => {
                   background: '#373737',
                   borderRadius: '24px',
                 },
+                scrollBehavior: 'smooth',
               }}
             >
               <Heading
@@ -91,7 +93,7 @@ export const Card = ({ manga }) => {
                 fontSize={['md', 'md']}
                 borderBottom="2px"
                 borderColor="orange.500"
-                pb={1}
+                pb={0.5}
                 mr={2}
                 noOfLines={expanded ? null : 2}
               >
@@ -194,4 +196,3 @@ export const Card = ({ manga }) => {
     </React.Fragment>
   );
 };
-

@@ -58,7 +58,7 @@ export const RandomList = props => {
   const isLoadingMore =
     isLoadingInitialData ||
     (page > 0 && data && typeof data[page - 1] === 'undefined');
-  const isReachingEnd = page === 50;
+  const isReachingEnd = page === 1;
   const isRefreshing = isValidating && data && data.length === page;
 
   useEffect(() => {
@@ -69,7 +69,13 @@ export const RandomList = props => {
   }, []);
 
   useEffect(() => {
-    if (isVisible && !isReachingEnd && !isRefreshing && !isLoadingInitialData) {
+    if (
+      isVisible &&
+      !isReachingEnd &&
+      !isRefreshing &&
+      !isLoadingInitialData &&
+      !isValidating
+    ) {
       setPage(page + 1);
     }
   }, [isVisible]);
@@ -103,15 +109,15 @@ export const RandomList = props => {
           return <Card manga={manga} />;
         })}
 
-        {isLoadingMore ? (
-          [...Array(3).keys()].map(() => <CardSkeleton />)
-        ) : isReachingEnd ? (
-          <Heading>Nothing left</Heading>
-        ) : (
-          ''
-        )}
+        {isLoadingMore ? [...Array(3).keys()].map(() => <CardSkeleton />) : ''}
       </SimpleGrid>
-      <Box ref={ref} />
+      <Box ref={ref} w="full" h="48" p={10}>
+        {isReachingEnd && (
+          <Heading fontSize="lg" textAlign="center">
+            Nothing left
+          </Heading>
+        )}
+      </Box>
     </Box>
   );
 };
