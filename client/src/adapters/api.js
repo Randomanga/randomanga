@@ -15,7 +15,9 @@ async function toggleLikeManga(id, flag) {
   });
 }
 async function login(data) {
-  return axios.post('http://192.168.1.242:5000/api/auth/login', data);
+  return axios.post('http://192.168.1.242:5000/api/auth/login', data, {
+    withCredentials: true,
+  });
 }
 async function signup(data) {
   return axios.post('http://192.168.1.242:5000/api/auth/register', data);

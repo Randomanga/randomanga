@@ -18,9 +18,7 @@ import { ScrollToTop } from './components/ScrollToTop';
 function App() {
   const { user, mutate } = useUser();
   useEffect(() => {
-    authStatus()
-      .then(data => mutate(data, true))
-      .catch(err => mutate(null, false));
+    mutate();
   }, []);
 
   return (

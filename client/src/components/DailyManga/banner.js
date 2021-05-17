@@ -4,6 +4,7 @@ import {
   Image,
   Heading,
   Skeleton,
+  SkeletonText,
 } from '@chakra-ui/react';
 import React from 'react';
 import useSWR from 'swr';
@@ -23,14 +24,23 @@ const Banner = ({ manga }) => {
       marginTop={['44px', '61px']}
       zIndex="-5"
     >
-      <Image
-        w="full"
-        h="full"
-        objectFit="cover"
-        alt="daily manga banner"
-        objectPosition="center"
-        src={data?.manga.banner}
-      />
+      <Skeleton
+        h={useBreakpointValue({
+          base: '96',
+          md: 'var(--chakra-space-104)',
+        })}
+        isLoaded={data}
+      >
+        <Image
+          w="full"
+          h="full"
+          objectFit="cover"
+          alt="daily manga banner"
+          loading="lazy"
+          objectPosition="center"
+          src={data?.manga.banner}
+        />
+      </Skeleton>
       <Box
         bgGradient="linear(to-t, dark.800,transparent)"
         w="full"
@@ -38,6 +48,7 @@ const Banner = ({ manga }) => {
         position={'absolute'}
         top={'0'}
       />
+
       <Heading
         fontSize={['2xl', '3xl']}
         position="absolute"
@@ -48,7 +59,7 @@ const Banner = ({ manga }) => {
         textShadow="1px 1px 3px rgb(0 0 0 / 29%), 2px 4px 7px rgb(73 64 125 / 35%);"
         pl={['5%', '12%']}
       >
-        Random Manga For You
+        {data && 'Random Manga For You'}
       </Heading>
     </Box>
   );

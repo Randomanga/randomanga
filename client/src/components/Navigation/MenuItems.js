@@ -53,7 +53,7 @@ const NoAccount = ({ closeNavigation }) => {
 };
 
 const MenuLinks = ({ isOpen, toggle }) => {
-  const { user } = useUser();
+  const { user, isValidating, isLoading } = useUser();
   return (
     <Box
       maxH={{ base: isOpen ? '3xl' : '0', md: '3xl' }}
@@ -78,7 +78,7 @@ const MenuLinks = ({ isOpen, toggle }) => {
         <MenuItem close={toggle} isLast to="/top-lists">
           Top Lists
         </MenuItem>
-        {user ? (
+        {user && !isLoading ? (
           <UserDropdown closeNavigation={toggle} />
         ) : (
           <NoAccount closeNavigation={toggle} />

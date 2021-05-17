@@ -34,7 +34,7 @@ const Description = ({ text, ...rest }) => {
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(DOMPurify.sanitize(text)),
         }}
-      ></Text>
+      />
       {truncated || expanded ? (
         <Button
           size="xs"

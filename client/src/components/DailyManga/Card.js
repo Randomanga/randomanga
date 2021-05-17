@@ -87,6 +87,7 @@ function Card(props) {
               w={['24', '36', '40', '36']}
               rounded="sm"
               boxShadow="dark-lg"
+              loading="lazy"
               alt="daily manga cover"
               src={data?.manga.cover_image.large}
             />
@@ -153,15 +154,11 @@ function Card(props) {
           </SkeletonText>
         </VStack>
       </HStack>
-      <Box>
-        <SkeletonText noOfLines={5} isLoaded={!(!data && !error)}>
-          <Description
-            pt={4}
-            display={['-webkit-box', '-webkit-box', 'none']}
-            text={data?.manga.description}
-          />
-        </SkeletonText>
-      </Box>
+      <Description
+        pt={4}
+        display={['-webkit-box', '-webkit-box', 'none']}
+        text={data?.manga.description}
+      />
     </Box>
   );
 }
