@@ -8,18 +8,16 @@ import {
   Avatar,
   HStack,
   Button,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { FaCog, FaSignOutAlt, FaUserAlt } from 'react-icons/fa';
 import useUser from '../../hooks/data/useUser';
+import { logout } from '../../adapters/api';
 
 import { Link } from 'react-router-dom';
-const Item = ({ icon: Icon, placeholder, href, close }) => {
+const Item = ({ icon: Icon, placeholder, href, close, ...rest }) => {
   return (
-    <Link to={href} onClick={() => close()}>
+    <Link to={href} onClick={() => close()} {...rest}>
       <MenuItem
         icon={<Icon size="15" />}
         _hover={{ bg: 'gray.700', color: 'white' }}
@@ -34,7 +32,10 @@ const Item = ({ icon: Icon, placeholder, href, close }) => {
 
 export const UserDropdown = ({ closeNavigation }) => {
   const { user, mutate, isLoading } = useUser();
-  const onLogout = () => {};
+  const onLogout = async () => {
+    await logout();
+    mutate(null);
+  };
   return (
     <Menu closeOnBlur={true} closeOnSelect={true} autoSelect={false}>
       <MenuButton
@@ -77,6 +78,10 @@ export const UserDropdown = ({ closeNavigation }) => {
           icon={FaSignOutAlt}
           placeholder="Log out"
           close={closeNavigation}
+          onClick={() => {
+            closeNavigation();
+            onLogout();
+          }}
         />
       </MenuList>
     </Menu>

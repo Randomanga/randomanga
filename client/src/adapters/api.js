@@ -43,4 +43,5 @@ export {
   login,
   authStatus,
   getRandomListInfo,
+  logout,
 };

@@ -37,6 +37,10 @@ export class AuthController extends BaseHttpController {
       data: user,
     });
   }
+  async logout(req: Request, res: Response) {
+    req.session.destroy(() => {});
+    res.sendStatus(200);
+  }
   async status(req: Request, res: Response) {
     //@ts-ignore
     const response = UserMapper.toWeb(req.user);

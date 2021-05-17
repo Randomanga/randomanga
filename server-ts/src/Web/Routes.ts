@@ -22,6 +22,7 @@ browter.group('/api', (browter) => {
     browter.post('/login', 'AuthController.login');
     browter.post('/register', 'AuthController.register');
     browter.get('/status', 'AuthController.status', [AuthValidate({})]);
+    browter.delete('/logout', 'AuthController.logout', [AuthValidate({})]);
   });
   browter.group('/users', (browter) => {});
   browter.group('/manga', (browter) => {
