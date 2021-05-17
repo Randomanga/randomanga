@@ -25,7 +25,6 @@ const SimpleForm = props => {
         includeFilters,
         excludeFilters,
       });
-      toast.info(listID);
       setIsLoading(false);
       history.push(`/random-lists/${listID}`);
     } catch (err) {

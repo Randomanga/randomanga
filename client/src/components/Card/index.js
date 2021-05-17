@@ -20,14 +20,18 @@ import {
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogFooter,
+  Skeleton,
 } from '@chakra-ui/react';
+import DOMPurify from 'dompurify';
 import { FaPlusSquare, FaCheckSquare } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import useDebounce from '../../hooks/useDebounce';
-export const Card = props => {
+export const Card = ({ manga }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const debouncedExpand = useDebounce(isHovering, 200);
+  const debouncedExpand = useDebounce(isHovering, 300);
 
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
@@ -38,7 +42,7 @@ export const Card = props => {
   }, [debouncedExpand]);
 
   return (
-    <React.Fragment>
+    <React.Fragment key={manga.id}>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         shadow="lg"
@@ -50,7 +54,7 @@ export const Card = props => {
         <Image
           w={[28, 32, 36]}
           objectFit="cover"
-          src="https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/bx108428-wTg20rSpvkU9.jpg"
+          src={manga.coverImage.large}
         />
 
         <Flex direction="column" w={'full'} h={'full'} maxH="">
@@ -63,6 +67,7 @@ export const Card = props => {
           >
             <Box
               maxH="100%"
+              minW="full"
               overflow="auto"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
@@ -86,10 +91,11 @@ export const Card = props => {
                 fontSize={['md', 'md']}
                 borderBottom="2px"
                 borderColor="orange.500"
+                pb={1}
                 mr={2}
                 noOfLines={expanded ? null : 2}
               >
-                Kage no Jitsuryokusha ni Naritakute!
+                {manga.title.romaji}
               </Heading>
               <Text
                 mt={1}
@@ -99,21 +105,12 @@ export const Card = props => {
                 noOfLines={expanded ? null : [6, 6, 6, 7]}
                 lineHeight={'4'}
                 minH={0}
-              >
-                Enim quis anim amet exercitation laboris irure magna quis
-                consequat. Officia voluptate eiusmod voluptate duis Lorem sunt
-                irure et cupidatat. Dolore anim est est incididunt ea sit tempor
-                id velit ipsum eiusmod anim in. Fugiat voluptate irure quis eu.
-                Adipisicing nisi adipisicing qui officia ipsum ad voluptate
-                culpa duis officia ex proident et. Dolor reprehenderit duis
-                ipsum in quis elit laboris. Est dolore consequat consectetur
-                exercitation minim minim fugiat reprehenderit dolor ut. Ex dolor
-                occaecat sint deserunt aliquip adipisicing consectetur velit
-                cupidatat sint pariatur ad velit ipsum. Lorem in pariatur id
-                pariatur est et duis consectetur ex ipsum nulla. Aute minim elit
-                exercitation non aliqua aute esse officia deserunt exercitation
-                aliqua.
-              </Text>
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    DOMPurify.sanitize(manga.description)
+                  ),
+                }}
+              />
             </Box>
           </VStack>
           <Flex
@@ -130,9 +127,10 @@ export const Card = props => {
               flexWrap="wrap"
               maxH="1.1rem"
             >
-              {['Action', 'Romance', 'Comedy', 'Harem', 'Ecchi'].map(genre => (
+              {manga.genres.map(genre => (
                 <Badge
                   rounded="full"
+                  key={genre}
                   px="2"
                   fontSize="xs"
                   textTransform="capitalize"
@@ -196,3 +194,4 @@ export const Card = props => {
     </React.Fragment>
   );
 };
+

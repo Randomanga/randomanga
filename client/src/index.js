@@ -10,14 +10,7 @@ import { SWRConfig } from 'swr';
 ReactDOM.render(
   <StrictMode>
     <ColorModeScript initialColorMode={'dark'} />
-    <SWRConfig
-      value={{
-        fetcher: url =>
-          axios.get(url, { withCredentials: true }).then(res => res.data),
-      }}
-    >
-      <App />
-    </SWRConfig>
+    <App />
   </StrictMode>,
   document.getElementById('root')
 );
