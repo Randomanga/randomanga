@@ -3,6 +3,7 @@ import { IArrayRandomizer } from 'Core/Adapters/IRandomizer';
 import {
   CreateListRequestDto,
   FindListRequestDto,
+  ListInfoRequestDto,
 } from 'Core/Dtos/RandomList/RandomList.dtos';
 import { IMangaRepository } from 'Core/Ports/IMangas.repository';
 import { IRandomListRepository } from 'Core/Ports/IRandomLists.repository';
@@ -29,6 +30,7 @@ export class RandomListService implements IRandomListService {
   }
 
   public async create(data: Omit<CreateListRequestDto, 'generated' | 'seed'>) {
+    console.log(data);
     const mangaResults = await this._mangaRepo.findFiltered(data);
     const { list, seed } = await this._randomizer.randomize(
       mangaResults.map((manga) => manga.al_id)
@@ -49,5 +51,9 @@ export class RandomListService implements IRandomListService {
       hasNextPage: (data.page ?? 1) < Math.ceil(list.count / 50),
       list: list.generated,
     };
+  }
+  public async info(data: ListInfoRequestDto) {
+    const list = await this._listRepo.listInfo(data);
+    return list;
   }
 }

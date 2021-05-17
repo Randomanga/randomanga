@@ -15,3 +15,12 @@ export class FindListResponseDto {
   lastPage: number | string;
   hasNextPage: boolean;
 }
+
+export class ListInfoRequestDto {
+  id: string;
+}
+
+export type ListInfoResponseDto = Pick<
+  IRandomListModel,
+  'count' | 'includeFilters' | 'excludeFilters'
+> & { lastPage: number | string };

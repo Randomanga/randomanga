@@ -3,6 +3,8 @@ import {
   CreateListResponseDto,
   FindListRequestDto,
   FindListResponseDto,
+  ListInfoRequestDto,
+  ListInfoResponseDto,
 } from 'Core/Dtos/RandomList/RandomList.dtos';
 
 export interface IRandomListService {
@@ -10,4 +12,5 @@ export interface IRandomListService {
   create(
     data: Omit<CreateListRequestDto, 'generated' | 'seed'>
   ): Promise<CreateListResponseDto>;
+  info(data: ListInfoRequestDto): Promise<ListInfoResponseDto>;
 }

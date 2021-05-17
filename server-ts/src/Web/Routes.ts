@@ -46,6 +46,7 @@ browter.group('/api', (browter) => {
     ]);
   });
   browter.group('/random-lists', (browter) => {
+    browter.get('/:id/info', 'RandomListController.info');
     browter.get('/:id/:page', 'RandomListController.find');
     browter.post('/', 'RandomListController.create');
   });

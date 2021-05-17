@@ -32,7 +32,7 @@ async function logout() {
   });
 }
 async function getRandomListInfo(id) {
-  return axios.get(`http://192.168.1.242:5000/api/random-lists/${id}/1`);
+  return axios.get(`http://192.168.1.242:5000/api/random-lists/${id}/info`);
 }
 
 export {

@@ -23,14 +23,14 @@ const RandomListModel: Schema = new Schema({
   count: Number,
 
   includeFilters: {
-    genres: [{ type: String }],
+    genre: [{ type: String }],
     tags: [{ type: String }],
-    demographics: [{ type: String }],
+    demographic: [{ type: String }],
   },
   excludeFilters: {
-    genres: [{ type: String }],
+    genre: [{ type: String }],
     tags: [{ type: String }],
-    demographics: [{ type: String }],
+    demographic: [{ type: String }],
   },
 });
 

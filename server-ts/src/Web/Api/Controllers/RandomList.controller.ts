@@ -2,6 +2,7 @@ import { RandomListMapper } from 'Config/Mappers/RandomList.mapper.dto';
 import {
   CreateListResponseDto,
   FindListResponseDto,
+  ListInfoResponseDto,
 } from 'Core/Dtos/RandomList/RandomList.dtos';
 import { IRandomListService } from 'Core/Ports/IRandomLists.service';
 import { NextFunction, Request, Response } from 'express';
@@ -11,7 +12,7 @@ export interface RandomListControllerOptions {
   randomListService: IRandomListService;
 }
 
-export  class RandomListController extends BaseHttpController {
+export class RandomListController extends BaseHttpController {
   private readonly _listService: IRandomListService;
   constructor({ randomListService }: RandomListControllerOptions) {
     super();
@@ -32,5 +33,12 @@ export  class RandomListController extends BaseHttpController {
     });
     const data = await this._listService.find(payload);
     this.toJson<FindListResponseDto>(res, { data });
+  }
+  async info(req: Request, res: Response, next: NextFunction) {
+    const payload = RandomListMapper.toListInfoRequestDto({
+      id: req.params.id,
+    });
+    const data = await this._listService.info(payload);
+    this.toJson<ListInfoResponseDto>(res, { data });
   }
 }

@@ -1,6 +1,8 @@
+import { RandomListMapper } from 'Config/Mappers/RandomList.mapper.dto';
 import {
   CreateListRequestDto,
   FindListRequestDto,
+  ListInfoRequestDto,
 } from 'Core/Dtos/RandomList/RandomList.dtos';
 import {
   FindListResponse,
@@ -32,5 +34,20 @@ export class RandomListRepository implements IRandomListRepository {
         'There was an error, make sure all provided data is in correct format.'
       );
     }
+  }
+  public async listInfo(data: ListInfoRequestDto) {
+    const list = await this._listsModel
+      .findOne(
+        { _id: data.id },
+        { count: 1, includeFilters: 1, excludeFilters: 1 }
+      )
+      .orFail(new Error('List not found'));
+    const lastPage = Math.ceil(list.count / 50);
+    return RandomListMapper.toListInfoResponseDto({
+      count: list.count,
+      includeFilters: list.includeFilters,
+      excludeFilters: list.excludeFilters,
+      lastPage,
+    });
   }
 }

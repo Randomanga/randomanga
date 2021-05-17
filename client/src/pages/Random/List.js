@@ -19,26 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useOnScreen from '../../hooks/useOnScreen';
 import { CardSkeleton } from '../../components/Card/CardSkeleton';
 import { getRandomListInfo } from '../../adapters/api';
-const FilterList = ({ filters }) => {
-  return (
-    <Flex maxW="lg" overflow="hidden" flexWrap="wrap">
-      {filters?.genre.map(genre => (
-        <Badge
-          rounded="full"
-          px="2"
-          fontSize="xs"
-          textTransform="capitalize"
-          cursor="default"
-          color="gray.400"
-          margin={0.5}
-          bg="gray.700"
-        >
-          {genre}
-        </Badge>
-      ))}
-    </Flex>
-  );
-};
+import TagBadge from '../../components/TagBadge';
 
 export const RandomList = props => {
   const ID = props.match.params.id;
@@ -58,12 +39,12 @@ export const RandomList = props => {
   const isLoadingMore =
     isLoadingInitialData ||
     (page > 0 && data && typeof data[page - 1] === 'undefined');
-  const isReachingEnd = page === 1;
+  const isReachingEnd = page === listInfo?.lastPage;
   const isRefreshing = isValidating && data && data.length === page;
 
   useEffect(() => {
     getRandomListInfo(ID).then(res => {
-      setListInfo(res.data);
+      console.log(listInfo);
     });
     window.scrollTo(0, 0);
   }, []);
@@ -94,15 +75,41 @@ export const RandomList = props => {
         <Text color="gray.400" fontSize="sm">
           Included genres:
         </Text>
-        <Skeleton isLoaded={listInfo}>
-          <FilterList listInfo={listInfo?.includeFilters} />
-        </Skeleton>
+        <Flex maxW="lg" overflow="hidden" flexWrap="wrap">
+          <Skeleton isLoaded={listInfo}>
+            {listInfo?.includeFilters?.genre?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {listInfo?.includeFilters?.tags?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {listInfo?.includeFilters?.demographic?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {isFiltersEmpty(listInfo?.includeFilters) && (
+              <TagBadge text="All" />
+            )}
+          </Skeleton>
+        </Flex>
         <Text color="gray.400" fontSize="sm">
-          Excluded genres
+          Excluded genres:
         </Text>
-        <Skeleton isLoaded={listInfo}>
-          <FilterList listInfo={listInfo} />
-        </Skeleton>
+        <Flex maxW="lg" overflow="hidden" flexWrap="wrap">
+          <Skeleton isLoaded={listInfo}>
+            {listInfo?.excludeFilters?.genre?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {listInfo?.excludeFilters?.tags?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {listInfo?.excludeFilters?.demographic?.map(genre => (
+              <TagBadge text={genre} />
+            ))}
+            {isFiltersEmpty(listInfo?.excludeFilters) && (
+              <TagBadge text="None" />
+            )}
+          </Skeleton>
+        </Flex>
       </Stack>
       <SimpleGrid boxSizing="border-box" columns={[1, 1, 2, 3]} spacing={6}>
         {list.map(manga => {
@@ -121,3 +128,13 @@ export const RandomList = props => {
     </Box>
   );
 };
+
+function isFiltersEmpty(filters) {
+  if (
+    filters?.genre?.length === 0 &&
+    filters?.tags?.length === 0 &&
+    filters?.demographic?.length === 0
+  )
+    return true;
+  else return false;
+}

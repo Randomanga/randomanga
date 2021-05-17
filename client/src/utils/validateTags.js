@@ -1,6 +1,5 @@
 function validateIncludeTags(tags, hideAdult = true) {
   if (tags.length === 0) return { genre: [], tags: [], demographic: [] };
-  const genre = tags.filter(tag => tag.category === 'Genres');
 
   return {
     genre: tags.filter(tag => tag.category === 'Genres').map(tag => tag.label),
