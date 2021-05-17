@@ -16,12 +16,14 @@ function validateIncludeTags(tags, hideAdult = true) {
 function validateExcludeTags(tags) {
   if (!tags) return {};
   return {
-    genre: tags.filter(tag => tag.value === 'Genres').map(tag => tag.label),
+    genre: tags.filter(tag => tag.category === 'Genres').map(tag => tag.label),
     tags: tags
-      .filter(tag => tag.value !== 'Genres' && tag.value !== 'Demographic')
+      .filter(
+        tag => tag.category !== 'Genres' && tag.category !== 'Demographic'
+      )
       .map(tag => tag.label),
     demographic: tags
-      .filter(tag => tag.value === 'Demographic')
+      .filter(tag => tag.category === 'Demographic')
       .map(tag => tag.label),
   };
 }

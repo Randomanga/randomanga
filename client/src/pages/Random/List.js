@@ -44,7 +44,7 @@ export const RandomList = props => {
 
   useEffect(() => {
     getRandomListInfo(ID).then(res => {
-      console.log(listInfo);
+      setListInfo(res.data);
     });
     window.scrollTo(0, 0);
   }, []);
@@ -69,7 +69,7 @@ export const RandomList = props => {
         </Heading>
         <SkeletonText noOfLines={1} isLoaded={listInfo}>
           <Text color="gray.400" fontSize="sm">
-            {`Manga count: ${listInfo?.count}`}
+            {`Number of manga found: ${listInfo?.count}`}
           </Text>
         </SkeletonText>
         <Text color="gray.400" fontSize="sm">

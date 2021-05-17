@@ -20,6 +20,7 @@ const SimpleForm = props => {
     setIsLoading(true);
     const includeFilters = validateIncludeTags(included);
     const excludeFilters = validateExcludeTags(excluded);
+    console.log(excludeFilters);
     try {
       const listID = await createRandomList({
         includeFilters,
