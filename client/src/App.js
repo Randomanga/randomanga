@@ -14,6 +14,7 @@ import { RandomList } from './pages/Random/List';
 import useUser from './hooks/data/useUser';
 import { authStatus } from './adapters/api';
 import { ScrollToTop } from './components/ScrollToTop';
+import { Profile } from './pages/Profile';
 
 function App() {
   const { user, mutate } = useUser();
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/sign-up" component={SignUp} />
 
           <Route exact path="/random-lists/:id" component={RandomList} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
         <Footer />
         <ToastContainer
