@@ -20,7 +20,7 @@ import axios from 'axios';
 
 const Controls = ({ manga, ...props }) => {
   const { data, error, mutate } = useSWR(
-    'http://192.168.1.242:5000/api/manga/daily',
+    'http://192.168.188.20:5000/api/manga/daily',
     {
       refreshInterval: 0,
     }
@@ -75,7 +75,7 @@ const Controls = ({ manga, ...props }) => {
 };
 
 function Card(props) {
-  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily', {
+  const { data, error } = useSWR('http://192.168.188.20:5000/api/manga/daily', {
     refreshInterval: 0,
   });
   return (
@@ -119,7 +119,7 @@ function Card(props) {
               flexWrap="wrap"
               maxH="1.1rem"
             >
-              {data?.manga.genre.map(genre => (
+              {data?.manga.genre.map((genre) => (
                 <Badge
                   rounded="full"
                   px="2"
@@ -131,7 +131,7 @@ function Card(props) {
                   {genre}
                 </Badge>
               ))}
-              {data?.manga.tags.map(tag => (
+              {data?.manga.tags.map((tag) => (
                 <Badge
                   rounded="full"
                   px="2"

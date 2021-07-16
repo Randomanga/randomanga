@@ -20,7 +20,7 @@ query ($ids: [Int]) {
 }
 `;
 
-const fetcher = async url => {
+const fetcher = async (url) => {
   const { data } = await axios.get(url, { withCredentials: true });
   const list = await request('https://graphql.anilist.co', query, {
     ids: data.list,
@@ -32,7 +32,7 @@ function useRandomList(id) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null;
     return [
-      `http://192.168.1.242:5000/api/random-lists/${id}/${
+      `http://192.168.188.20:5000/api/random-lists/${id}/${
         Number(pageIndex) + 1
       }`,
     ];

@@ -1,7 +1,7 @@
 import axios from 'axios';
 async function createRandomList(filters) {
   const list = await axios.post(
-    'http://192.168.1.242:5000/api/random-lists',
+    'http://192.168.188.20:5000/api/random-lists',
     filters
   );
   return list.data._id;
@@ -10,37 +10,40 @@ async function createRandomList(filters) {
 async function toggleLikeManga(id, flag) {
   return axios({
     method: flag ? 'delete' : 'post',
-    url: `http://192.168.1.242:5000/api/manga/${id}/likes`,
+    url: `http://192.168.188.20:5000/api/manga/${id}/likes`,
     withCredentials: true,
   });
 }
 async function login(data) {
-  return axios.post('http://192.168.1.242:5000/api/auth/login', data, {
+  return axios.post('http://192.168.188.20:5000/api/auth/login', data, {
     withCredentials: true,
   });
 }
 async function signup(data) {
-  return axios.post('http://192.168.1.242:5000/api/auth/register', data);
+  return axios.post('http://192.168.188.20:5000/api/auth/register', data, {
+    withCredentials: true,
+  });
 }
 
 async function authStatus() {
-  return axios.get('http://192.168.1.242:5000/api/auth/status', {
+  return axios.get('http://192.168.188.20:5000/api/auth/status', {
     withCredentials: true,
   });
 }
 async function logout() {
-  return axios.delete('http://192.168.1.242:5000/api/auth/logout', {
+  return axios.delete('http://192.168.188.20:5000/api/auth/logout', {
     withCredentials: true,
   });
 }
 async function getRandomListInfo(id) {
-  return axios.get(`http://192.168.1.242:5000/api/random-lists/${id}/info`);
+  return axios.get(`http://192.168.188.20:5000/api/random-lists/${id}/info`);
 }
 
 export {
   createRandomList,
   toggleLikeManga,
   login,
+  signup,
   authStatus,
   getRandomListInfo,
   logout,

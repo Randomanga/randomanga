@@ -10,7 +10,7 @@ import React from 'react';
 import useSWR from 'swr';
 //https://s4.anilist.co/file/anilistcdn/media/manga/banner/101233-4Q41vXLKrjhe.jpg
 const Banner = ({ manga }) => {
-  const { data, error } = useSWR('http://192.168.1.242:5000/api/manga/daily', {
+  const { data, error } = useSWR('http://192.168.188.20:5000/api/manga/daily', {
     refreshInterval: 0,
   });
   return (

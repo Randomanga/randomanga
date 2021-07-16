@@ -25,6 +25,6 @@ export class UserController extends BaseHttpController {
       user: req.user!,
     });
     await this._userService.updateToken(data);
-    res.redirect('http://192.168.1.242:3000/');
+    res.redirect('http://192.168.188.20:3000/');
   }
 }
