@@ -7,12 +7,10 @@ import {
   SkeletonText,
 } from '@chakra-ui/react';
 import React from 'react';
-import useSWR from 'swr';
+import useDaily from '../../hooks/data/useDaily';
 //https://s4.anilist.co/file/anilistcdn/media/manga/banner/101233-4Q41vXLKrjhe.jpg
-const Banner = ({ manga }) => {
-  const { data, error } = useSWR('http://192.168.188.20:5000/api/manga/daily', {
-    refreshInterval: 0,
-  });
+const Banner = () => {
+  const { manga, isLoading } = useDaily();
   return (
     <Box
       w="full"
@@ -29,7 +27,7 @@ const Banner = ({ manga }) => {
           base: '96',
           md: 'var(--chakra-space-104)',
         })}
-        isLoaded={data}
+        isLoaded={!isLoading}
       >
         <Image
           w="full"
@@ -38,7 +36,7 @@ const Banner = ({ manga }) => {
           alt="daily manga banner"
           loading="lazy"
           objectPosition="center"
-          src={data?.manga.banner}
+          src={manga?.banner}
         />
       </Skeleton>
       <Box
@@ -59,7 +57,7 @@ const Banner = ({ manga }) => {
         textShadow="1px 1px 3px rgb(0 0 0 / 29%), 2px 4px 7px rgb(73 64 125 / 35%);"
         pl={['5%', '12%']}
       >
-        {data && 'Random Manga For You'}
+        {!isLoading && 'Random Manga For You'}
       </Heading>
     </Box>
   );

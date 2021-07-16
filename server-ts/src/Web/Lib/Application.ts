@@ -29,12 +29,8 @@ export abstract class Application {
   private initCors() {
     this._server.use(
       cors({
-        origin: [
-          'http://192.168.188.20:3000',
-          'http://localhost:3000',
-          'http://192.168.188.20:3001',
-          'http://192.168.188.20:43765',
-        ],
+        origin: 'http://192.168.188.20:3000',
+
         credentials: true,
         preflightContinue: true,
       })

@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 async function createRandomList(filters) {
   const list = await axios.post(
     'http://192.168.188.20:5000/api/random-lists',
@@ -6,7 +7,12 @@ async function createRandomList(filters) {
   );
   return list.data._id;
 }
-
+async function getDailyManga() {
+  const res = await axios.get('http://192.168.188.20:5000/api/manga/daily', {
+    withCredentials: true,
+  });
+  return res.data;
+}
 async function toggleLikeManga(id, flag) {
   return axios({
     method: flag ? 'delete' : 'post',
@@ -47,4 +53,5 @@ export {
   authStatus,
   getRandomListInfo,
   logout,
+  getDailyManga,
 };
