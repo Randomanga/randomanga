@@ -29,6 +29,7 @@ import {
   Radio,
   useEditableControls,
   VStack,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
 import { Editable, EditableInput, EditablePreview } from '@chakra-ui/react';
@@ -76,6 +77,7 @@ export function Settings() {
   const [uploadedImage, setUploadedImage] = useState();
   const onImageDropAccepted = (acceptedFiles, fileRejections) => {
     setUploadedImage(acceptedFiles[0]);
+    console.log(uploadedImage);
   };
   const onImageDropRejected = () => {
     toast.error('Max file size is 2MB. ');
@@ -86,7 +88,7 @@ export function Settings() {
       <Heading py={5} fontFamily="body">
         Settings
       </Heading>
-      <VStack bg="gray.800" p={5} spacing="3">
+      <VStack bg="gray.800" p={5} spacing="5">
         <FormControl>
           <FormLabel color="gray.400" fontSize="md">
             Username:
@@ -98,12 +100,15 @@ export function Settings() {
             fontSize="md"
             value={username}
             onChange={onUsernameChange}
+            selectAllOnFocus={false}
           >
             <EditablePreview />
             <EditableInput mr="3" as="input" />
             <EditableControl />
           </Editable>
         </FormControl>
+        {/* 
+        Shou
         <FormControl>
           <FormLabel color="gray.400" fontSize="md">
             Email:
@@ -120,7 +125,7 @@ export function Settings() {
             <EditableInput mr="3" as="input" />
             <EditableControl />
           </Editable>
-        </FormControl>
+        </FormControl> */}
         <FormControl>
           <FormLabel color="gray.400">About: </FormLabel>
           <Textarea
@@ -129,17 +134,6 @@ export function Settings() {
             placeholder="A short description about yourself."
             maxLength={200}
           />
-          <Button
-            size="sm"
-            bg="blue.400"
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus
-            _active
-          >
-            Save
-          </Button>
         </FormControl>
 
         <FormControl>
@@ -213,6 +207,17 @@ export function Settings() {
             later directly from randomanga.
           </FormHelperText>
         </FormControl>
+        <Button
+          size="sm"
+          bg="blue.400"
+          _hover={{
+            bg: 'blue.500',
+          }}
+          _focus
+          _active
+        >
+          Save changes
+        </Button>
       </VStack>
     </Box>
   );
