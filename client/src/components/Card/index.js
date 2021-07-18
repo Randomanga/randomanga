@@ -127,7 +127,7 @@ export const Card = ({ manga }) => {
               pl={{ base: 2, md: 3 }}
               overflow="hidden"
               flexWrap="wrap"
-              maxH="1.1rem"
+              maxH="1.12rem"
             >
               {manga.genres.map(genre => (
                 <Badge

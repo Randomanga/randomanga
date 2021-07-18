@@ -44,6 +44,16 @@ async function logout() {
 async function getRandomListInfo(id) {
   return axios.get(`http://192.168.188.20:5000/api/random-lists/${id}/info`);
 }
+async function getAlIdentity() {
+  return axios.get('http://192.168.188.20:5000/api/oauth/identity', {
+    withCredentials: true,
+  });
+}
+async function getTokens() {
+  return axios.get('http://192.168.188.20:5000/api/users/token', {
+    withCredentials: true,
+  });
+}
 
 export {
   createRandomList,
@@ -54,4 +64,6 @@ export {
   getRandomListInfo,
   logout,
   getDailyManga,
+  getAlIdentity,
+  getTokens,
 };

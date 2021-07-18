@@ -30,15 +30,17 @@ import {
   useEditableControls,
   VStack,
   FormErrorMessage,
+  HStack,
 } from '@chakra-ui/react';
-import { FaUser } from 'react-icons/fa';
+import { FaTimes, FaUser } from 'react-icons/fa';
 import { Editable, EditableInput, EditablePreview } from '@chakra-ui/react';
 import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import useUser from '../hooks/data/useUser';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
+import { Redirect, useHistory } from 'react-router-dom';
+import { getAlIdentity, getTokens } from '../adapters/api';
 const EditableControl = (props) => {
   const {
     isEditing,
@@ -61,13 +63,28 @@ const EditableControl = (props) => {
 
 export function Settings() {
   const { user } = useUser();
-
+  const [al, setAl] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [description, setDescription] = useState();
+  const [alIdentity, setAlIdentity] = useState();
+  const history = useHistory();
+
+  const checkIfAuthorized = async () => {
+    const { data } = await getTokens();
+    return data.alToken ? true : false;
+  };
+
+  const fetchAlIdentity = async () => {
+    const authorized = await checkIfAuthorized();
+    if (authorized) return;
+    const { data } = await getAlIdentity();
+    setAlIdentity(data.identity);
+  };
 
   useEffect(() => {
     setUsername(user?.username);
+    fetchAlIdentity();
   }, [user]);
 
   const onUsernameChange = (change) => setUsername(change);
@@ -191,17 +208,29 @@ export function Settings() {
 
         <FormControl>
           <FormLabel color="gray.400">Anilist</FormLabel>
-          <Button
-            bg="blue.400"
-            size="sm"
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus
-            _active
-          >
-            Authorize
-          </Button>
+          <HStack>
+            <Button
+              bg={!alIdentity ? 'green.500' : 'blue.400'}
+              size="sm"
+              _hover={{
+                bg: !alIdentity ? 'green.600' : 'blue.500',
+              }}
+              _focus
+              _active
+              disabled={!alIdentity}
+              as="a"
+              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.188.20:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
+            >
+              {!alIdentity ? 'Authorized' : 'Authorize'}
+            </Button>
+            {!alIdentity ? (
+              <IconButton
+                size="sm"
+                aria-label="Log out of anilist"
+                icon={<FaTimes />}
+              />
+            ) : null}
+          </HStack>
           <FormHelperText fontSize="xs">
             Please authorize if you wish to save manga you want to read for
             later directly from randomanga.

@@ -47,8 +47,8 @@ export class UserService implements IUserService {
       },
       body: JSON.stringify({
         grant_type: 'authorization_code',
-        client_id: '2475',
-        client_secret: 'RKa2OMI8Z8ViiIhGmeuCu5RqmXPWtMQasgpGEfEW',
+        client_id: '6064',
+        client_secret: 'i0SvxjOkapHMuhaeS7DDTaKPArk8W7Lk36MgnJZg',
         redirect_uri: 'http://192.168.188.20:5000/api/oauth/token',
         code: code,
       }),

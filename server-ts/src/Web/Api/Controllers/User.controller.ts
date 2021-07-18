@@ -29,7 +29,7 @@ export class UserController extends BaseHttpController {
       user: req.user!,
     });
     await this._userService.updateToken(data);
-    res.redirect('http://192.168.188.20:3000/');
+    res.redirect('http://192.168.188.20:3000/settings');
   }
   async show(req: Request, res: Response) {
     const dto = UserMapper.toShowDto({ id: req.params.id! });
