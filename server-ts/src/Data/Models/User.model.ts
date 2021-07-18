@@ -52,6 +52,10 @@ const UserModel: Schema = new Schema({
     type: Date,
     default: Date.now,
   },
+  about: {
+    type: String,
+    default: null,
+  },
 });
 
 export default mongoose.model<IUserModel & Document>('Users', UserModel);

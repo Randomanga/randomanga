@@ -30,3 +30,6 @@ export class IdentityResponseDto {
   _id: IUserModel['_id'];
   identity: string;
 }
+export class UserShowDto {
+  id: IUserModel['_id'];
+}

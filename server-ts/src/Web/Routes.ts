@@ -24,7 +24,16 @@ browter.group('/api', (browter) => {
     browter.get('/status', 'AuthController.status', [AuthValidate({})]);
     browter.delete('/logout', 'AuthController.logout', [AuthValidate({})]);
   });
-  browter.group('/users', (browter) => {});
+  browter.group('/users', (browter) => {
+    // browter.get('/', 'UserController.index', [AuthValidate({})]);
+    browter.get('/token', 'UserController.token', [AuthValidate({})]);
+    browter.get('/:id', 'UserController.show');
+    browter.patch('/:id', 'UserController.update', [AuthValidate({})]);
+    browter.put('/:id/avatar', 'UserController.updateAvatar', [
+      AuthValidate({}),
+    ]);
+    // browter.delete('/:id', 'UserController.destroy', [AuthValidate({})]);
+  });
   browter.group('/manga', (browter) => {
     browter.get('/daily', 'MangaController.daily', [
       AuthValidate({ noCredentials: true }),

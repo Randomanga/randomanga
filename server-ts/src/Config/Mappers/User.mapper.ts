@@ -5,6 +5,7 @@ import {
   IdentityResponseDto,
   LoginUserRequestDto,
   UpdateALTokenRequestDto,
+  UserShowDto,
   UserTokensResponse,
 } from 'Core/Dtos/User/User.dtos';
 import { IUserModel } from 'Data/Models/User.model';
@@ -55,6 +56,11 @@ export class UserMapper {
       username: data.username,
       alToken: data.alAuth.token,
     } as UserTokensResponse;
+  }
+  public static toShowDto(data: UserShowDto) {
+    return {
+      id: data.id,
+    } as UserShowDto;
   }
   /**
    * A generic response

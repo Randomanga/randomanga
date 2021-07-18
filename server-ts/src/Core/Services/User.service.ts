@@ -2,6 +2,7 @@ import { UserMapper } from 'Config/Mappers/User.mapper';
 import {
   CreateIdentityDto,
   UpdateALTokenRequestDto,
+  UserShowDto,
 } from 'Core/Dtos/User/User.dtos';
 import { IUserService } from 'Core/Ports/IUser.service';
 import { IUsersRepository } from 'Core/Ports/IUsers.repository';
@@ -57,5 +58,15 @@ export class UserService implements IUserService {
       access_token: body.access_token,
       refresh_token: body.refresh_token,
     };
+  }
+  async show(data: UserShowDto) {
+    const user = await this._usersRepo.findOneUser(data.id);
+    if (!user) throw Error('User not found');
+    return user;
+  }
+  async token(data: UserShowDto) {
+    const user = await this._usersRepo.findOneUser(data.id);
+    if (!user) throw Error('User not found');
+    return UserMapper.toUserTokensResponse(user);
   }
 }
