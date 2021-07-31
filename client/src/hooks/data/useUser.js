@@ -1,7 +1,18 @@
 import useSWR from 'swr';
 import axios from 'axios';
-const fetch = (url) =>
-  axios.get(url, { withCredentials: true }).then((res) => res.data);
+const fetch = async (url) => {
+  const { data } = await axios.get(url, { withCredentials: true });
+  const {
+    data: { alToken },
+  } = await axios.get('http://192.168.188.20:5000/api/users/token', {
+    withCredentials: true,
+  });
+
+  return {
+    ...data,
+    alToken,
+  };
+};
 export default function useUser() {
   const { data, error, mutate, isValidating } = useSWR(
     'http://192.168.188.20:5000/api/auth/status',

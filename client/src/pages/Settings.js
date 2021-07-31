@@ -40,7 +40,7 @@ import Dropzone, { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Redirect, useHistory } from 'react-router-dom';
-import { getAlIdentity, getTokens } from '../adapters/api';
+import { getAlIdentity } from '../adapters/api';
 const EditableControl = (props) => {
   const {
     isEditing,
@@ -63,21 +63,14 @@ const EditableControl = (props) => {
 
 export function Settings() {
   const { user } = useUser();
-  const [al, setAl] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [description, setDescription] = useState();
   const [alIdentity, setAlIdentity] = useState();
   const history = useHistory();
 
-  const checkIfAuthorized = async () => {
-    const { data } = await getTokens();
-    return data.alToken ? true : false;
-  };
-
   const fetchAlIdentity = async () => {
-    const authorized = await checkIfAuthorized();
-    if (authorized) return;
+    if (user.alToken) return;
     const { data } = await getAlIdentity();
     setAlIdentity(data.identity);
   };
@@ -210,20 +203,20 @@ export function Settings() {
           <FormLabel color="gray.400">Anilist</FormLabel>
           <HStack>
             <Button
-              bg={!alIdentity ? 'green.500' : 'blue.400'}
+              bg={user.alToken ? 'green.500' : 'blue.400'}
               size="sm"
               _hover={{
-                bg: !alIdentity ? 'green.600' : 'blue.500',
+                bg: user.alToken ? 'green.600' : 'blue.500',
               }}
               _focus
               _active
-              disabled={!alIdentity}
+              disabled={user.alToken}
               as="a"
               href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.188.20:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
             >
-              {!alIdentity ? 'Authorized' : 'Authorize'}
+              {user.alToken ? 'Authorized' : 'Authorize'}
             </Button>
-            {!alIdentity ? (
+            {user.alToken ? (
               <IconButton
                 size="sm"
                 aria-label="Log out of anilist"

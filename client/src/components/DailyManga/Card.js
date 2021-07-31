@@ -25,7 +25,7 @@ const Controls = (props) => {
       const res = await toggleLikeManga(manga?.al_id, manga?.liked);
       mutate();
     } catch (e) {
-      toast.error(e.response.data.error, {
+      toast.error('You need to sign in to like manga', {
         toastId: 'likeerr',
       });
     }

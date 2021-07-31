@@ -16,7 +16,9 @@ import { authStatus } from './adapters/api';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
-
+import ProtectedRoute from './components/Router/ProtectedRoute';
+import { Unauthorized } from './pages/Unauthorized';
+import { NotFound } from './pages/404';
 function App() {
   const { user, mutate } = useUser();
   useEffect(() => {
@@ -36,8 +38,10 @@ function App() {
           <Route exact path="/sign-up" component={SignUp} />
 
           <Route exact path="/random-lists/:id" component={RandomList} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/settings" component={Settings} />
+          <Route exact path="/profile/:id" component={Profile} />
+          <ProtectedRoute exact path="/settings" component={Settings} />
+          <Route exact path="/unauthorized" component={Unauthorized} />
+          <Route path="" component={NotFound} />
         </Switch>
         <Footer />
         <ToastContainer

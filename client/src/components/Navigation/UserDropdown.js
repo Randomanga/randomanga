@@ -65,7 +65,7 @@ export const UserDropdown = ({ closeNavigation }) => {
           icon={FaUserAlt}
           placeholder="Profile"
           close={closeNavigation}
-          href="/profile"
+          href={`/profile/${user._id}`}
         />
         <Item
           icon={FaCog}
