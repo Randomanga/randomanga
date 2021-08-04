@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "Bootstrap.ts",
   "scripts": {
-    "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --no-notify -r tsconfig-paths/register src/Bootstrap.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --no-notify -r tsconfig-paths/register src/Bootstrap.ts",
     "test:watch": "NODE_ENV=test jest --watch"
   },
   "license": "MIT",

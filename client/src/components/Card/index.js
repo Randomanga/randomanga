@@ -28,19 +28,51 @@ import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import useDebounce from '../../hooks/useDebounce';
-export const Card = ({ manga }) => {
+import request from 'graphql-request';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { addToPlanning, removeFromPlanning } from '../../adapters/api';
+
+export const Card = ({ data }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const debouncedExpand = useDebounce(isHovering, 300);
-
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
 
+  const [manga, setManga] = useState(data);
+  const [onList, setOnList] = useState(manga.mediaListEntry != null);
+  const addToList = async () => {
+    if (!localStorage.getItem('alToken')) {
+      toast.error('You need to authenticate with anilist to add manga');
+      return;
+    }
+    try {
+      const data = await addToPlanning(manga.id);
+      toast.success('Manga added to planning list');
+      setManga({ ...manga, mediaListEntry: data.SaveMediaListEntry });
+    } catch (e) {
+      toast.error('An error ocurred. Please try again');
+    }
+  };
+  const removeFromList = async () => {
+    try {
+      const response = await removeFromPlanning(manga.mediaListEntry.id);
+      toast.success('Manga removed from list');
+      setManga({ ...manga, mediaListEntry: null });
+    } catch (e) {
+      toast.error('An error ocurred. Please try again');
+    }
+  };
+
+  useEffect(() => {
+    setOnList(manga.mediaListEntry != null);
+  }, [manga]);
+
   useEffect(() => {
     debouncedExpand ? setExpanded(true) : setExpanded(false);
   }, [debouncedExpand]);
-
   return (
     <React.Fragment key={manga.id}>
       <Flex
@@ -129,10 +161,10 @@ export const Card = ({ manga }) => {
               flexWrap="wrap"
               maxH="1.12rem"
             >
-              {manga.genres.map(genre => (
+              {manga.genres.map((genre) => (
                 <Badge
                   rounded="full"
-                  key={genre}
+                  key={uuidv4()}
                   px="2"
                   fontSize="xs"
                   textTransform="capitalize"
@@ -144,21 +176,21 @@ export const Card = ({ manga }) => {
               ))}
             </HStack>
             <Tooltip
-              label="On list"
+              label={onList ? 'Remove from planning' : 'Add to planning'}
               bg="gray.700"
               color="white"
               hasArrow
               fontSize="md"
-              aria-label="Add/Remove manga from list"
-              openDelay={300}
+              aria-label={onList ? 'Remove from planning' : 'Add to planning'}
+              openDelay={350}
             >
               <IconButton
                 bg="transparent"
                 _hover
                 _focus
                 _active
-                onClick={() => setIsOpen(true)}
-                icon={<FaPlusSquare />}
+                onClick={onList ? () => setIsOpen(true) : () => addToList()}
+                icon={onList ? <FaCheckSquare /> : <FaPlusSquare />}
                 size="xs"
                 fontSize={'lg'}
               />
@@ -179,14 +211,20 @@ export const Card = ({ manga }) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to remove it?
+              Are you sure you want to remove this manga from your list?
             </AlertDialogBody>
-
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  onClose();
+                  removeFromList(manga.mediaListEntry.id);
+                }}
+                ml={3}
+              >
                 Remove
               </Button>
             </AlertDialogFooter>

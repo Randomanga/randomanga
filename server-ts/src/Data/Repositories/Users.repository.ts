@@ -22,6 +22,16 @@ export class UsersRepository implements IUsersRepository {
   public async findOneByUsername(username: string) {
     return UserModel.findOne({ username: username });
   }
+  public async removeAnilistAuth(id: string) {
+    const user = await this._model.updateOne(
+      { _id: id },
+      {
+        $unset: { alAuth: 1 },
+      }
+    );
+    return user ? user.nModified === 1 : false;
+  }
+
   public async saveAnilistAuth(
     data: { access_token: string; refresh_token: string },
     user: IUserModel

@@ -4,10 +4,10 @@ const fetch = async (url) => {
   const { data } = await axios.get(url, { withCredentials: true });
   const {
     data: { alToken },
-  } = await axios.get('http://192.168.188.20:5000/api/users/token', {
+  } = await axios.get('http://192.168.178.63:5000/api/users/token', {
     withCredentials: true,
   });
-
+  localStorage.setItem('alToken', alToken);
   return {
     ...data,
     alToken,
@@ -15,13 +15,13 @@ const fetch = async (url) => {
 };
 export default function useUser() {
   const { data, error, mutate, isValidating } = useSWR(
-    'http://192.168.188.20:5000/api/auth/status',
+    'http://192.168.178.63:5000/api/auth/status',
     fetch,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         if (error.response.status === 401) return;
 
-        if (key === 'http://192.168.188.20:5000/api/auth/status') return;
+        if (key === 'http://192.168.178.63:5000/api/auth/status') return;
 
         if (retryCount >= 2) return;
 

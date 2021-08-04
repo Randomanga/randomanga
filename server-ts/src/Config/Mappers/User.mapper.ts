@@ -71,6 +71,7 @@ export class UserMapper {
       username: data.username,
       avatar: data.avatar,
       createdAt: data.createdAt,
+      about: data.about,
     } as IUserModel;
   }
 

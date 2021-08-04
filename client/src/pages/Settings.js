@@ -40,7 +40,7 @@ import Dropzone, { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Redirect, useHistory } from 'react-router-dom';
-import { getAlIdentity } from '../adapters/api';
+import { getAlIdentity, removeAlAuth } from '../adapters/api';
 const EditableControl = (props) => {
   const {
     isEditing,
@@ -68,7 +68,7 @@ export function Settings() {
   const [description, setDescription] = useState();
   const [alIdentity, setAlIdentity] = useState();
   const history = useHistory();
-
+  console.log(user);
   const fetchAlIdentity = async () => {
     if (user.alToken) return;
     const { data } = await getAlIdentity();
@@ -79,7 +79,6 @@ export function Settings() {
     setUsername(user?.username);
     fetchAlIdentity();
   }, [user]);
-
   const onUsernameChange = (change) => setUsername(change);
   const onEmailChange = (change) => setEmail(change);
   const onDescChange = (e) => setDescription(e.target.value);
@@ -210,19 +209,20 @@ export function Settings() {
               }}
               _focus
               _active
-              disabled={user.alToken}
+              disabled={user.alToken !== null}
               as="a"
-              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.188.20:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
+              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.178.63:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
             >
               {user.alToken ? 'Authorized' : 'Authorize'}
             </Button>
-            {user.alToken ? (
+            {/* {user.alToken ? (
               <IconButton
                 size="sm"
                 aria-label="Log out of anilist"
                 icon={<FaTimes />}
+                onClick={removeToken}
               />
-            ) : null}
+            ) : null} */}
           </HStack>
           <FormHelperText fontSize="xs">
             Please authorize if you wish to save manga you want to read for

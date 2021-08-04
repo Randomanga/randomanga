@@ -32,6 +32,9 @@ browter.group('/api', (browter) => {
     browter.put('/:id/avatar', 'UserController.updateAvatar', [
       AuthValidate({}),
     ]);
+    browter.delete('/:id/alAuth', 'UserController.removeAlToken', [
+      AuthValidate({}),
+    ]);
     // browter.delete('/:id', 'UserController.destroy', [AuthValidate({})]);
   });
   browter.group('/manga', (browter) => {

@@ -21,7 +21,7 @@ import { CardSkeleton } from '../../components/Card/CardSkeleton';
 import { getRandomListInfo } from '../../adapters/api';
 import TagBadge from '../../components/TagBadge';
 
-export const RandomList = props => {
+export const RandomList = (props) => {
   const ID = props.match.params.id;
   const [listInfo, setListInfo] = useState();
   const {
@@ -31,6 +31,9 @@ export const RandomList = props => {
     isLoading: isLoadingInitialData,
     isValidating,
   } = useRandomList(ID);
+
+
+
   const ref = useRef();
   const isVisible = useOnScreen(ref);
 
@@ -43,7 +46,7 @@ export const RandomList = props => {
   const isRefreshing = isValidating && data && data.length === page;
 
   useEffect(() => {
-    getRandomListInfo(ID).then(res => {
+    getRandomListInfo(ID).then((res) => {
       setListInfo(res.data);
     });
   }, []);
@@ -76,14 +79,14 @@ export const RandomList = props => {
         </Text>
         <Flex maxW="lg" overflow="hidden" flexWrap="wrap">
           <Skeleton isLoaded={listInfo}>
-            {listInfo?.includeFilters?.genre?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.includeFilters?.genre?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
-            {listInfo?.includeFilters?.tags?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.includeFilters?.tags?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
-            {listInfo?.includeFilters?.demographic?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.includeFilters?.demographic?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
             {isFiltersEmpty(listInfo?.includeFilters) && (
               <TagBadge text="All" />
@@ -95,14 +98,14 @@ export const RandomList = props => {
         </Text>
         <Flex maxW="lg" overflow="hidden" flexWrap="wrap">
           <Skeleton isLoaded={listInfo}>
-            {listInfo?.excludeFilters?.genre?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.excludeFilters?.genre?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
-            {listInfo?.excludeFilters?.tags?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.excludeFilters?.tags?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
-            {listInfo?.excludeFilters?.demographic?.map(genre => (
-              <TagBadge text={genre} />
+            {listInfo?.excludeFilters?.demographic?.map((genre) => (
+              <TagBadge text={genre} key={uuidv4()} />
             ))}
             {isFiltersEmpty(listInfo?.excludeFilters) && (
               <TagBadge text="None" />
@@ -111,8 +114,8 @@ export const RandomList = props => {
         </Flex>
       </Stack>
       <SimpleGrid boxSizing="border-box" columns={[1, 1, 2, 3]} spacing={6}>
-        {list.map(manga => {
-          return <Card manga={manga} />;
+        {list.map((manga) => {
+          return <Card data={manga}  />;
         })}
 
         {isLoadingMore ? [...Array(3).keys()].map(() => <CardSkeleton />) : ''}

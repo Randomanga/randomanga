@@ -10,4 +10,5 @@ export interface IUsersRepository {
     data: { access_token: string; refresh_token: string },
     user: IUserModel
   ): Promise<IUserModel>;
+  removeAnilistAuth(id: string): Promise<boolean>;
 }

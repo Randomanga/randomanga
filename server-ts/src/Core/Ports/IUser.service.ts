@@ -12,4 +12,5 @@ export interface IUserService {
   createAlIdentity(data: CreateIdentityDto): Promise<IdentityResponseDto>;
   show(data: UserShowDto): Promise<IUserModel>;
   token(data: UserShowDto): Promise<UserTokensResponse>;
+  removeAlToken(data: UserShowDto): Promise<boolean>;
 }

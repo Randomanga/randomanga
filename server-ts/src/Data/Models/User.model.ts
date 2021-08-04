@@ -12,6 +12,7 @@ export interface IUserModel {
     token: string;
     refreshToken: string;
   };
+  about: string;
 }
 const UserModel: Schema = new Schema({
   username: {

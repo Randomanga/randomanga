@@ -39,7 +39,7 @@ function App() {
 
           <Route exact path="/random-lists/:id" component={RandomList} />
           <Route exact path="/profile/:id" component={Profile} />
-          <ProtectedRoute exact path="/settings" component={Settings} />
+          <Route exact path="/settings" component={Settings} />
           <Route exact path="/unauthorized" component={Unauthorized} />
           <Route path="" component={NotFound} />
         </Switch>

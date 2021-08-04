@@ -3,6 +3,7 @@ import mongodb from 'mongodb';
 
 export class Database {
   public static async connect(uri: string = process.env.DB_URI as string) {
+    console.log(uri);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

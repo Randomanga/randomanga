@@ -38,6 +38,9 @@ export class UserService implements IUserService {
     const user = await this._usersRepo.saveAnilistAuth(authData, data.user);
     return UserMapper.toUserTokensResponse(user);
   }
+  async removeAlToken(data: UserShowDto) {
+    return this._usersRepo.removeAnilistAuth(data.id);
+  }
   private async getAnilistAuthData(code: string) {
     const response = await fetch('https://anilist.co/api/v2/oauth/token', {
       method: 'POST',
@@ -49,7 +52,7 @@ export class UserService implements IUserService {
         grant_type: 'authorization_code',
         client_id: '6064',
         client_secret: 'i0SvxjOkapHMuhaeS7DDTaKPArk8W7Lk36MgnJZg',
-        redirect_uri: 'http://192.168.188.20:5000/api/oauth/token',
+        redirect_uri: 'http://192.168.178.63:5000/api/oauth/token',
         code: code,
       }),
     });
