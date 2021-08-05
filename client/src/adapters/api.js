@@ -104,6 +104,42 @@ async function removeFromPlanning(id) {
     }
   );
 }
+async function alSearch(query) {
+  const alToken = localStorage.getItem('alToken');
+  return request(
+    'https://graphql.anilist.co/',
+    `
+    query($query: String!) {
+      Page{
+        media(search: $query,type: MANGA, format: MANGA) {
+          id
+          title {
+            romaji
+          }
+          coverImage {
+            large 
+            extraLarge
+            medium
+            color
+          }
+          mediaListEntry {
+            id
+            status
+          }
+        }
+      }
+    }
+    `,
+    {
+      query,
+    },
+    {
+      ...(alToken ? { Authorization: `Bearer ${alToken}` } : {}),
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+  );
+}
 
 export {
   createRandomList,
@@ -112,6 +148,7 @@ export {
   login,
   removeAlAuth,
   addToPlanning,
+  alSearch,
   signup,
   authStatus,
   getProfile,

@@ -19,7 +19,10 @@ export default function useUser() {
     fetch,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        if (error.response.status === 401) return;
+        if (error.response.status === 401) {
+          localStorage.removeItem('alToken');
+          return;
+        }
 
         if (key === 'http://192.168.178.63:5000/api/auth/status') return;
 

@@ -19,6 +19,8 @@ import { Settings } from './pages/Settings';
 import ProtectedRoute from './components/Router/ProtectedRoute';
 import { Unauthorized } from './pages/Unauthorized';
 import { NotFound } from './pages/404';
+import { Related } from './pages/Related/index';
+
 function App() {
   const { user, mutate } = useUser();
   useEffect(() => {
@@ -41,6 +43,7 @@ function App() {
           <Route exact path="/profile/:id" component={Profile} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/unauthorized" component={Unauthorized} />
+          <Route exact path="/recommendations" component={Related} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

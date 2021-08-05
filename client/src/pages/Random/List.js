@@ -32,8 +32,6 @@ export const RandomList = (props) => {
     isValidating,
   } = useRandomList(ID);
 
-
-
   const ref = useRef();
   const isVisible = useOnScreen(ref);
 
@@ -62,7 +60,6 @@ export const RandomList = (props) => {
       setPage(page + 1);
     }
   }, [isVisible]);
-
   return (
     <Box minH={'60vh'} maxW="7xl" mx="auto" mt={16} px={['2', '5']} maxW="7xl">
       <Stack py={10} maxW="xl">
@@ -115,7 +112,8 @@ export const RandomList = (props) => {
       </Stack>
       <SimpleGrid boxSizing="border-box" columns={[1, 1, 2, 3]} spacing={6}>
         {list.map((manga) => {
-          return <Card data={manga}  />;
+          
+          return <Card data={manga} />;
         })}
 
         {isLoadingMore ? [...Array(3).keys()].map(() => <CardSkeleton />) : ''}

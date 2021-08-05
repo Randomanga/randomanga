@@ -33,7 +33,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { addToPlanning, removeFromPlanning } from '../../adapters/api';
 
-export const Card = ({ data }) => {
+export const Card = ({ data, ...rest }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const debouncedExpand = useDebounce(isHovering, 300);
@@ -82,6 +82,7 @@ export const Card = ({ data }) => {
         minH="48"
         height={['52', '52', '56', '60']}
         overflow="hidden"
+        {...rest}
       >
         <Image
           w={[28, 32, 36]}
