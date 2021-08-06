@@ -140,10 +140,81 @@ async function alSearch(query) {
     }
   );
 }
-
+async function fetchTrending(page = 1) {
+  return request(
+    'https://graphql.anilist.co/',
+    `
+    query ($page: Int) {
+      Page(page: $page,perPage: 5) {
+        media(isAdult: false, sort: [TRENDING_DESC],type: MANGA) {
+          id
+          title {
+            romaji
+            userPreferred
+          }
+          bannerImage
+          coverImage {
+            extraLarge
+            large
+            medium
+          }
+        }
+        pageInfo {
+          hasNextPage
+          total
+        }
+      }
+    }
+      `,
+    {
+      page,
+    },
+    {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+  );
+}
+async function fetchPopular(page = 1) {
+  return request(
+    'https://graphql.anilist.co/',
+    `
+    query ($page: Int) {
+      Page(page: $page,perPage: 5) {
+        media(isAdult: false, sort: [POPULARITY_DESC],type: MANGA) {
+          id
+          title {
+            romaji
+            userPreferred
+          }
+          bannerImage
+          coverImage {
+            large
+            medium
+            color
+          }
+        }
+        pageInfo {
+          hasNextPage
+          total
+        }
+      }
+    }
+      `,
+    {
+      page,
+    },
+    {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+  );
+}
 export {
   createRandomList,
   toggleLikeManga,
+  fetchTrending,
+  fetchPopular,
   removeFromPlanning,
   login,
   removeAlAuth,

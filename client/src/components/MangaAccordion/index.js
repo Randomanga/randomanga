@@ -20,7 +20,9 @@ import {
 } from '@chakra-ui/react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { Similar } from './Similar';
-export const MangaAccordion = ({ id, title, banner, coverImage }) => {
+export const MangaAccordion = ({
+  manga: { coverImage, bannerImage, title, id },
+}) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -34,7 +36,8 @@ export const MangaAccordion = ({ id, title, banner, coverImage }) => {
             w="full"
             h={'40'}
             fit="cover"
-            src="https://unsplash.it/920?random"
+            loading="lazy"
+            src={ bannerImage ?? (coverImage.extraLarge || coverImage.large)} 
             alt="Manga banner"
           />
           <Text
@@ -63,7 +66,7 @@ export const MangaAccordion = ({ id, title, banner, coverImage }) => {
             textAlign="left"
             fontFamily="body"
           >
-            I Built A Successful Blog In One Year
+            {title.romaji}
           </Heading>
           <Icon as={isOpen ? FaChevronUp : FaChevronDown} mr={2} />
         </Flex>

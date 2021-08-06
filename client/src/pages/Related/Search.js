@@ -6,6 +6,7 @@ import {
   Icon,
   IconButton,
   List,
+  Heading,
   ListItem,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
@@ -77,11 +78,16 @@ export const Search = ({ onSearchStateChange }) => {
       </InputGroup>
       {isSearching && (
         <Box>
-          <List>
-            {results.map((item) => (
-              <ListItem>{item.title.romaji}</ListItem>
-            ))}
-          </List>
+          <Heading
+            as="h2"
+            fontSize="3xl"
+            px={2}
+            my={8}
+            fontFamily="body"
+            fontWeight="bold"
+          >
+            Search
+          </Heading>
         </Box>
       )}
     </Box>
