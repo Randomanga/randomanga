@@ -19,7 +19,8 @@ import {
   Grid,
 } from '@chakra-ui/react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-export const MangaAccordion = (props) => {
+import { Similar } from './Similar';
+export const MangaAccordion = ({ id, title, banner, coverImage }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -34,14 +35,14 @@ export const MangaAccordion = (props) => {
             h={'40'}
             fit="cover"
             src="https://unsplash.it/920?random"
-            alt="Article"
+            alt="Manga banner"
           />
           <Text
             position="absolute"
             left="1"
             bottom="1"
             fontSize="x-small"
-            textShadow="2xl"
+            textShadow="1px 1px 1px #000"
           >
             Click for details
           </Text>
@@ -68,15 +69,7 @@ export const MangaAccordion = (props) => {
         </Flex>
       </Box>
       <Collapse in={isOpen} animateOpacity>
-        <Box mt={4}>
-          <Heading as="h4" fontSize="lg" fontWeight="bold" fontFamily="body">
-            Similar manga
-          </Heading>
-          <Divider bg="orange" my={2} />
-          <Grid mt={5} gap={4} placeContent="center">
-            {props.children}
-          </Grid>
-        </Box>
+        <Similar id={id} />
         <Button w="full" size={'sm'} variant="ghost" onClick={onToggle} mt={4}>
           Collapse
         </Button>
