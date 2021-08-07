@@ -1,17 +1,25 @@
-import { Box, Heading, Input, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Input,
+  Skeleton,
+  SkeletonText,
+  Text,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { MangaAccordion } from '../../components/MangaAccordion';
-import { fetchPopular, fetchTrending } from '../../adapters/api';
+import { fetchPopular, fetchTrending, fetchSections } from '../../adapters/api';
 export const Sections = (props) => {
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchPopular().then((data) => {
-      setPopular(data.Page.media);
-    });
-    fetchTrending().then((data) => {
-      setTrending(data.Page.media);
+    setIsLoading(true);
+    fetchSections().then((data) => {
+      setTrending(data.trending.media);
+      setPopular(data.popular.media);
+      setIsLoading(false);
     });
   }, []);
   return (
@@ -24,12 +32,35 @@ export const Sections = (props) => {
         fontFamily="body"
         fontWeight="bold"
       >
-        Trending
+        Trending now
       </Heading>
       <Box px={2}>
         {trending.map((manga) => (
           <MangaAccordion manga={manga} />
         ))}
+        {isLoading && (
+          <>
+            <Skeleton
+              isLoaded={!isLoading}
+              mx="auto"
+              maxW="4xl"
+              mb={4}
+              w="full"
+              h="40"
+              rounded="md"
+            />
+
+            <Skeleton
+              isLoaded={!isLoading}
+              mx="auto"
+              maxW="4xl"
+              mb={4}
+              w="full"
+              h="40"
+              rounded="md"
+            />
+          </>
+        )}
       </Box>
 
       <Heading
@@ -40,12 +71,35 @@ export const Sections = (props) => {
         fontFamily="body"
         fontWeight="bold"
       >
-        Top Manga
+        Popular
       </Heading>
       <Box px={2}>
         {popular.map((manga) => (
           <MangaAccordion manga={manga} />
         ))}
+        {isLoading && (
+          <>
+            <Skeleton
+              isLoaded={!isLoading}
+              mx="auto"
+              maxW="4xl"
+              mb={4}
+              w="full"
+              h="40"
+              rounded="md"
+            />
+
+            <Skeleton
+              isLoaded={!isLoading}
+              mx="auto"
+              maxW="4xl"
+              mb={4}
+              w="full"
+              h="40"
+              rounded="md"
+            />
+          </>
+        )}
       </Box>
     </Box>
   );

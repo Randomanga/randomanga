@@ -9,7 +9,7 @@ export interface IMangaService {
     id: number | string;
     user: IUserModel;
   }): Promise<boolean>;
-  getRelated(id: number | string): Promise<IMangaModel[]>;
+  getRelated(id: number | string): Promise<Number[]>;
   getDaily(
     data: RequestDailyDto
   ): Promise<IMangaModel & { likes_count: number; liked: boolean }>;

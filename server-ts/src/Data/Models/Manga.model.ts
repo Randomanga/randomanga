@@ -8,7 +8,7 @@ export type IMangaModel = Document & {
   demographic: Array<string>;
   genre: Array<string>;
   tags: Array<string>;
-  related: Array<IMangaModel>;
+  related: Array<number>;
   cover_image: {
     extraLarge: string | null;
     large: string | null;
@@ -46,8 +46,7 @@ const mangaSchema = new Schema<IMangaModel>({
   ],
   related: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'manga',
+      type: Number,
     },
   ],
   cover_image: {

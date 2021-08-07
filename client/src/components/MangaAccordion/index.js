@@ -27,7 +27,15 @@ export const MangaAccordion = ({
 
   return (
     <Box mx="auto" maxW="4xl" mb={4}>
-      <Box onClick={onToggle} cursor="pointer" shadow="lg">
+      <Box
+        onClick={onToggle}
+        cursor="pointer"
+        shadow="lg"
+        outline="0"
+        userSelect="none"
+        userSelect="-moz-none"
+        style={{ '-webkit-tap-highlight-color': 'transparent;' }}
+      >
         <Box position="relative">
           <Image
             roundedTop="lg"
@@ -37,7 +45,8 @@ export const MangaAccordion = ({
             h={'40'}
             fit="cover"
             loading="lazy"
-            src={ bannerImage ?? (coverImage.extraLarge || coverImage.large)} 
+            objectPosition="center"
+            src={bannerImage ?? (coverImage.extraLarge || coverImage.large)}
             alt="Manga banner"
           />
           <Text
@@ -71,7 +80,7 @@ export const MangaAccordion = ({
           <Icon as={isOpen ? FaChevronUp : FaChevronDown} mr={2} />
         </Flex>
       </Box>
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={isOpen} unmountOnExit={true}>
         <Similar id={id} />
         <Button w="full" size={'sm'} variant="ghost" onClick={onToggle} mt={4}>
           Collapse

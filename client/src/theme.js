@@ -9,6 +9,11 @@ export default extendTheme({
       '.Toastify__toast-container': {
         top: 'var(--chakra-space-16)',
       },
+      '*': {
+        'box-sizing': 'border-box',
+        outline: 'none',
+        '-webkit-tap-highlight-color': 'transparent',
+      },
     },
   },
   initialColorMode: 'dark',

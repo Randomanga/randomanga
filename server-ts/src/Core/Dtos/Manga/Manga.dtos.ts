@@ -34,7 +34,7 @@ export class ResponseLikeStatusDto {
 
 export class ResponseRelatedDto {
   id: string;
-  related: IMangaModel[];
+  related: Number[];
 }
 
 export type FindFilteredRequestDto = Pick<

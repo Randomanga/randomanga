@@ -177,12 +177,12 @@ export const Card = ({ data, ...rest }) => {
               ))}
             </HStack>
             <Tooltip
-              label={onList ? 'Remove from planning' : 'Add to planning'}
+              label={onList ? 'Remove from list' : 'Add to planning'}
               bg="gray.700"
               color="white"
               hasArrow
               fontSize="md"
-              aria-label={onList ? 'Remove from planning' : 'Add to planning'}
+              aria-label={onList ? 'Remove from list' : 'Add to planning'}
               openDelay={350}
             >
               <IconButton

@@ -111,11 +111,12 @@ async function alSearch(query) {
     `
     query($query: String!) {
       Page{
-        media(search: $query,type: MANGA, format: MANGA) {
+        media(search: $query,type: MANGA, format: MANGA, isAdult: false) {
           id
           title {
             romaji
           }
+          bannerImage
           coverImage {
             large 
             extraLarge
@@ -138,6 +139,53 @@ async function alSearch(query) {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
+  );
+}
+async function fetchSections() {
+  return request(
+    'https://graphql.anilist.co/',
+    `
+    query ($page: Int) {
+      trending:Page(page: $page,perPage: 5) {
+        media(isAdult: false, sort: [TRENDING_DESC],type: MANGA) {
+          id
+          title {
+            romaji
+            userPreferred
+          }
+          bannerImage
+          coverImage {
+            extraLarge
+            large
+            medium
+          }
+        }
+        pageInfo {
+          hasNextPage
+          total
+        }
+      }
+      popular:Page(page: $page,perPage: 5) {
+        media(isAdult: false, sort: [POPULARITY_DESC],type: MANGA) {
+          id
+          title {
+            romaji
+            userPreferred
+          }
+          bannerImage
+          coverImage {
+            extraLarge
+            large
+            medium
+          }
+        }
+        pageInfo {
+          hasNextPage
+          total
+        }
+      }
+    }
+    `
   );
 }
 async function fetchTrending(page = 1) {
@@ -220,6 +268,7 @@ export {
   removeAlAuth,
   addToPlanning,
   alSearch,
+  fetchSections,
   signup,
   authStatus,
   getProfile,

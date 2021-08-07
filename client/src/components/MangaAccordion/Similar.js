@@ -1,23 +1,31 @@
 import {
   HStack,
   Box,
+  Text,
   Heading,
   Divider,
   Grid,
   Flex,
   Icon,
   IconButton,
+  Skeleton,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FaList, FaThList, FaBars } from 'react-icons/fa';
 import { ImMenu } from 'react-icons/im';
+import useRelated from '../../hooks/data/useRelated';
 import { Card } from '../Card';
 import { ListCard } from '../ListCard';
 
 export const Similar = ({ id }) => {
-  const [cardView, setCardView] = useState(false);
-  const [similar, setSimilar] = useState([1]);
-  useEffect(() => {}, []);
+  const [cardView, setCardView] = useState(
+    localStorage.getItem('view') === 'card'
+  );
+  const onViewChange = (flag) => {
+    setCardView(flag);
+    localStorage.setItem('view', flag ? 'card' : 'list');
+  };
+  const { data, isLoading, error } = useRelated(id);
 
   return (
     <Box mt={4}>
@@ -44,7 +52,7 @@ export const Similar = ({ id }) => {
             _active
             height="0"
             minW={8}
-            onClick={() => setCardView(true)}
+            onClick={() => onViewChange(true)}
           />
           <IconButton
             icon={<FaThList />}
@@ -58,37 +66,37 @@ export const Similar = ({ id }) => {
             _active
             height="0"
             minW={8}
-            onClick={() => setCardView(false)}
+            onClick={() => onViewChange(false)}
           />
         </HStack>
       </Flex>
       <Divider bg="orange" my={2} py={'1px'} />
       <Grid mt={5} gap={4}>
-        {similar.map(({ id, title, url }) =>
+        {data?.map((manga) =>
           cardView ? (
-            <Card
-              data={{
-                id: 126161,
-                title: {
-                  romaji: 'Ore no Joushi wa Mate ga Dekinai',
-                },
-                description:
-                  "Energetic teenager Shuichi Shindo is the lead singer and songwriter for the smash-hit pop band, Bad Luck. He's recently moved in with his older boyfriend, Eiri Yuki, the handsome, sophisticated, and uber-famous romance novelist. Nothing goes smoothly for Shuichi, however. Yuki is inexplicably cold and cruel toward him, more so than usual; due to a rash of publicity appearances on comedy sketch shows, he can't get anyone to take his band seriously; and he's suddenly entered, totally unprepared, into a nationally televised concert with Bad Luck's rival band, Ask.",
-                coverImage: {
-                  large:
-                    'https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/bx126161-GPs2Pa537844.jpg',
-                  medium:
-                    'https://s4.anilist.co/file/anilistcdn/media/manga/cover/small/bx126161-GPs2Pa537844.jpg',
-                },
-                genres: ['Romance'],
-                mediaListEntry: null,
-              }}
-            />
+            <Card data={manga} key={manga.id} />
           ) : (
-            <ListCard />
+            <ListCard data={manga} key={manga.id} />
           )
         )}
+        {error && <Text textAlign="center">No similar manga found</Text>}
+        <Skeletons isLoading={isLoading} cardView={cardView} />
       </Grid>
     </Box>
+  );
+};
+
+const Skeletons = ({ isLoading, cardView }) => {
+  return (
+    <>
+      {isLoading && cardView ? <Skeleton w="full" h="40" rounded="md" /> : null}
+      {isLoading && cardView ? <Skeleton w="full" h="40" rounded="md" /> : null}
+      {isLoading && !cardView ? (
+        <Skeleton w="full" h="12" rounded="md" />
+      ) : null}
+      {isLoading && !cardView ? (
+        <Skeleton w="full" h="12" rounded="md" />
+      ) : null}
+    </>
   );
 };

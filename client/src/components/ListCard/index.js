@@ -62,17 +62,18 @@ export const ListCard = ({ data }) => {
       <Flex bg={'gray.900'} rounded="sm" boxShadow="md">
         <Image
           roundedLeft="sm"
-          src="https://s4.anilist.co/file/anilistcdn/media/manga/cover/small/22669.jpg"
+          src={manga.coverImage.medium}
           w={12}
           h="auto"
+          loading="lazy"
         />
         <Flex alignItems="center" justifyContent="space-between" w="full">
           <Box px="2">
             <Heading fontSize="md" fontFamily="body" noOfLines={1} py={1}>
-              Isekai maou to shoukan dorei jutsu
+              {manga.title.romaji}
             </Heading>
-            <HStack overflow="hidden" flexWrap="wrap" maxH="1.12rem">
-              {['Action', 'Comedy', 'Drama'].map((genre) => (
+            <HStack overflow="hidden" flexWrap="wrap" maxH="1.12rem" maxW="lg">
+              {manga.genres.map((genre) => (
                 <Badge
                   rounded="full"
                   key={uuidv4()}
@@ -83,6 +84,19 @@ export const ListCard = ({ data }) => {
                   bg="blue.500"
                 >
                   {genre}
+                </Badge>
+              ))}
+              {manga.tags.map((tag) => (
+                <Badge
+                  rounded="full"
+                  key={uuidv4()}
+                  px="2"
+                  fontSize="xs"
+                  textTransform="capitalize"
+                  color="white"
+                  bg="blue.500"
+                >
+                  {tag.name}
                 </Badge>
               ))}
             </HStack>

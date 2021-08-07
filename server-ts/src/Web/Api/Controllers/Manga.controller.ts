@@ -67,11 +67,10 @@ export class MangaController extends BaseHttpController {
   }
   async related(req: Request, res: Response) {
     const relatedList = await this._mangaService.getRelated(req.params.id);
-    const response = MangaMapper.manyToweb(relatedList);
     this.toJson<ResponseRelatedDto>(res, {
       data: {
         id: req.params.id,
-        related: response,
+        related: relatedList,
       },
     });
   }

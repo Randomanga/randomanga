@@ -57,19 +57,8 @@ export class MangaRepository implements IMangaRepository {
   }
   async findRelated(id: number) {
     const manga = await this._manga
-      .findOne({ al_id: id }, { al_id: 1 })
-      .populate('related', {
-        al_id: 1,
-        title: 1,
-        description: 1,
-        genre: 1,
-        tags: 1,
-        cover_image: 1,
-        banner: 1,
-        _id: 0,
-      })
+      .findOne({ al_id: id }, { al_id: 1, related: 1 })
       .orFail();
-
     return manga.related;
   }
 

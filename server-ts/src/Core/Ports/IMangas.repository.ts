@@ -10,7 +10,7 @@ import { IUserModel } from './../../Data/Models/User.model';
 
 export interface IMangaRepository {
   findOneManga(id: number): Promise<IMangaModel | null>;
-  findRelated(id: number | string): Promise<IMangaModel[]>;
+  findRelated(id: number | string): Promise<Number[]>;
   likeManga(id: number, userID: IUserModel['_id']): Promise<void>;
   dislikeManga(id: number, userID: IUserModel['_id']): Promise<void>;
   getLikeStatus(

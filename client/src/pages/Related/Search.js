@@ -6,6 +6,7 @@ import {
   Icon,
   IconButton,
   List,
+  Skeleton,
   Heading,
   ListItem,
 } from '@chakra-ui/react';
@@ -17,35 +18,38 @@ import { CloseIcon, SearchIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { FaSearch, FaTimes } from 'react-icons/fa';
 import { alSearch } from '../../adapters/api';
 import { useHistory } from 'react-router-dom';
+import { MangaAccordion } from '../../components/MangaAccordion';
 export const Search = ({ onSearchStateChange }) => {
   const query = useQuery();
   const history = useHistory();
   const [results, setResults] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const debounceSearchQuery = useDebounce(searchInput, 500);
 
   useEffect(() => {
     const search = query.get('search');
-    console.log('path changed');
     if (search) setSearchInput(search);
     else setSearchInput('');
   }, [query.get('search')]);
   useEffect(() => {
     if (debounceSearchQuery) {
       setIsSearching(true);
+      setIsLoading(true);
       history.push(`/recommendations?search=${debounceSearchQuery}`);
       alSearch(debounceSearchQuery).then((data) => {
         setResults(data.Page.media);
+        setIsLoading(false);
       });
     } else {
       setIsSearching(false);
+      setIsLoading(false);
       history.push(`/recommendations`);
     }
   }, [debounceSearchQuery]);
   useEffect(() => {
-    console.log('search state change');
-    if (onSearchStateChange) onSearchStateChange();
+    if (onSearchStateChange) onSearchStateChange(isSearching);
   }, [isSearching]);
 
   return (
@@ -88,6 +92,32 @@ export const Search = ({ onSearchStateChange }) => {
           >
             Search
           </Heading>
+          {results.map((manga) => (
+            <MangaAccordion manga={manga} />
+          ))}
+          {isLoading && (
+            <>
+              <Skeleton
+                isLoaded={!isLoading}
+                mx="auto"
+                maxW="4xl"
+                mb={4}
+                w="full"
+                h="40"
+                rounded="md"
+              />
+
+              <Skeleton
+                isLoaded={!isLoading}
+                mx="auto"
+                maxW="4xl"
+                mb={4}
+                w="full"
+                h="40"
+                rounded="md"
+              />
+            </>
+          )}
         </Box>
       )}
     </Box>

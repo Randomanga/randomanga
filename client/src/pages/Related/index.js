@@ -13,7 +13,11 @@ export const Related = () => {
       <Heading as="h1" px={2} fontFamily="body" fontWeight="bold">
         Recommendations
       </Heading>
-      <Search onSearchStateChange={(flag) => setIsVisible(!flag)} />
+      <Search
+        onSearchStateChange={(flag) => {
+          setIsVisible(!flag);
+        }}
+      />
       {isVisible && <Sections />}
     </Box>
   );
