@@ -1,5 +1,5 @@
 import { IMangaModel } from 'Data/Models/Manga.model';
-import { MangaMapper } from './../../../Config/Mappers/Manga.mapper.dto';
+import { MangaMapper } from '../../../Config/Mappers/Manga.mapper.dto';
 import { BaseHttpController } from './../../Lib/BaseHttp.controller';
 import { IMangaService } from 'Core/Ports/IManga.service';
 import { Request, Response } from 'express';

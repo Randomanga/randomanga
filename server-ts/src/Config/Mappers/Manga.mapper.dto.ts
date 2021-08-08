@@ -4,7 +4,7 @@ import {
   RequestLikeDto,
   RequestLikeStatusDto,
   ResponseLikeStatusDto,
-} from './../../Core/Dtos/Manga/Manga.dtos';
+} from '../../Core/Dtos/Manga/Manga.dtos';
 import { IMangaModel } from 'Data/Models/Manga.model';
 import { RequestDailyDto, ResponseDailyDto } from 'Core/Dtos/Manga/Manga.dtos';
 
