@@ -59,20 +59,44 @@ export const ListCard = ({ data }) => {
 
   return (
     <React.Fragment>
-      <Flex bg={'gray.900'} rounded="sm" boxShadow="md">
+      <Flex bg={'gray.800'} rounded="sm" boxShadow="md">
         <Image
           roundedLeft="sm"
           src={manga.coverImage.medium}
           w={12}
-          h="auto"
+          h={16}
+          fallbackSrc={'https://placehold.it/48x64?text=NO%20IMAGE'}
           loading="lazy"
         />
-        <Flex alignItems="center" justifyContent="space-between" w="full">
-          <Box px="2">
+
+        <Flex alignItems="center" flex="1" justifyContent="space-between">
+          <Box px="2" role="group" maxW="lg">
             <Heading fontSize="md" fontFamily="body" noOfLines={1} py={1}>
               {manga.title.romaji}
             </Heading>
-            <HStack overflow="hidden" flexWrap="wrap" maxH="1.12rem" maxW="lg">
+            <HStack
+              maxW="lg"
+              // sx={{
+              //   '::-webkit-scrollbar': { height: '5px' },
+              //   '::-webkit-scrollbar-track': {
+              //     background: 'transparent',
+              //   },
+              //   '::-webkit-scrollbar-thumb': {
+              //     background: 'var(--chakra-colors-gray-600)',
+              //     borderRadius: '4px',
+              //   },
+              // }}
+              overflow="hidden"
+              wrap="wrap"
+              h="18px"
+              // _groupHover={{
+              //   overflow: 'auto',
+              // }}
+              // _groupFocus={{
+              //   overflow: 'auto',
+              // }}
+              pb={1}
+            >
               {manga.genres.map((genre) => (
                 <Badge
                   rounded="full"
@@ -111,7 +135,7 @@ export const ListCard = ({ data }) => {
             onClick={onList ? () => onToggle() : () => addToList()}
             leftIcon={onList ? <FaCheckSquare /> : <FaPlusSquare />}
           >
-            {isDesktop ? 'Add to list' : ''}
+            {isDesktop ? (onList ? 'Remove from list' : 'Add to list') : ''}
           </Button>
         </Flex>
       </Flex>

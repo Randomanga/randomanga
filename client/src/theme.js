@@ -10,9 +10,8 @@ export default extendTheme({
         top: 'var(--chakra-space-16)',
       },
       '*': {
-        'box-sizing': 'border-box',
         outline: 'none',
-        '-webkit-tap-highlight-color': 'transparent',
+        WebKitTapHighlightColor: 'transparent',
       },
     },
   },

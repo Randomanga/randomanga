@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import axios from 'axios';
+import { getUserAlId } from '../../adapters/api';
 const fetch = async (url) => {
   const { data } = await axios.get(url, { withCredentials: true });
   const {
@@ -8,8 +9,10 @@ const fetch = async (url) => {
     withCredentials: true,
   });
   localStorage.setItem('alToken', alToken);
+  const alID = await getUserAlId();
   return {
     ...data,
+    alID,
     alToken,
   };
 };

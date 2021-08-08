@@ -1,5 +1,6 @@
 import {
   HStack,
+  Button,
   Box,
   Text,
   Heading,
@@ -82,6 +83,9 @@ export const Similar = ({ id }) => {
         {error && <Text textAlign="center">No similar manga found</Text>}
         <Skeletons isLoading={isLoading} cardView={cardView} />
       </Grid>
+      <Button w="full" size={'sm'} mt={2} mb={6} hidden >
+        Load more
+      </Button>
     </Box>
   );
 };

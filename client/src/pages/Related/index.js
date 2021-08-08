@@ -13,6 +13,17 @@ export const Related = () => {
       <Heading as="h1" px={2} fontFamily="body" fontWeight="bold">
         Recommendations
       </Heading>
+      <Text
+        p={2}
+        maxW="2xl"
+        fontFamily="body"
+        fontSize="sm"
+        color="whiteAlpha.800"
+      >
+        Find manga recommendations by browsing the current trending and popular
+        section, or search for a specific title. You can also sign in and
+        authenticate with Anilist to see recommendations for your own list.
+      </Text>
       <Search
         onSearchStateChange={(flag) => {
           setIsVisible(!flag);

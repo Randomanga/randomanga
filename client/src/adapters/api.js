@@ -84,7 +84,6 @@ async function addToPlanning(id) {
   );
 }
 async function removeFromPlanning(id) {
-  console.log(id);
   return request(
     'https://graphql.anilist.co/',
     `
@@ -258,12 +257,92 @@ async function fetchPopular(page = 1) {
     }
   );
 }
+async function getUserAlId() {
+  const alToken = localStorage.getItem('alToken');
+  const data = await request(
+    'https://graphql.anilist.co/',
+    `
+    query {
+      Viewer{
+        id
+      }
+    }
+    `,
+    {},
+    {
+      Authorization: `Bearer ${alToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+  );
+  return data.Viewer.id;
+}
+async function getUserMangaList(userId, page = 1) {
+  const alToken = localStorage.getItem('alToken');
+  const response = await request(
+    'https://graphql.anilist.co/',
+    `
+    query($page: Int,$id: Int)  {
+      Page(perPage: 10, page: $page ){
+        mediaList(userId: $id, type: MANGA) {
+          media {
+            title {
+              romaji
+            }
+            coverImage{
+              extraLarge
+              large
+              medium
+            }
+            bannerImage
+            id
+            relations{
+              nodes{
+                format
+                bannerImage
+              }
+            }
+          }
+        }
+        pageInfo{
+          total
+          lastPage
+          hasNextPage
+        }
+      }
+    }
+    
+    
+    `,
+    {
+      id: userId,
+      page,
+    },
+    {
+      Authorization: `Bearer ${alToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+  );
+  return response.Page.mediaList.map((entry) => entry.media);
+  // .map((manga) => {
+  //   if (manga.bannerImage === null) {
+  //     const relation = manga.relations.nodes.find(
+  //       (node) => node.bannerImage !== null && node.format === 'TV'
+  //     );
+  //     if (relation) manga.bannerImage = relation.bannerImage;
+  //   }
+  //   return manga;
+  // });
+}
+
 export {
   createRandomList,
   toggleLikeManga,
   fetchTrending,
   fetchPopular,
   removeFromPlanning,
+  getUserAlId,
   login,
   removeAlAuth,
   addToPlanning,
@@ -272,6 +351,7 @@ export {
   signup,
   authStatus,
   getProfile,
+  getUserMangaList,
   getRandomListInfo,
   logout,
   getDailyManga,

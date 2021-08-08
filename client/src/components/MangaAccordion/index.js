@@ -33,8 +33,6 @@ export const MangaAccordion = ({
         shadow="lg"
         outline="0"
         userSelect="none"
-        userSelect="-moz-none"
-        style={{ '-webkit-tap-highlight-color': 'transparent;' }}
       >
         <Box position="relative">
           <Image
@@ -82,6 +80,7 @@ export const MangaAccordion = ({
       </Box>
       <Collapse in={isOpen} unmountOnExit={true}>
         <Similar id={id} />
+
         <Button w="full" size={'sm'} variant="ghost" onClick={onToggle} mt={4}>
           Collapse
         </Button>
