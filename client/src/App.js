@@ -4,7 +4,6 @@ import theme from './theme';
 import { ColorModeSwitcher } from './components/ColorModeSwitcher';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
-import { Home } from './pages/Home';
 import { Footer } from './components/Footer';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
@@ -20,6 +19,7 @@ import ProtectedRoute from './components/Router/ProtectedRoute';
 import { Unauthorized } from './pages/Unauthorized';
 import { NotFound } from './pages/404';
 import { Related } from './pages/Related/index';
+import { Home } from './pages/Home';
 
 function App() {
   const { user, mutate } = useUser();
