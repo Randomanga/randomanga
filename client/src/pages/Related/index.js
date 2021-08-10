@@ -23,6 +23,13 @@ export const Related = () => {
         Find manga recommendations by browsing the current trending and popular
         section, or search for a specific title. You can also sign in and
         authenticate with Anilist to see recommendations for your own list.
+        <br />
+        <br />
+        <Text opacity="0.6">
+          Note: The recommendations are not always accurate. It all depends how
+          accurate the tags and description are. It gives ok results most of the
+          time.
+        </Text>
       </Text>
       <Search
         onSearchStateChange={(flag) => {

@@ -19,6 +19,7 @@ import ProtectedRoute from './components/Router/ProtectedRoute';
 import { Unauthorized } from './pages/Unauthorized';
 import { NotFound } from './pages/404';
 import { Related } from './pages/Related/index';
+import { Create } from './pages/Lists/Create';
 import { Home } from './pages/Home';
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/unauthorized" component={Unauthorized} />
           <Route exact path="/recommendations" component={Related} />
+
+          <Route exact path="/top-lists/create" component={Create} />
+
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

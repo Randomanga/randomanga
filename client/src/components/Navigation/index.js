@@ -11,7 +11,7 @@ const NavbarContainer = ({ children, ...props }) => {
       as="nav"
       align="center"
       mx="auto"
-      justify="space-between"
+      justify={['space-between', 'space-between', 'space-around']}
       h="full"
       wrap="wrap"
       w="100%"
@@ -26,7 +26,7 @@ const NavbarContainer = ({ children, ...props }) => {
   );
 };
 
-export const Navigation = props => {
+export const Navigation = (props) => {
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
   useOutsideClick({
