@@ -18,15 +18,40 @@ import {
   useBreakpointValue,
   StackDivider,
   Divider,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { FaGripVertical, FaTimes } from 'react-icons/fa';
 import { Search } from './components/search';
 import React from 'react';
-import { GrDrag } from 'react-icons/gr';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { uploadList } from '../../adapters/api';
+import { useHistory } from 'react-router-dom';
 export function Create(props) {
   const [list, setList] = React.useState([]);
+  const [isUploading, setIsUploading] = React.useState(false);
+  const { register, handleSubmit, formState } = useForm();
+  const history = useHistory();
+  const onSubmit = (data) => {
+    if (list.length < 5) {
+      toast.error('List must have at least 5 entries');
+      return;
+    }
+    const ids = list.map((item) => item.id);
+    setIsUploading(true);
+    uploadList({ ...data, list: ids })
+      .then((res) => {
+        setIsUploading(false);
+        toast.success('List created');
+        history.push(`/top-lists/${res.data._id}}`);
+      })
+      .catch((err) => {
+        setIsUploading(false);
+        toast.error('There was an error creating the list. Please try again');
+      });
+  };
 
   const onAdd = (entry) => {
     setList(list.concat([entry]));
@@ -62,24 +87,50 @@ export function Create(props) {
         can hold and drag them.
       </Text>
       <Flex direction={['column', 'column', 'row']} w={'full'}>
-        <Stack spacing={2} as="form" w={['full', 'full', '50%']}>
-          <FormControl>
+        <Stack
+          spacing={2}
+          as="form"
+          onSubmit={(e) => e.preventDefault()}
+          w={['full', 'full', '50%']}
+        >
+          <FormControl isInvalid={formState.errors.title}>
             <Input
               rounded="md"
               placeholder="List title"
               name="title"
               variant="Filled"
               bg="gray.800"
+              {...register('title', {
+                required: 'Tite is required',
+                minLength: {
+                  value: 15,
+                  message: 'Title must be at least 15 characters long',
+                },
+              })}
             />
+            <FormErrorMessage>
+              {formState.errors.title && formState.errors.title.message}
+            </FormErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={formState.errors.description}>
             <Textarea
               placeholder="Describe the list shortly"
               bg="gray.800"
+              {...register('description', {
+                required: 'Description is required',
+                minLength: {
+                  value: 20,
+                  message: 'Description must be at least 20 characters long',
+                },
+              })}
               variant="Filled"
             />
+            <FormErrorMessage>
+              {formState.errors.description &&
+                formState.errors.description.message}
+            </FormErrorMessage>
           </FormControl>
-          <Search onAdd={onAdd} />
+          <Search onAdd={onAdd} list={list} />
         </Stack>
         <Box
           w={['full', 'full', '50%']}
@@ -123,7 +174,7 @@ export function Create(props) {
                         draggableId={manga.id.toString()}
                         index={index}
                       >
-                        {(provided) => (
+                        {(provided, snapshot) => (
                           <Flex
                             alignItems="center"
                             justifyContent="space-between"
@@ -158,7 +209,16 @@ export function Create(props) {
                         )}
                       </Draggable>
                     ))}
-                    {provided.placeholder}
+                    {list.length === 0 ? (
+                      <Text
+                        my="32"
+                        textAlign="center"
+                        fontFamily="body"
+                        color="gray.500"
+                      >
+                        No manga in the list.
+                      </Text>
+                    ) : null}
                   </div>
                 )}
               </Droppable>
@@ -166,76 +226,14 @@ export function Create(props) {
           </Box>
         </Box>
       </Flex>
-      <Button w="full" my={4}>
+      <Button
+        w="full"
+        my={4}
+        isLoading={isUploading}
+        onClick={handleSubmit(onSubmit)}
+      >
         Create list
       </Button>
     </Box>
   );
 }
-const dummyData = [
-  {
-    id: 1,
-    sequence_no: 1,
-    title: 'The Avengers',
-    release_year: 2012,
-  },
-  {
-    id: 2,
-    sequence_no: 2,
-    title: 'The Avengers - Age of Ultron',
-    release_year: 2016,
-  },
-  {
-    id: 3,
-    sequence_no: 3,
-    title: 'The Avengers - Infinity War',
-    release_year: 2019,
-  },
-  {
-    id: 4,
-    sequence_no: 4,
-    title: 'The Avengers - End Game',
-    release_year: 2020,
-  },
-];
-
-/* 
-{list?.map((manga, index) => (
-              <Flex
-                alignItems="center"
-                justifyContent="space-between"
-                ref={_provided.innerRef}
-                {..._provided.draggableProps}
-                {..._provided.dragHandleProps}
-                userSelect="none"
-                sx={{ ..._provided.draggableProps.style }}
-                bg={_snapshot.isDragging ? 'var(--chakra-colors-gray-900)' : ''}
-              >
-                <Flex alignItems="center" justifyContent="space-between" mb={1}>
-                  <Text pr={3}>{index + 1}. </Text>
-                  <Icon
-                    w="7"
-                    as={FaGripVertical}
-                    bg="transparent"
-                    color="white"
-                    pr={1}
-                  />
-                  <Image src={manga.coverImage.medium} w={8} pr={2} />
-                  <Tooltip
-                    aria-label={manga.title.romaji}
-                    label={manga.title.romaji}
-                    openDelay={200}
-                  >
-                    <Text noOfLines={1}>{manga.title.romaji}</Text>
-                  </Tooltip>
-                </Flex>
-                <IconButton size="md" bg="transparent" icon={<FaTimes />} />
-              </Flex>
-            ))}
-            {!list || list.length === 0 ? (
-              <Text opacity={0.7}>
-                Search for a manga and click the add button.
-              </Text>
-            ) : null}
-
-*/

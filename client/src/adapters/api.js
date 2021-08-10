@@ -335,6 +335,11 @@ async function getUserMangaList(userId, page = 1) {
   //   return manga;
   // });
 }
+async function uploadList(data) {
+  return axios.post('http://192.168.178.63:5000/api/lists/', data, {
+    withCredentials: true,
+  });
+}
 
 export {
   createRandomList,
@@ -357,4 +362,5 @@ export {
   getDailyManga,
   getAlIdentity,
   getTokens,
+  uploadList,
 };

@@ -14,19 +14,21 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import { FaTimes, FaSearch } from 'react-icons/fa';
+import { FaTimes, FaSearch, FaCheckSquare } from 'react-icons/fa';
 import { SiAddthis } from 'react-icons/si';
 import { alSearch } from '../../../adapters/api';
 import useDebounce from '../../../hooks/useDebounce';
 
-export function Search({ onAdd }) {
+export function Search({ onAdd, list }) {
   const [isSearching, setIsSearching] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const debouncedQuery = useDebounce(searchTerm, 500);
   const [results, setResults] = React.useState([]);
 
   const handleAdd = (entry) => {
-    if (onAdd) onAdd(entry);
+    if (!onAdd || !entry) return;
+    if (list.find((e) => e.id === entry.id)) return;
+    onAdd(entry);
   };
   useEffect(() => {
     if (debouncedQuery) {
@@ -77,6 +79,7 @@ export function Search({ onAdd }) {
         rounded="md"
         h={'44'}
         overflowY="auto"
+        textAlign="center"
         sx={{
           '::-webkit-scrollbar': { height: '5px', width: '7px' },
           '::-webkit-scrollbar-track': {
@@ -103,11 +106,22 @@ export function Search({ onAdd }) {
             <IconButton
               size="md"
               bg="transparent"
-              icon={<SiAddthis />}
+              icon={
+                list.find((e) => e.id == manga.id) ? (
+                  <FaCheckSquare />
+                ) : (
+                  <SiAddthis />
+                )
+              }
               onClick={() => handleAdd(manga)}
             />
           </Flex>
         ))}
+        {!isSearching && (
+          <Text my="14" fontFamily="body" color="gray.500">
+            Search for something for it to appear here
+          </Text>
+        )}
       </Box>
     </React.Fragment>
   );

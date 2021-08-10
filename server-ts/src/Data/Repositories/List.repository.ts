@@ -10,7 +10,7 @@ export class ListRepository implements IListRepository {
   }
   public async save(data: CreateListRequestDto) {
     const list = new this._model(data);
-    return list.save();
+    return (await list.save()).toObject();
   }
 
   public async delete(id: string) {
