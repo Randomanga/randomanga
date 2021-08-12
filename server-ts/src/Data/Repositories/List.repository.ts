@@ -6,7 +6,11 @@ export class ListRepository implements IListRepository {
   private _model = ListModel;
 
   public async findOneList(id: string) {
-    return this._model.findById(id);
+    const data = await this._model
+      .findOne({ _id: id })
+      .populate('author', { username: 1 })
+      .orFail(new Error('List not found'));
+    return data.toObject();
   }
   public async save(data: CreateListRequestDto) {
     const list = new this._model(data);

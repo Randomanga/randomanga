@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 
 export class Database {
   public static async connect(uri: string = process.env.DB_URI as string) {

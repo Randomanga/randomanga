@@ -20,6 +20,7 @@ import { Unauthorized } from './pages/Unauthorized';
 import { NotFound } from './pages/404';
 import { Related } from './pages/Related/index';
 import { Create } from './pages/Lists/Create';
+import { List } from './pages/Lists/List';
 import { Home } from './pages/Home';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route exact path="/recommendations" component={Related} />
 
           <Route exact path="/top-lists/create" component={Create} />
+          <Route exact path="/top-lists/:id" component={List} />
 
           <Route path="" component={NotFound} />
         </Switch>

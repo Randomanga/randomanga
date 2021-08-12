@@ -4,6 +4,7 @@ import { MangaService } from './../../Core/Services/Manga.service';
 import * as Awilix from 'awilix';
 
 import { UsersRepository } from 'Data/Repositories/Users.repository';
+import { ListRepository } from 'Data/Repositories/List.repository';
 import { SubscribersRepository } from 'Data/Repositories/Subscribers.repository';
 import { AuthService } from 'Core/Services/Auth.service';
 import { ArgonToHasherAdapter } from 'Core/Adapters/ArgonToHasher.adapter';
@@ -19,7 +20,6 @@ import { AuthController } from 'Web/Api/Controllers/Auth.controller';
 import { TagRepository } from 'Data/Repositories/Tags.repository';
 import { ListController } from 'Web/Api/Controllers/List.controller';
 import { ListService } from 'Core/Services/List.service';
-import { ListRepository } from 'Data/Repositories/List.repository';
 
 export const container = Awilix.createContainer();
 

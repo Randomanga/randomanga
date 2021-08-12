@@ -59,4 +59,4 @@ const UserModel: Schema = new Schema({
   },
 });
 
-export default mongoose.model<IUserModel & Document>('Users', UserModel);
+export default mongoose.model<IUserModel & Document>('User', UserModel);
