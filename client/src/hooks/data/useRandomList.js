@@ -47,7 +47,7 @@ function useRandomList(id) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null;
     return [
-      `http://192.168.178.63:5000/api/random-lists/${id}/${
+      `http://192.168.178.66:5000/api/random-lists/${id}/${
         Number(pageIndex) + 1
       }`,
     ];

@@ -52,7 +52,7 @@ export class UserService implements IUserService {
         grant_type: 'authorization_code',
         client_id: '6064',
         client_secret: 'i0SvxjOkapHMuhaeS7DDTaKPArk8W7Lk36MgnJZg',
-        redirect_uri: 'http://192.168.178.63:5000/api/oauth/token',
+        redirect_uri: 'http://192.168.178.66:5000/api/oauth/token',
         code: code,
       }),
     });

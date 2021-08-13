@@ -20,7 +20,7 @@ const attachUserFromIdentity = async (
   }
 };
 const checkForRevoke = (req: Request, res: Response, next: NextFunction) => {
-  if (req.query.error) return res.redirect('http://192.168.178.63:3000/');
+  if (req.query.error) return res.redirect('http://192.168.178.66:3000/');
   return next();
 };
 const validateJwt = jwt({

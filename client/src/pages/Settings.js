@@ -211,7 +211,7 @@ export function Settings() {
               _active
               disabled={user.alToken !== null}
               as="a"
-              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.178.63:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
+              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.178.66:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
             >
               {user.alToken ? 'Authorized' : 'Authorize'}
             </Button>

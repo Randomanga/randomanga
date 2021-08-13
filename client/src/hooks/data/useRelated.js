@@ -40,12 +40,12 @@ const fetcher = async (url) => {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
-  );  
+  );
   return mangas.Page.media;
 };
 function useRelated(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `http://192.168.178.63:5000/api/manga/${id}/related`,
+    `http://192.168.178.66:5000/api/manga/${id}/related`,
     fetcher
   );
 

@@ -78,7 +78,7 @@ const MenuLinks = ({ isOpen, toggle }) => {
         <MenuItem close={toggle} isLast to="/top-lists">
           Top Lists
         </MenuItem>
-        {user && !isLoading ? (
+        {user ? (
           <UserDropdown closeNavigation={toggle} />
         ) : (
           <NoAccount closeNavigation={toggle} />
