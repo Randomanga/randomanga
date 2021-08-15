@@ -67,8 +67,8 @@ browter.group('/api', (browter) => {
     browter.get('/', 'ListController.get');
     browter.post('/', 'ListController.create', [AuthValidate({})]);
     browter.get('/:id', 'ListController.find');
-    browter.post(':id/likes', 'ListController.like', [AuthValidate({})]);
-    browter.delete(':id/likes', 'ListController.unlike', [AuthValidate({})]);
+    browter.post('/:id/likes', 'ListController.like', [AuthValidate({})]);
+    browter.delete('/:id/likes', 'ListController.unlike', [AuthValidate({})]);
     browter.delete('/:id', 'ListController.delete', [AuthValidate({})]);
   });
 });

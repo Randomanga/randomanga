@@ -1,5 +1,10 @@
 export class SaveListRequestDto {
-  list: number[];
+  list: [
+    {
+      id: number;
+      rank: number;
+    }
+  ];
   description: string;
   author: string;
   title: string;

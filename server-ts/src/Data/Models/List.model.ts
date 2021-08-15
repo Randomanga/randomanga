@@ -9,7 +9,10 @@ export interface IListModel {
   author: IUserModel;
   createdAt: Date;
   likes: Array<IUserModel['_id']>;
-  list: Array<IMangaModel['al_id']>;
+  list: {
+    rank: number;
+    id: Array<IMangaModel['al_id']>;
+  };
 }
 const ListModel: Schema = new Schema({
   title: { type: String, required: true },
@@ -21,10 +24,12 @@ const ListModel: Schema = new Schema({
       ref: 'User',
     },
   ],
+  likesCount: { type: Number, default: 0 },
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   list: [
     {
-      type: Number,
+      rank: { type: Number },
+      id: { type: Number },
     },
   ],
 });

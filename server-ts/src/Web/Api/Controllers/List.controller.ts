@@ -1,3 +1,4 @@
+import { ListMapper } from 'Config/Mappers/List.mapper.dto';
 import { IListService } from 'Core/Ports/IList.service';
 import { IListModel } from 'Data/Models/List.model';
 import { Request, Response } from 'express';
@@ -12,7 +13,17 @@ export class ListController extends BaseHttpController {
     super();
     this._listService = listService;
   }
-  public async get() {}
+  public async get(req: Request, res: Response) {
+    const payload = ListMapper.toFindRequestDto({
+      sort: String(req.query.sort ?? 'title'),
+      order: String(req.query.order ?? 'asc'),
+      page: Number(req.query.page ?? '1'),
+      query: req.query.search,
+    });
+    const page = await this._listService.find(payload);
+    const mapped = ListMapper.manyToweb(page);
+    this.toJson<{ list: IListModel[] }>(res, { data: { list: mapped } });
+  }
   public async find(req: Request, res: Response) {
     const id = req.params.id;
     const result = await this._listService.findOneList(id);
@@ -32,6 +43,16 @@ export class ListController extends BaseHttpController {
     const deleted = await this._listService.delete(id);
     this.toJson<{ deleted: boolean }>(res, { data: { deleted: deleted } });
   }
-  public async like(req: Request, res: Response) {}
-  public async unlike(req: Request, res: Response) {}
+  public async like(req: Request, res: Response) {
+    const id = req.params.id;
+    const result = await this._listService.like(id, req.user!._id);
+    const mapped = ListMapper.toWeb(result!);
+    this.toJson<IListModel>(res, { data: mapped });
+  }
+  public async unlike(req: Request, res: Response) {
+    const id = req.params.id;
+    const result = await this._listService.unlike(id, req.user!._id);
+    const mapped = ListMapper.toWeb(result!);
+    this.toJson<IListModel>(res, { data: mapped });
+  }
 }

@@ -1,4 +1,5 @@
 import { SaveListRequestDto } from 'Core/Dtos/List/CreateList.dtos';
+import { GetListDto } from 'Core/Dtos/List/GetList.dtos';
 import { IListRepository } from 'Core/Ports/IList.repository';
 import { IListService } from 'Core/Ports/IList.service';
 
@@ -11,6 +12,13 @@ export class ListService implements IListService {
   constructor({ listRepo }: IListServiceOptions) {
     this._listRepo = listRepo;
   }
+
+  public async find(data: GetListDto) {
+    const lists = await this._listRepo.find(data);
+    console.log(lists)
+    return lists;
+  }
+
   public async findOneList(id: string) {
     const list = await this._listRepo.findOneList(id);
     return list;
