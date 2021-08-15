@@ -1,4 +1,5 @@
 import { ListMapper } from 'Config/Mappers/List.mapper.dto';
+import { PageData } from 'Config/types/other/page.ds';
 import { IListService } from 'Core/Ports/IList.service';
 import { IListModel } from 'Data/Models/List.model';
 import { Request, Response } from 'express';
@@ -20,9 +21,11 @@ export class ListController extends BaseHttpController {
       page: Number(req.query.page ?? '1'),
       query: req.query.search,
     });
-    const page = await this._listService.find(payload);
+    const { page, pageInfo } = await this._listService.find(payload);
     const mapped = ListMapper.manyToweb(page);
-    this.toJson<{ list: IListModel[] }>(res, { data: { list: mapped } });
+    this.toJson<{ list: IListModel[]; pageInfo: PageData }>(res, {
+      data: { list: mapped, pageInfo },
+    });
   }
   public async find(req: Request, res: Response) {
     const id = req.params.id;

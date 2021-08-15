@@ -18,11 +18,15 @@ export class ListRepository implements IListRepository {
     return this._model
       .find(findQuery)
       .sort(sortQuery)
-      .skip(data.page - 1 ?? 0 * 10)
-      .limit(10)
+      .skip(data.page - 1 ?? 0 * 50)
+      .limit(50)
       .populate('author', { username: 1 });
   }
-
+  public async count(data: GetListDto) {
+    const findQuery: any = {};
+    if (data.query) findQuery['$text'] = { $search: data.query };
+    return this._model.countDocuments(findQuery);
+  }
   public async findOneList(id: string) {
     const data = await this._model
       .findOne({ _id: id })

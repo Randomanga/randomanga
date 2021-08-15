@@ -7,7 +7,6 @@ export function List(props) {
   const { id } = useParams();
   const { data, isLoading, error } = useList(id);
 
-  if (data) console.log(data);
   return (
     <Box minH={'60vh'} maxW="4xl" mx="auto" mt={20} px={['2', '5']}>
       <SkeletonText noOfLines={4} isLoaded={!isLoading}>
@@ -24,7 +23,19 @@ export function List(props) {
           {data?.description}
         </Text>
       </SkeletonText>
-      <RankingCard />
+      <Box mt={16}>
+        {data?.list
+          .sort((a, b) => {
+            return b.rank - a.rank;
+          })
+          .map((manga, index) => (
+            <RankingCard
+              mangaData={manga}
+              rank={data.list.length - index}
+              key={manga.id}
+            />
+          ))}
+      </Box>
     </Box>
   );
 }

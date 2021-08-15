@@ -39,13 +39,15 @@ export function Create(props) {
       toast.error('List must have at least 5 entries');
       return;
     }
-    const ids = list.map((item) => item.id);
+    const ids = list.map((item, index) => {
+      return { id: item.id, rank: index + 1 };
+    });
     setIsUploading(true);
     uploadList({ ...data, list: ids })
       .then((res) => {
         setIsUploading(false);
         toast.success('List created');
-        history.push(`/top-lists/${res.data._id}}`);
+        history.push(`/top-lists/${res.data._id}`);
       })
       .catch((err) => {
         setIsUploading(false);

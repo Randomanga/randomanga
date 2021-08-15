@@ -7,81 +7,124 @@ import {
   Link,
   Flex,
   useColorModeValue,
+  Skeleton,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-export function Article(props) {
+import { Link as RouterLink } from 'react-router-dom';
+import { unlikeList, likeList, toggleListLike } from '../../adapters/api';
+import useUser from '../../hooks/data/useUser';
+export function Article({ article }) {
+  const { user } = useUser();
+  const [list, setList] = useState(article);
+  const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    const liked = list.likes.includes(user?._id);
+    setLiked(liked);
+  }, [list, user]);
+
+  const onLike = async () => {
+    const liked = list.likes.includes(user?._id);
+    const res = await toggleListLike(list._id, liked);
+    setList({ ...list, likes: res.data.likes });
+  };
   return (
-    <Box
-      rounded="lg"
-      shadow="md"
-      bg={useColorModeValue('white', 'gray.800')}
+    <LinkBox>
+      <Flex
+        direction="column"
+        rounded="lg"
+        shadow="md"
+        maxW="lg"
+        bg={useColorModeValue('white', 'gray.800')}
+      >
+        <Image
+          roundedTop="lg"
+          w="full"
+          h={'44'}
+          fit="cover"
+          loading="lazy"
+          fallbackSrc="https://placehold.it/400/202020?text=LOADING"
+          src={list.cover}
+          alt="Article"
+        />
 
-    >
-      <Image
-        roundedTop="lg"
-        w="full"
-        h={'44'}
-        fit="cover"
-        src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-        alt="Article"
-      />
+        <Flex p={4} flex="1" justifyContent="space-between" direction="column">
+          <Box>
+            <Link
+              display="block"
+              color={useColorModeValue('gray.800', 'white')}
+              fontWeight="bold"
+              fontSize="lg"
+              _hover={{ color: 'gray.600', textDecor: 'underline' }}
+            >
+              {list.title}
+            </Link>
+            <Text
+              mt={2}
+              fontSize="sm"
+              h="3rem"
+              noOfLines={3}
+              color={useColorModeValue('gray.600', 'gray.400')}
+            >
+              {list.description}
+            </Text>
+          </Box>
 
-      <Box p={4}>
-        <Box>
-          <Link
-            display="block"
-            color={useColorModeValue('gray.800', 'white')}
-            fontWeight="bold"
-            fontSize="lg"
-            _hover={{ color: 'gray.600', textDecor: 'underline' }}
-          >
-            I Built A Successful Blog In One Year
-          </Link>
-          <Text
-            mt={2}
-            fontSize="sm"
-            noOfLines={2}
-            color={useColorModeValue('gray.600', 'gray.400')}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestie
-            parturient et sem ipsum volutpat vel. Natoque sem et aliquam mauris
-            egestas quam volutpat viverra. In pretium nec senectus erat. Et
-            malesuada lobortis.
-          </Text>
-        </Box>
-
-        <Box mt={4}>
-          <Flex alignItems="center" justifyContent="space-between">
-            <Flex alignItems="center">
-              <Link
-                mr={2}
-                fontWeight="bold"
-                color={useColorModeValue('gray.700', 'gray.200')}
-              >
-                Jone Doe
-              </Link>
-              <Heading
+          <Box mt={4} flex="1">
+            <Flex alignItems="center" justifyContent="space-between">
+              <Flex alignItems="center">
+                <LinkOverlay
+                  as={RouterLink}
+                  mr={2}
+                  to={`/top-lists/${list._id}`}
+                  fontWeight="bold"
+                  fontSize="xs"
+                  color={useColorModeValue('gray.700', 'gray.200')}
+                >
+                  Author: {list.author.username}
+                </LinkOverlay>
+                {/* <Heading
                 mx={1}
                 fontSize="xs"
                 color={useColorModeValue('gray.600', 'gray.300')}
-              >
+                >
                 21 SEP 2015
-              </Heading>
+              </Heading> */}
+              </Flex>
+              {liked ? (
+                <Button
+                  color="gray.100"
+                  px={5}
+                  py={3}
+                  _focus={{ borderColor: '' }}
+                  _hover={{ bg: 'gray.800' }}
+                  leftIcon={<FaHeart color="red" size={20} />}
+                  onClick={onLike}
+                  variant="regular"
+                >
+                  {list.likes.length}
+                </Button>
+              ) : (
+                <Button
+                  color="gray.100"
+                  px={5}
+                  py={3}
+                  _focus={{ borderColor: '' }}
+                  _hover={{ bg: 'gray.800' }}
+                  leftIcon={<FaHeart color="white" size={20} />}
+                  onClick={onLike}
+                  variant="regular"
+                >
+                  {list.likes.length}
+                </Button>
+              )}
             </Flex>
-            <Button
-              color="gray.100"
-              px={5}
-              py={3}
-              _focus={{ borderColor: '' }}
-              _hover={{ bg: 'gray.800' }}
-              leftIcon={<FaHeart size={20} />}
-              variant="regular"
-            >
-              39
-            </Button>
-          </Flex>
-        </Box>
-      </Box>
-    </Box>
+          </Box>
+        </Flex>
+      </Flex>
+    </LinkBox>
   );
 }

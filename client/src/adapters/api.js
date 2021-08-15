@@ -340,10 +340,47 @@ async function uploadList(data) {
     withCredentials: true,
   });
 }
+async function searchLists(query) {
+  return axios.get(`http://192.168.178.66:5000/api/lists?${query}`);
+}
+async function getListCover(ids) {
+  const manga = await request(
+    'https://graphql.anilist.co/',
+    `
+    query ($ids: [Int]) { 
+      Page(perPage: 10){
+      media (id_in: $ids) { 
+       id
+        coverImage{
+          extraLarge
+          large
+          medium
+        }
+        bannerImage
+      }
+    }
+    }
+    `,
+    {
+      ids,
+    }
+  );
+  return manga.Page.media;
+}
+async function toggleListLike(id, flag) {
+  return axios({
+    method: flag ? 'delete' : 'post',
+    url: `http://192.168.178.66:5000/api/lists/${id}/likes`,
+    withCredentials: true,
+  });
+}
 
 export {
   createRandomList,
+  toggleListLike,
+  getListCover,
   toggleLikeManga,
+  searchLists,
   fetchTrending,
   fetchPopular,
   removeFromPlanning,

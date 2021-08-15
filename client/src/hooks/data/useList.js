@@ -10,7 +10,9 @@ query ($ids: [Int]) {
       romaji
     }
     description
+    bannerImage
     coverImage{
+      extraLarge
       large
       medium
     }
@@ -20,7 +22,7 @@ query ($ids: [Int]) {
     }
     mediaListEntry{
       id
-status
+      status
     }
   }
 }
@@ -33,21 +35,29 @@ const fetcher = async (url) => {
   const mangas = await request(
     'https://graphql.anilist.co',
     query,
-    { ids: data.list },
+    { ids: data.list.map((manga) => manga.id) },
     {
       ...(alToken ? { Authorization: `Bearer ${alToken}` } : {}),
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
   );
+  const payload = data.list.map((raw) => {
+    const manga = mangas.Page.media.find((manga) => manga.id === raw.id);
+    return {
+      ...raw,
+      ...manga,
+    };
+  });
+
   return {
     ...data,
-    list: mangas.Page.media,
+    list: payload,
   };
 };
 function useList(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `http://192.168.178.63:5000/api/lists/${id}/`,
+    `http://192.168.178.66:5000/api/lists/${id}`,
     fetcher
   );
 

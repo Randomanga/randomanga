@@ -10,4 +10,5 @@ export interface IListRepository {
   delete(id: string): Promise<boolean>;
   like(id: string, userID: IUserModel['_id']): Promise<IListModel | null>;
   unlike(id: string, userID: IUserModel['_id']): Promise<IListModel | null>;
+  count(data: GetListDto): Promise<number>;
 }

@@ -15,8 +15,13 @@ export class ListService implements IListService {
 
   public async find(data: GetListDto) {
     const lists = await this._listRepo.find(data);
-    console.log(lists)
-    return lists;
+    const total = await this._listRepo.count(data);
+    const hasNextPage = data.page * 50 < total;
+
+    return {
+      page: lists,
+      pageInfo: { total, hasNextPage, currentPage: data.page },
+    };
   }
 
   public async findOneList(id: string) {
