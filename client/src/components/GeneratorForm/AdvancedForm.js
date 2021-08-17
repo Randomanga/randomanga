@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 import { createRandomList } from '../../adapters/api';
 import { useHistory } from 'react-router';
 
-const AdvancedForm = props => {
+const AdvancedForm = (props) => {
   const [included, setIncluded] = useState([]);
   const [excluded, setExcluded] = useState([]);
   const [isAdult, setIsAdult] = useState(false);
@@ -35,6 +35,7 @@ const AdvancedForm = props => {
       const listID = await createRandomList({
         includeFilters,
         excludeFilters,
+        hideAdult: !isAdult,
       });
       setIsLoading(false);
       history.push(`/random-lists/${listID}`);
@@ -43,10 +44,10 @@ const AdvancedForm = props => {
     }
   };
 
-  const onIncludedChange = changes => {
+  const onIncludedChange = (changes) => {
     setIncluded(changes);
   };
-  const onExcludedChange = changes => {
+  const onExcludedChange = (changes) => {
     setExcluded(changes);
   };
 
@@ -57,7 +58,7 @@ const AdvancedForm = props => {
         <Checkbox
           defaultChecked={!isAdult}
           fontSize={'sm'}
-          onChange={flag => setIsAdult(flag)}
+          onChange={(flag) => setIsAdult(flag)}
         >
           Hide Adult Content
         </Checkbox>

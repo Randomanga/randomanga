@@ -67,16 +67,20 @@ export class MangaRepository implements IMangaRepository {
   }
 
   private validateFilters(
-    data: Pick<IRandomListModel, 'includeFilters' | 'excludeFilters'>
+    data: Pick<IRandomListModel, 'includeFilters' | 'excludeFilters'> & {
+      hideAdult: boolean;
+    }
   ) {
-    function transform(type: '$in' | '$nin') {
+    function transform(type: 'includeFilters' | 'excludeFilters') {
       return Object.entries(data).reduce<Filters>(
         (prev, [filterType, keys]) => {
           Object.entries(keys).forEach(([key, values]) => {
-            if (!values.length) {
+            const inOrExclude =
+              filterType === 'includeFilters' ? '$in' : '$nin';
+            if (!values.length || filterType !== type) {
               return;
             }
-            prev[key] = { [type]: values };
+            prev[key] = { [inOrExclude]: values };
           });
 
           return prev;
@@ -84,20 +88,20 @@ export class MangaRepository implements IMangaRepository {
         {}
       );
     }
-    const include = transform('$in');
-    const exclude = transform('$nin');
+    const include = transform('includeFilters');
+    const exclude = transform('excludeFilters');
 
-    return { $and: [include, exclude] };
+    return {
+      $and: [include, exclude],
+      ...(data.hideAdult ? { isAdult: false } : {}),
+    };
   }
 
   async findFiltered(data: FindFilteredRequestDto) {
-    const filters = this.validateFilters({
-      includeFilters: data.includeFilters,
-      excludeFilters: data.excludeFilters,
-    });
+    const filters = this.validateFilters(data);
 
     const results = await this._manga
-      .find({ ...filters, isAdult: !data.hideAdult }, { al_id: 1 })
+      .find({ ...filters }, { al_id: 1 })
       .orFail();
     return results;
   }

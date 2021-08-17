@@ -175,6 +175,19 @@ export const Card = ({ data, ...rest }) => {
                   {genre}
                 </Badge>
               ))}
+              {manga.tags.map((tag) => (
+                <Badge
+                  rounded="full"
+                  key={uuidv4()}
+                  px="2"
+                  fontSize="xs"
+                  textTransform="capitalize"
+                  color="white"
+                  bg="blue.500"
+                >
+                  {tag.name}
+                </Badge>
+              ))}
             </HStack>
             <Tooltip
               label={onList ? 'Remove from list' : 'Add to planning'}

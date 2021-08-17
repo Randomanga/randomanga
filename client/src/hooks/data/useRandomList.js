@@ -16,9 +16,12 @@ query ($ids: [Int]) {
       medium
     }
     genres
+    tags{
+      name
+    }
     mediaListEntry{
       id
-status
+      status
     }
   }
 }
