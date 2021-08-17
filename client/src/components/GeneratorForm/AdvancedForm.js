@@ -24,6 +24,7 @@ const AdvancedForm = (props) => {
   const [included, setIncluded] = useState([]);
   const [excluded, setExcluded] = useState([]);
   const [isAdult, setIsAdult] = useState(false);
+  const [hideList, setHideList] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const history = useHistory();
 
@@ -38,9 +39,10 @@ const AdvancedForm = (props) => {
         hideAdult: !isAdult,
       });
       setIsLoading(false);
-      history.push(`/random-lists/${listID}`);
+      history.push(`/random-lists/${listID}`, { hideOnList: hideList });
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error('An error occured. Please refresh and try again. ');
+      console.log(err);
     }
   };
 
@@ -61,6 +63,21 @@ const AdvancedForm = (props) => {
           onChange={(flag) => setIsAdult(flag)}
         >
           Hide Adult Content
+        </Checkbox>
+        <Checkbox
+          defaultChecked={hideList}
+          fontSize={'sm'}
+          onChange={(flag) => {
+            if (localStorage.getItem('alToken') === null) {
+              toast.error(
+                'You need to authenticate with Anilist  to use this feature.'
+              );
+              return;
+            }
+            setHideList(flag);
+          }}
+        >
+          Hide my manga
         </Checkbox>
       </HStack>
       <StackDivider />

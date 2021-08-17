@@ -11,6 +11,7 @@ import {
   SkeletonText,
   Skeleton,
 } from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import { Card } from '../../components/Card';
 import useRandomList from '../../hooks/data/useRandomList';
@@ -24,13 +25,14 @@ import TagBadge from '../../components/TagBadge';
 export const RandomList = (props) => {
   const ID = props.match.params.id;
   const [listInfo, setListInfo] = useState();
+  const location = useLocation();
   const {
     data,
     setPage,
     page,
     isLoading: isLoadingInitialData,
     isValidating,
-  } = useRandomList(ID);
+  } = useRandomList(ID, location?.state?.hideOnList);
 
   const ref = useRef();
   const isVisible = useOnScreen(ref);
@@ -112,7 +114,6 @@ export const RandomList = (props) => {
       </Stack>
       <SimpleGrid boxSizing="border-box" columns={[1, 1, 2, 3]} spacing={6}>
         {list.map((manga) => {
-          
           return <Card data={manga} />;
         })}
 
@@ -120,8 +121,8 @@ export const RandomList = (props) => {
       </SimpleGrid>
       <Box ref={ref} w="full" h="48" p={10}>
         {isReachingEnd && (
-          <Heading fontSize="lg" textAlign="center">
-            Nothing left
+          <Heading fontSize="lg" fontFamily="body" textAlign="center">
+            Wow! You've reached the end of the list. 
           </Heading>
         )}
       </Box>
