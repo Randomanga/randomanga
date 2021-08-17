@@ -111,16 +111,16 @@ export default function SignUp() {
                 placeholder="Password"
                 variant="flushed"
                 {...register('password', {
-                  required: 'Password is required', 
+                  required: 'Password is required',
                   minLength: {
                     value: 8,
                     message: 'Password must have at least 8 characters',
                   },
                   pattern: {
                     value:
-                      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/,
+                      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d][?=\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,}$/,
                     message:
-                      'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+                      'Password must contain at least one letter and one number',
                   },
                 })}
               />

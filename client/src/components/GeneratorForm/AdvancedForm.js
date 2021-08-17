@@ -67,14 +67,13 @@ const AdvancedForm = (props) => {
         <Checkbox
           defaultChecked={hideList}
           fontSize={'sm'}
+          isChecked={hideList}
           onChange={(flag) => {
-            if (localStorage.getItem('alToken') === null) {
+            if (!localStorage.getItem('alToken')) {
               toast.error(
                 'You need to authenticate with Anilist  to use this feature.'
               );
-              return;
-            }
-            setHideList(flag);
+            } else setHideList(!hideList);
           }}
         >
           Hide my manga

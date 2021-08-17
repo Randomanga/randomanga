@@ -87,7 +87,7 @@ export const Profile = (props) => {
           <ListItem>Facilisis in pretium nisl aliquet</ListItem>
         </List>
       </Box>
-      {user && user._id == profile._id ? (
+      {user && user?._id === profile?._id ? (
         <VStack p={5} alignItems="center">
           <Button
             bg="red.500"

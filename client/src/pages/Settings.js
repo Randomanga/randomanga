@@ -62,7 +62,7 @@ const EditableControl = (props) => {
 };
 
 export function Settings() {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [description, setDescription] = useState();
@@ -70,12 +70,13 @@ export function Settings() {
   const history = useHistory();
   console.log(user);
   const fetchAlIdentity = async () => {
-    if (user.alToken) return;
+    if (user?.alToken) return;
     const { data } = await getAlIdentity();
     setAlIdentity(data.identity);
   };
 
   useEffect(() => {
+    if (!user) return;
     setUsername(user?.username);
     fetchAlIdentity();
   }, [user]);
@@ -202,18 +203,18 @@ export function Settings() {
           <FormLabel color="gray.400">Anilist</FormLabel>
           <HStack>
             <Button
-              bg={user.alToken ? 'green.500' : 'blue.400'}
+              bg={user?.alToken ? 'green.500' : 'blue.400'}
               size="sm"
               _hover={{
-                bg: user.alToken ? 'green.600' : 'blue.500',
+                bg: user?.alToken ? 'green.600' : 'blue.500',
               }}
               _focus
               _active
-              disabled={user.alToken !== null}
+              disabled={user?.alToken !== null}
               as="a"
               href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=http://192.168.178.66:5000/api/oauth/token&response_type=code&state=${alIdentity}`}
             >
-              {user.alToken ? 'Authorized' : 'Authorize'}
+              {user?.alToken ? 'Authorized' : 'Authorize'}
             </Button>
             {/* {user.alToken ? (
               <IconButton

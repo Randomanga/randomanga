@@ -24,6 +24,10 @@ const Controls = (props) => {
   const { manga, isLoading, mutate, error } = useDaily();
 
   const onAddToList = async () => {
+    if (!localStorage.getItem('alToken')) {
+      toast.info('Please authenticate with Anilist to save manga. ');
+      return;
+    }
     try {
       if (manga.mediaListEntry) {
         await removeFromPlanning(manga.mediaListEntry.id);
@@ -36,7 +40,7 @@ const Controls = (props) => {
         toast.info('Added to list');
       }
     } catch (e) {
-      toast.error(e);
+      toast.error('An error occured. Please refresh and try again');
     }
   };
   const onLike = async () => {
