@@ -6,12 +6,16 @@ import {
 import { IMangaRepository } from 'Core/Ports/IMangas.repository';
 import DailyMangaModel from 'Data/Models/DailyManga.model';
 import MangaModel, { IMangaModel } from 'Data/Models/Manga.model';
+import { IRandomListModel } from 'Data/Models/RandomList.model';
 import { IUserModel } from 'Data/Models/User.model';
 import { FilterQuery } from 'mongoose';
-type FilterFormat = Record<
-  string,
-  Record<'$elemMatch', Partial<Record<'$in' | '$nin', string[]>>>
->;
+// type FilterFormat = Record<
+//   string,
+//   Record<'$elemMatch', Partial<Record<'$in' | '$nin', string[]>>>
+// >;
+type Filters = Record<string, Partial<Record<'$in' | '$nin', string[]>>>;
+type FilterFormat = Record<'$and', Partial<Filters[]>>;
+
 export class MangaRepository implements IMangaRepository {
   private _manga = MangaModel;
   private _daily = DailyMangaModel;
@@ -62,9 +66,64 @@ export class MangaRepository implements IMangaRepository {
     return manga.related;
   }
 
-  private validateFilters(data: FindFilteredRequestDto) {
+  private validateFilters(
+    data: Pick<IRandomListModel, 'includeFilters' | 'excludeFilters'>
+  ) {
+    function transform(type: '$in' | '$nin') {
+      return Object.entries(data).reduce<Filters>(
+        (prev, [filterType, keys]) => {
+          Object.entries(keys).forEach(([key, values]) => {
+            if (!values.length) {
+              return;
+            }
+            prev[key] = { [type]: values };
+          });
+
+          return prev;
+        },
+        {}
+      );
+    }
+    const include = transform('$in');
+    const exclude = transform('$nin');
+
+    return { $and: [include, exclude] };
+  }
+
+  async findFiltered(data: FindFilteredRequestDto) {
+    const filters = this.validateFilters({
+      includeFilters: data.includeFilters,
+      excludeFilters: data.excludeFilters,
+    });
+
+    const results = await this._manga
+      .find({ ...filters, isAdult: !data.hideAdult }, { al_id: 1 })
+      .orFail();
+    return results;
+  }
+  async countCustomFiltered(filter: FilterQuery<IMangaModel>) {
+    return this._manga.countDocuments(filter);
+  }
+  async findDaily(data: FindDailyDto) {
+    const manga = await this._manga.find({
+      tags: {
+        $elemMatch: {
+          $nin: data.excludeFilters.tags,
+        },
+      },
+      banner: {
+        $ne: null,
+      },
+      isAdult: false,
+    });
+    return manga;
+  }
+}
+
+/*
     return Object.entries(data).reduce<FilterFormat>(
       (prev, [filterType, keys]) => {
+        console.log(filterType, keys);
         Object.entries(keys).forEach(([key, values]) => {
           if (!values.length) {
             return;
@@ -87,27 +146,5 @@ export class MangaRepository implements IMangaRepository {
       },
       {}
     );
-  }
 
-  async findFiltered(data: FindFilteredRequestDto) {
-    const filters = this.validateFilters(data);
-    const results = await this._manga.find(filters, { al_id: 1 }).orFail();
-    return results;
-  }
-  async countCustomFiltered(filter: FilterQuery<IMangaModel>) {
-    return this._manga.countDocuments(filter);
-  }
-  async findDaily(data: FindDailyDto) {
-    const manga = await this._manga.find({
-      tags: {
-        $elemMatch: {
-          $nin: data.excludeFilters.tags,
-        },
-      },
-      banner: {
-        $ne: null,
-      },
-    });
-    return manga;
-  }
-}
+*/

@@ -9,11 +9,14 @@ import { IRandomListModel } from 'Data/Models/RandomList.model';
 
 export class RandomListMapper {
   public static toCreateRequestDto(
-    data: Omit<CreateListRequestDto, 'generated' | 'count' | 'seed'>
+    data: Omit<CreateListRequestDto, 'generated' | 'count' | 'seed'> & {
+      hideAdult: boolean;
+    }
   ) {
     return {
       includeFilters: data.includeFilters,
       excludeFilters: data.excludeFilters,
+      hideAdult: data.hideAdult,
     };
   }
   public static toCreateResponseDto(data: IRandomListModel) {

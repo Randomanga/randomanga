@@ -80,7 +80,8 @@ export const Similar = ({ id }) => {
             <ListCard data={manga} key={manga.id} />
           )
         )}
-        {error && <Text textAlign="center">No similar manga found</Text>}
+        {error ||
+          (!data && <Text textAlign="center">No similar manga found</Text>)}
         <Skeletons isLoading={isLoading} cardView={cardView} />
       </Grid>
       <Button w="full" size={'sm'} mt={2} mb={6} hidden>

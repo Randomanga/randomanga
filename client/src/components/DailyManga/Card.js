@@ -11,7 +11,11 @@ import {
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Description from '../MangaDescription';
 import AlIcon from '../al.svg';
-import { toggleLikeManga } from '../../adapters/api';
+import {
+  toggleLikeManga,
+  addToPlanning,
+  removeFromPlanning,
+} from '../../adapters/api';
 import { toast } from 'react-toastify';
 
 import useDaily from '../../hooks/data/useDaily';
@@ -19,7 +23,22 @@ import useDaily from '../../hooks/data/useDaily';
 const Controls = (props) => {
   const { manga, isLoading, mutate, error } = useDaily();
 
-  const onAddToList = () => {};
+  const onAddToList = async () => {
+    try {
+      if (manga.mediaListEntry) {
+        await removeFromPlanning(manga.mediaListEntry.id);
+        mutate();
+        toast.info('Removed from list');
+      } else {
+        await addToPlanning(manga.al_id);
+
+        mutate();
+        toast.info('Added to list');
+      }
+    } catch (e) {
+      toast.error(e);
+    }
+  };
   const onLike = async () => {
     try {
       const res = await toggleLikeManga(manga?.al_id, manga?.liked);
@@ -42,8 +61,9 @@ const Controls = (props) => {
         _hover={{ bg: 'blue.500' }}
         _active={{ bg: 'blue.300' }}
         _focus={{ borderColor: 'blue.200' }}
+        onClick={onAddToList}
       >
-        Save
+        {manga?.mediaListEntry ? 'Remove' : 'Save'}
       </Button>
       <Button
         colorScheme="blue"

@@ -1,11 +1,32 @@
-import { Box, Heading, SkeletonText, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  HStack,
+  SkeletonText,
+  Text,
+  Button,
+  useBoolean,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useList from '../../hooks/data/useList';
 import { RankingCard } from './components/RankingCard';
+import { FaHeart } from 'react-icons/fa';
+import useUser from '../../hooks/data/useUser';
+import { toast } from 'react-toastify';
+import { toggleListLike } from '../../adapters/api';
 export function List(props) {
   const { id } = useParams();
-  const { data, isLoading, error } = useList(id);
+  const { data, isLoading, error, mutate } = useList(id);
+  const { user } = useUser();
+  const onLike = async () => {
+    if (!user) {
+      toast.error('Please login to like this list.');
+      return;
+    }
+    await toggleListLike(data._id, data.likes.includes(user._id));
+    mutate();
+  };
 
   return (
     <Box minH={'60vh'} maxW="4xl" mx="auto" mt={20} px={['2', '5']}>
@@ -23,6 +44,26 @@ export function List(props) {
           {data?.description}
         </Text>
       </SkeletonText>
+      <HStack>
+        <Button
+          bg="gray.900"
+          color="gray.100"
+          px={5}
+          py={3}
+          _focus={{ borderColor: '' }}
+          _hover={{ bg: 'gray.800' }}
+          leftIcon={
+            <FaHeart
+              color={data?.likes.includes(user?._id) ? 'red' : 'gray.100'}
+              size={20}
+            />
+          }
+          onClick={onLike}
+          variant="regular"
+        >
+          {data?.likes.length}
+        </Button>
+      </HStack>
       <Box mt={16}>
         {data?.list
           .sort((a, b) => {

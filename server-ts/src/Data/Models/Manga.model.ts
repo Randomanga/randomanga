@@ -18,6 +18,7 @@ export type IMangaModel = Document & {
   al_id: number;
   al_url: string;
   likes: Array<IUserModel['_id']>;
+  isAdult: boolean;
 };
 
 const mangaSchema = new Schema<IMangaModel>({
@@ -49,7 +50,7 @@ const mangaSchema = new Schema<IMangaModel>({
       type: Number,
     },
   ],
-  cover_image: {
+  cover_image: {  
     extraLarge: String,
     large: String,
     medium: String,
@@ -66,6 +67,9 @@ const mangaSchema = new Schema<IMangaModel>({
       ref: 'User',
     },
   ],
+  isAdult: {
+    type: Boolean,
+  },
 });
 
 export default mongoose.model<IMangaModel>('manga', mangaSchema, 'mangas');

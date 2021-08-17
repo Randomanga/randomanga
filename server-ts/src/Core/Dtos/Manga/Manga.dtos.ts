@@ -40,7 +40,7 @@ export class ResponseRelatedDto {
 export type FindFilteredRequestDto = Pick<
   IRandomListModel,
   'includeFilters' | 'excludeFilters'
->;
+> & { hideAdult: boolean };
 
 export type CreateDailyMangaDto = Pick<IMangaModel, '_id'>;
 export type FindDailyDto = Pick<IRandomListModel, 'excludeFilters'>;

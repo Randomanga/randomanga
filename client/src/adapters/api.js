@@ -11,6 +11,35 @@ async function getDailyManga() {
   const res = await axios.get('http://192.168.178.66:5000/api/manga/daily', {
     withCredentials: true,
   });
+  const { al_id } = res.data.manga;
+  console.log(al_id);
+  if (localStorage.getItem('alToken')) {
+    const status = await request(
+      'https://graphql.anilist.co/',
+      `
+    query($id: Int){
+      Media(id: $id,type: MANGA){
+        id
+        mediaListEntry{
+          id,
+          status
+        }
+      }
+    }
+    `,
+      {
+        id: al_id,
+      },
+      {
+        Authorization: `Bearer ${localStorage.getItem('alToken')}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }
+    );
+    return {
+      manga: { ...res.data.manga, mediaListEntry: status.Media.mediaListEntry },
+    };
+  }
   return res.data;
 }
 async function toggleLikeManga(id, flag) {

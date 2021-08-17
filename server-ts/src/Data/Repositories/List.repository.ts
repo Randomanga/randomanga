@@ -18,8 +18,8 @@ export class ListRepository implements IListRepository {
     return this._model
       .find(findQuery)
       .sort(sortQuery)
-      .skip(data.page - 1 ?? 0 * 50)
-      .limit(50)
+      .skip(data.page - 1 ?? 0 * 20)
+      .limit(20)
       .populate('author', { username: 1 });
   }
   public async count(data: GetListDto) {

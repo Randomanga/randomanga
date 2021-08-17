@@ -10,7 +10,7 @@ import {
 } from '../../utils/validateTags';
 import { createRandomList } from '../../adapters/api';
 import { useHistory } from 'react-router';
-const SimpleForm = props => {
+const SimpleForm = (props) => {
   const [included, setIncluded] = useState([]);
   const [excluded, setExcluded] = useState([]);
   const [loading, setIsLoading] = useState(false);
@@ -25,6 +25,7 @@ const SimpleForm = props => {
       const listID = await createRandomList({
         includeFilters,
         excludeFilters,
+        hideAdult: true,
       });
       setIsLoading(false);
       history.push(`/random-lists/${listID}`);
@@ -33,10 +34,10 @@ const SimpleForm = props => {
     }
   };
 
-  const onIncludedChange = changes => {
+  const onIncludedChange = (changes) => {
     setIncluded(changes);
   };
-  const onExcludedChange = changes => {
+  const onExcludedChange = (changes) => {
     setExcluded(changes);
   };
 
