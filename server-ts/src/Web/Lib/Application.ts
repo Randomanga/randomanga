@@ -41,6 +41,7 @@ export abstract class Application {
         name: 'sid',
         secret: 'cat',
         saveUninitialized: false,
+        rolling: true,
         resave: false,
         store: new MongoStore({
           mongoUrl: process.env.DB_URI,
@@ -50,7 +51,8 @@ export abstract class Application {
         cookie: {
           sameSite: true,
           secure: process.env.NODE_ENV === 'production',
-          maxAge: parseInt('100000000'),
+          //expire in one hour
+          maxAge: 60 * 60 * 1000,
         },
       })
     );

@@ -68,7 +68,6 @@ export function Settings() {
   const [description, setDescription] = useState();
   const [alIdentity, setAlIdentity] = useState();
   const history = useHistory();
-  console.log(user);
   const fetchAlIdentity = async () => {
     if (user?.alToken) return;
     const { data } = await getAlIdentity();

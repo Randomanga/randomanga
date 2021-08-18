@@ -22,6 +22,7 @@ export class CreateUserResponseDto {
 export class LoginUserRequestDto {
   username: IUserModel['username'];
   password: IUserModel['password'];
+  rememberMe?: boolean;
 }
 export class CreateIdentityDto {
   user: IUserModel;

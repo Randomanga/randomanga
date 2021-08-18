@@ -37,6 +37,7 @@ export class UserMapper {
     return {
       username: data.username,
       password: data.password,
+      rememberMe: data.rememberMe,
     } as LoginUserRequestDto;
   }
   public static toCreateAlIdentityRequestDto(data: CreateIdentityDto) {

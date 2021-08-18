@@ -23,7 +23,7 @@ export default function Login() {
   const { register, handleSubmit, formState } = useForm();
   const { mutate } = useUser();
   const history = useHistory();
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     try {
       const res = await login(data);
       mutate(res, true);
@@ -82,7 +82,7 @@ export default function Login() {
                 align={'start'}
                 justify={'space-between'}
               >
-                <Checkbox {...register('remember')}>Remember me</Checkbox>
+                <Checkbox {...register('rememberMe')}>Remember me</Checkbox>
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack>
               <Stack spacing={2} alignItems="center">
