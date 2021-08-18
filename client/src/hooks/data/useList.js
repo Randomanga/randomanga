@@ -57,7 +57,7 @@ const fetcher = async (url) => {
 };
 function useList(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `http://192.168.178.66:5000/api/lists/${id}`,
+    `/api/lists/${id}`,
     fetcher
   );
 

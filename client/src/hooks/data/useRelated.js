@@ -45,7 +45,7 @@ const fetcher = async (url) => {
 };
 function useRelated(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `http://192.168.178.66:5000/api/manga/${id}/related`,
+    `/api/manga/${id}/related`,
     fetcher
   );
 

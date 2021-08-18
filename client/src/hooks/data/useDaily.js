@@ -3,7 +3,7 @@ import { getDailyManga } from '../../adapters/api';
 
 export default function useDaily() {
   const { data, error, mutate, isValidating } = useSWR(
-    'http://192.168.178.66:5000/api/manga/daily',
+    '/api/manga/daily',
     getDailyManga
   );
   return {

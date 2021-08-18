@@ -49,11 +49,7 @@ const fetcher = async (url, hideOnList) => {
 function useRandomList(id, hideOnList) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null;
-    return [
-      `http://192.168.178.66:5000/api/random-lists/${id}/${
-        Number(pageIndex) + 1
-      }`,
-    ];
+    return [`/api/random-lists/${id}/${Number(pageIndex) + 1}`];
   };
   const { data, size, setSize, mutate, isValidating, error } = useSWRInfinite(
     getKey,
