@@ -3,7 +3,7 @@ import { getDailyManga } from '../../adapters/api';
 
 export default function useDaily() {
   const { data, error, mutate, isValidating } = useSWR(
-    '/api/manga/daily',
+    'https://randomanga.net/api/manga/daily',
     getDailyManga
   );
   return {

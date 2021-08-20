@@ -1,11 +1,11 @@
 import axios from 'axios';
 import request from 'graphql-request';
 async function createRandomList(filters) {
-  const list = await axios.post('/api/random-lists', filters);
+  const list = await axios.post('https://randomanga.net/api/random-lists', filters);
   return list.data._id;
 }
 async function getDailyManga() {
-  const res = await axios.get('/api/manga/daily', {
+  const res = await axios.get('https://randomanga.net/api/manga/daily', {
     withCredentials: true,
   });
   const { al_id } = res.data.manga;
@@ -46,23 +46,23 @@ async function toggleLikeManga(id, flag) {
   });
 }
 async function login(data) {
-  return axios.post('/api/auth/login', data, {
+  return axios.post('https://randomanga.net/api/auth/login', data, {
     withCredentials: true,
   });
 }
 async function signup(data) {
-  return axios.post('/api/auth/register', data, {
+  return axios.post('https://randomanga.net/api/auth/register', data, {
     withCredentials: true,
   });
 }
 
 async function authStatus() {
-  return axios.get('/api/auth/status', {
+  return axios.get('https://randomanga.net/api/auth/status', {
     withCredentials: true,
   });
 }
 async function logout() {
-  return axios.delete('/api/auth/logout', {
+  return axios.delete('https://randomanga.net/api/auth/logout', {
     withCredentials: true,
   });
 }
@@ -70,12 +70,12 @@ async function getRandomListInfo(id) {
   return axios.get(`/api/random-lists/${id}/info`);
 }
 async function getAlIdentity() {
-  return axios.get('/api/oauth/identity', {
+  return axios.get('https://randomanga.net/api/oauth/identity', {
     withCredentials: true,
   });
 }
 async function getTokens() {
-  return axios.get('/api/users/token', {
+  return axios.get('https://randomanga.net/api/users/token', {
     withCredentials: true,
   });
 }
@@ -361,7 +361,7 @@ async function getUserMangaList(userId, page = 1) {
   // });
 }
 async function uploadList(data) {
-  return axios.post('/api/lists/', data, {
+  return axios.post('https://randomanga.net/api/lists/', data, {
     withCredentials: true,
   });
 }

@@ -18,6 +18,7 @@ export abstract class Application {
   private async run() {
     this._server.use(morgan('dev'));
     this._server.use(express.json());
+    // this._server.enable('trust proxy');
     this._server.use(express.urlencoded({ extended: true }));
     this.initCors();
     this.initSession();
@@ -29,7 +30,7 @@ export abstract class Application {
   private initCors() {
     this._server.use(
       cors({
-        origin: ['http://192.168.178.66:3000', 'http://localhost:3000'],
+        origin: ['https://randomanga.net'],
         credentials: true,
         preflightContinue: true,
       })
@@ -42,22 +43,23 @@ export abstract class Application {
         secret: 'cat',
         saveUninitialized: false,
         rolling: true,
+        proxy: true,
         resave: false,
         store: new MongoStore({
           mongoUrl: process.env.DB_URI,
           collectionName: 'session',
           ttl: parseInt('100000000') / 1000,
         }),
-        cookie: {
-          sameSite: true,
-          secure: process.env.NODE_ENV === 'production',
+        cookie: { 
+          httpOnly: true,
+          secure: true,
+          sameSite: 'lax',
           //expire in one hour
           maxAge: 60 * 60 * 1000,
         },
       })
     );
   }
-
   private onSuccessListen() {
     console.log(`🔥 Server is running on http://localhost:5000`);
   }

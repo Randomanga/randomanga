@@ -4,8 +4,8 @@
   "main": "Bootstrap.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --no-notify -r tsconfig-paths/register src/Bootstrap.ts",
-    "build": "ttsc",
-    "start": "cd ./dist && node ./src/Bootstrap.js",
+    "build": "ttsc -P ./tsconfig.json",
+    "start": "cd dist && node ./src/Bootstrap.js",
     "test:watch": "NODE_ENV=test jest --watch"
   },
   "license": "MIT",
@@ -35,6 +35,7 @@
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.33",
     "@types/node-fetch": "^2.5.10",
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "agenda": "^4.1.3",
     "agendash": "^2.1.1",
     "argon2": "^0.27.1",
@@ -55,7 +56,6 @@
     "random": "^3.0.6",
     "seededshuffle": "^0.2.0",
     "tscpaths": "^0.0.9",
-    "ttypescript": "^1.5.12",
-    "typescript-transform-paths": "^3.3.1"
+    "ttypescript": "^1.5.12"
   }
 }

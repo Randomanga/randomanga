@@ -5,7 +5,7 @@ const fetch = async (url) => {
   const { data } = await axios.get(url, { withCredentials: true });
   const {
     data: { alToken },
-  } = await axios.get('/api/users/token', {
+  } = await axios.get('https://randomanga.net/api/users/token', {
     withCredentials: true,
   });
   if (alToken) {
@@ -17,7 +17,7 @@ const fetch = async (url) => {
 };
 export default function useUser() {
   const { data, error, mutate, isValidating } = useSWR(
-    '/api/auth/status',
+    'https://randomanga.net/api/auth/status',
     fetch,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
@@ -26,7 +26,7 @@ export default function useUser() {
           return;
         }
 
-        if (key === '/api/auth/status') return;
+        if (key === 'https://randomanga.net/api/auth/status') return;
 
         if (retryCount >= 2) return;
 
