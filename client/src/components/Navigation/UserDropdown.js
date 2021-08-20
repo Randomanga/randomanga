@@ -47,7 +47,11 @@ export const UserDropdown = ({ closeNavigation }) => {
         _active={{ bg: 'transparent' }}
       >
         <HStack spacing={1}>
-          <Avatar size={'sm'} src={"https://avatars.dicebear.com/api/bottts/" + user.username} loading="lazy"} />
+          <Avatar
+            size={'sm'}
+            src={'https://avatars.dicebear.com/api/bottts/' + user.username}
+            loading={'lazy'}
+          />
           <Text fontSize="sm" fontWeight="semibold" fontFamily="sans-serif">
             {user.username}
           </Text>
