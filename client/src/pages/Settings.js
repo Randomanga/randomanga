@@ -145,7 +145,7 @@ export function Settings() {
           />
         </FormControl>
 
-        <FormControl>
+        {/* <FormControl>
           <FormLabel color="gray.400">Profile avatar:</FormLabel>
           <Flex alignItems="center" mt={1} w="full" maxH="32">
             <Image
@@ -196,7 +196,7 @@ export function Settings() {
               )}
             </Dropzone>
           </Flex>
-        </FormControl>
+        </FormControl> */}
 
         <FormControl>
           <FormLabel color="gray.400">Anilist</FormLabel>
