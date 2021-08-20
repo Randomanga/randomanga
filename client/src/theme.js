@@ -5,14 +5,13 @@ export default extendTheme({
       body: {
         color: 'white',
         background: 'dark.800',
-        WebKitTapHighlightColor: 'rgba(255, 255, 255, 0); !important',
       },
       '.Toastify__toast-container': {
         top: 'var(--chakra-space-16)',
       },
       '*': {
-        outline: 'none',  
-        WebKitTapHighlightColor: 'rgba(255, 255, 255, 0); !important',
+        outline: 'none',
+        WebKitTapHighlightColor: 'transparent !important',
       },
     },
   },
