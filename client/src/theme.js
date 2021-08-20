@@ -13,6 +13,7 @@ export default extendTheme({
         outline: 'none',
         WebKitTapHighlightColor: 'transparent !important',
       },
+      
     },
   },
   initialColorMode: 'dark',
