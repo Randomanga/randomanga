@@ -65,6 +65,7 @@ const MenuLinks = ({ isOpen, toggle }) => {
       <Stack
         spacing={5}
         pl={4}
+        align={{ lg: 'center' }}
         justify={['center', 'space-between', 'flex-end', 'flex-end']}
         direction={['column', null, 'row', 'row']}
         pt={[4, 4, 0, 0]}
