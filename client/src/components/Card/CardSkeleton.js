@@ -22,7 +22,7 @@ export const CardSkeleton = (props) => {
       overflow="hidden"
     >
       <Skeleton>
-        <Image w={[32, 32, 36]} objectFit="cover" />
+        <Image minW={[32, 32, 36]} objectFit="cover" />
       </Skeleton>
 
       <Flex direction="column" w={'full'} h={'full'}>

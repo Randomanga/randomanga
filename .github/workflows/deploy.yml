@@ -15,10 +15,10 @@ jobs:
                   username: ${{ secrets.USERNAME }} # User of the server you want to ssh into
 
                   script: |
-                      cd apps/randomanga
-                      cd client
-                      npm run build
-                      cd ../server-ts
-                      npm run build
-                      pm2 restart all
+                      cd apps/randomanga &&
+                      cd client &&
+                      npm run build &&
+                      cd ../server-ts &&
+                      npm run build &&
+                      pm2 restart all &&
                       echo 'Deployment successful'
