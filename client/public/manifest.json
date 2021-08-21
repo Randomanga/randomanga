@@ -53,7 +53,7 @@
     {
       "name": "Top lists",
       "description": "Open top lists page",
-      "url": "Link to shortcut",
+      "url": "/top-lists",
       "icons": [
         {
           "src": "/manifestData/user.png",
