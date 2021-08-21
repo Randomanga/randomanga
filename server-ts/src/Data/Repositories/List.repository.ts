@@ -14,12 +14,13 @@ export class ListRepository implements IListRepository {
       data.sort === 'popularity'
         ? (sortQuery['likesCount'] = data.order ?? 'desc')
         : (sortQuery[data.sort ?? 'title'] = data.order ?? 'asc');
+    const limit = 20;
+    const startIndex = (data.page - 1) * limit;
 
     return this._model
       .find(findQuery)
-      .sort(sortQuery)
-      .skip(data.page - 1 ?? 0 * 20)
-      .limit(20)
+      .skip(startIndex)
+      .limit(limit)
       .populate('author', { username: 1 });
   }
   public async count(data: GetListDto) {
