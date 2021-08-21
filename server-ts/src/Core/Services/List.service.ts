@@ -16,7 +16,8 @@ export class ListService implements IListService {
   public async find(data: GetListDto) {
     const lists = await this._listRepo.find(data);
     const totalLists = await this._listRepo.count(data);
-    const total = Math.ceil(totalLists / 20);
+    const total = totalLists < 20 ? 1 : Math.ceil(totalLists / 20);
+
     const hasNextPage = data.page * 20 < total;
 
     return {

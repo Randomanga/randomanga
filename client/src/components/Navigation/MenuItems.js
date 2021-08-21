@@ -24,7 +24,7 @@ const MenuItem = ({ children, to = '/', close, isLast, ...rest }) => {
 
 const NoAccount = ({ closeNavigation }) => {
   return (
-    <Stack direction="row" align="center" spacing={3}>
+    <Stack direction="row" align="center" spacing={3} mb={5}>
       <MenuItem close={closeNavigation} to="/login">
         Login
       </MenuItem>
@@ -63,8 +63,8 @@ const MenuLinks = ({ isOpen, toggle }) => {
       flexBasis={{ base: '100%', md: 'auto' }}
     >
       <Stack
-        spacing={8}
-        align="center"
+        spacing={5}
+        pl={4}
         justify={['center', 'space-between', 'flex-end', 'flex-end']}
         direction={['column', null, 'row', 'row']}
         pt={[4, 4, 0, 0]}

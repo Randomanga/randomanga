@@ -2,15 +2,17 @@ import { Box, Link, SimpleGrid, Stack } from '@chakra-ui/react';
 import * as React from 'react';
 import { FooterHeading } from './FooterHeading';
 import { Link as ReactLink } from 'react-router-dom';
-export const LinkGrid = props => (
+export const LinkGrid = (props) => (
   <SimpleGrid columns={2} {...props}>
     <Box minW="130px">
       <FooterHeading mb="4">Links</FooterHeading>
       <Stack>
-        <Link as={ReactLink} to="/how-it-works">
+        <Link _focus as={ReactLink} to="/how-it-works">
           How it works
         </Link>
-        <Link as={ReactLink}>Top lists</Link>
+        <Link _focus as={ReactLink}>
+          Top lists
+        </Link>
         <Link as={ReactLink} href="/about">
           About
         </Link>
@@ -19,8 +21,22 @@ export const LinkGrid = props => (
     <Box minW="130px">
       <FooterHeading mb="4">Help</FooterHeading>
       <Stack>
-        <Link as={ReactLink}>Privacy</Link>
-        <Link as={ReactLink}>Terms</Link>
+        <Link
+          _focus
+          href="https://www.iubenda.com/privacy-policy/94743267"
+          class="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe "
+          title="Privacy Policy "
+        >
+          Privacy Policy
+        </Link>
+        <Link
+          _focus
+          href="https://www.iubenda.com/terms-and-conditions/94743267"
+          class="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe "
+          title="Terms and Conditions "
+        >
+          Terms and Conditions
+        </Link>
       </Stack>
     </Box>
   </SimpleGrid>

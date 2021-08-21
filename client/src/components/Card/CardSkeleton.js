@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { FaPlusSquare, FaCheckSquare } from 'react-icons/fa';
 
-export const CardSkeleton = props => {
+export const CardSkeleton = (props) => {
   return (
     <Flex
       bg={useColorModeValue('white', 'gray.800')}
@@ -22,10 +22,10 @@ export const CardSkeleton = props => {
       overflow="hidden"
     >
       <Skeleton>
-        <Image w={[28, 32, 36]} objectFit="cover" />
+        <Image w={[32, 32, 36]} objectFit="cover" />
       </Skeleton>
 
-      <Flex direction="column" w={'full'} h={'full'} maxH="">
+      <Flex direction="column" w={'full'} h={'full'}>
         <VStack
           p={{ base: 2, md: 4 }}
           maxH={'full'}

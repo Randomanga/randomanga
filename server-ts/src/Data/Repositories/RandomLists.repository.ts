@@ -22,7 +22,7 @@ export class RandomListRepository implements IRandomListRepository {
   }
 
   public async find(data: FindListRequestDto) {
-    const perPage = 50;
+    const perPage = 20;
     const offset = (Math.max(1, data.page) - 1) * perPage;
     try {
       const list = await this._listsModel
