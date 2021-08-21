@@ -10,21 +10,21 @@ export const LinkGrid = (props) => (
         <Link _focus as={ReactLink} to="/how-it-works">
           How it works
         </Link>
-        <Link _focus as={ReactLink}>
+        <Link _focus as={ReactLink} to="/top-lists">
           Top lists
         </Link>
-        <Link as={ReactLink} href="/about">
+        <Link as={ReactLink} to="/about">
           About
         </Link>
       </Stack>
     </Box>
     <Box minW="130px">
-      <FooterHeading mb="4">Help</FooterHeading>
+      {/* <FooterHeading mb="4">Help</FooterHeading>
       <Stack>
         <Link
           _focus
           href="https://www.iubenda.com/privacy-policy/94743267"
-          class="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe "
+          class="iubenda-noiframe iubenda-embed iubenda-noiframe "
           title="Privacy Policy "
         >
           Privacy Policy
@@ -37,7 +37,7 @@ export const LinkGrid = (props) => (
         >
           Terms and Conditions
         </Link>
-      </Stack>
+      </Stack> */}
     </Box>
   </SimpleGrid>
 );
