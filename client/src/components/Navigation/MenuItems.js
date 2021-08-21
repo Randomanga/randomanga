@@ -24,7 +24,7 @@ const MenuItem = ({ children, to = '/', close, isLast, ...rest }) => {
 
 const NoAccount = ({ closeNavigation }) => {
   return (
-    <Stack direction="row" align="center" pb={5}>
+    <Stack direction="row" align="center" pb={[5, 5, 0]}>
       <MenuItem close={closeNavigation} mr={3} to="/login">
         Login
       </MenuItem>
