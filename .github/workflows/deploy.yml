@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+    push:
+        branches: [master]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Copy repo contents via scp
+              uses: appleboy/scp-action@master
+              env:
+                  HOST: ${{ secrets.HOST }}
+                  USERNAME: ${{ secrets.USERNAME }}
+                  PORT: ${{ secrets.PORT }}
+                  KEY: ${{ secrets.SSHKEY }}
+              with:
+                  source: '.'
+                  target: '/apps/randomanga'
+            - name: Build client
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  USERNAME: ${{ secrets.USERNAME }}
+                  PORT: ${{ secrets.PORT }}
+                  KEY: ${{ secrets.SSHKEY }}
+                  script: cd client && npm run build
+            - name: Build API
+                uses: appleboy/ssh-action@master
+                with:
+                  host: ${{ secrets.HOST }}
+                  USERNAME: ${{ secrets.USERNAME }}
+                  PORT: ${{ secrets.PORT }}
+                  KEY: ${{ secrets.SSHKEY }}
+                  script: cd server-ts && npm run build && pm2 restart all
