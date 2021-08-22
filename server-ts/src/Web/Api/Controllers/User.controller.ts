@@ -23,13 +23,13 @@ export class UserController extends BaseHttpController {
     this.toJson<IdentityResponseDto>(res, { data: identity });
   }
   async authorizeAniList(req: Request, res: Response) {
-    if (req.query.error) res.redirect('http://192.168.178.66:3000/');
+    if (req.query.error) res.redirect('https://randomanga.net/');
     const data = UserMapper.toUpdateALTokenRequestDto({
       code: String(req.query.code),
       user: req.user!,
     });
     await this._userService.updateToken(data);
-    res.redirect('http://192.168.178.66:3000/settings');
+    res.redirect('https://randomanga.net/settings');
   }
   async show(req: Request, res: Response) {
     const dto = UserMapper.toShowDto({ id: req.params.id! });
