@@ -86,7 +86,6 @@ export function RankingCard({ mangaData, rank }) {
               _focus={{ borderColor: '' }}
               leftIcon={onList ? <FaCheckSquare /> : <FaPlusSquare />}
               onClick={onList ? onRemoveFromList : onAddToList}
-              mr={2}
             >
               {onList ? 'Remove from list' : 'Add to list'}
             </Button>
