@@ -32,7 +32,7 @@
       "sizes": "1125x2436"
     },
     {
-      "src": "manifestData/top-lists.png",
+      "src": "manifestData/lists.png",
       "type": "image/png",
       "sizes": "1125x2436"
     }
@@ -53,7 +53,7 @@
     {
       "name": "Top lists",
       "description": "Open top lists page",
-      "url": "/top-lists",
+      "url": "/lists",
       "icons": [
         {
           "src": "/manifestData/user.png",

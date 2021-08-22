@@ -16,8 +16,8 @@ export class ListController extends BaseHttpController {
   }
   public async get(req: Request, res: Response) {
     const payload = ListMapper.toFindRequestDto({
-      sort: String(req.query.sort ?? 'title'),
-      order: String(req.query.order ?? 'asc'),
+      sort: String(req.query.sort),
+      order: String(req.query.order),
       page: Number(req.query.page ?? '1'),
       query: req.query.search,
     });

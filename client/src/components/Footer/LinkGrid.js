@@ -10,8 +10,8 @@ export const LinkGrid = (props) => (
         <Link _focus as={ReactLink} to="/how-it-works">
           How it works
         </Link>
-        <Link _focus as={ReactLink} to="/top-lists">
-          Top lists
+        <Link _focus as={ReactLink} to="/lists">
+          Lists
         </Link>
         <Link _focus as={ReactLink} to="/about">
           About

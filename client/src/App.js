@@ -47,9 +47,9 @@ function App() {
           <Route exact path="/unauthorized" component={Unauthorized} />
           <Route exact path="/recommendations" component={Related} />
 
-          <Route exact path="/top-lists" component={Browse} />
-          <Route exact path="/top-lists/create" component={Create} />
-          <Route exact path="/top-lists/:id" component={List} />
+          <Route exact path="/lists" component={Browse} />
+          <Route exact path="/lists/create" component={Create} />
+          <Route exact path="/lists/:id" component={List} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

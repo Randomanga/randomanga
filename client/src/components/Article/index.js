@@ -79,7 +79,7 @@ export function Article({ article }) {
                 <LinkOverlay
                   as={RouterLink}
                   mr={2}
-                  to={`/top-lists/${list._id}`}
+                  to={`/lists/${list._id}`}
                   fontWeight="bold"
                   fontSize="xs"
                   color={useColorModeValue('gray.700', 'gray.200')}

@@ -46,8 +46,7 @@ export function Create(props) {
     uploadList({ ...data, list: ids })
       .then((res) => {
         setIsUploading(false);
-        toast.success('List created');
-        history.push(`/top-lists/${res.data._id}`);
+        history.push(`/lists/${res.data._id}`);
       })
       .catch((err) => {
         setIsUploading(false);
@@ -73,7 +72,7 @@ export function Create(props) {
   return (
     <Box minH={'60vh'} maxW="7xl" mx="auto" mt={20} px={['2', '5']}>
       <Heading as="h1" mt={16} fontFamily="body" fontWeight="bold">
-        Create top list
+        Create list
       </Heading>
       <Text
         fontSize="sm"

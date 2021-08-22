@@ -19,6 +19,7 @@ export class ListRepository implements IListRepository {
 
     return this._model
       .find(findQuery)
+      .sort(sortQuery)
       .skip(startIndex)
       .limit(limit)
       .populate('author', { username: 1 });

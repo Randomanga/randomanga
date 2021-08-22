@@ -80,6 +80,7 @@ export function RankingCard({ mangaData, rank }) {
               bg="gray.800"
               color="gray.100"
               px={5}
+              w="full"
               py={3}
               _hover={{ bg: 'gray.800' }}
               _focus={{ borderColor: '' }}
@@ -105,8 +106,12 @@ export function RankingCard({ mangaData, rank }) {
         )}
       </Box>
 
-      <Box py={2} mt={2} maxW={{ base: 'xl', lg: '5xl' }} w={{ md: '60%' }}>
-        <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" lineHeight="10">
+      <Box py={2} mt={2} w={{ md: '60%' }}>
+        <Heading
+          fontSize={{ base: 'xl', md: '2xl' }}
+          fontWeight="bold"
+          lineHeight="10"
+        >
           <Box bg="gray.800" p={2} mr={2} display="inline">
             {`${rank}.`}
           </Box>
@@ -142,6 +147,7 @@ export function RankingCard({ mangaData, rank }) {
               color="gray.100"
               px={5}
               py={3}
+              w="full"
               _hover={{ bg: 'gray.800' }}
               _focus={{ borderColor: '' }}
               leftIcon={onList ? <FaCheckSquare /> : <FaPlusSquare />}

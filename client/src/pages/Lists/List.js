@@ -40,7 +40,7 @@ export function List(props) {
       </SkeletonText>
       <SkeletonText noOfLines={4} isLoaded={!isLoading}>
         <Text py={4} color="gray.300">
-          Description: <br />
+          <Text color="gray.500">Description</Text> <br />
           {data?.description}
         </Text>
       </SkeletonText>

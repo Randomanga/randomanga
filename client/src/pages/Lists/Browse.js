@@ -49,9 +49,7 @@ export function Browse(props) {
     const covers = await getListCover(ids);
     const list = data.list.map((list, index) => {
       const [{ id }] = list.list;
-      console.log(covers);
       const cor = covers.find((cover) => cover.id == id);
-      console.log(cor);
       return {
         ...list,
         cover: cor.bannerImage || cor.coverImage.extraLarge,
@@ -91,6 +89,7 @@ export function Browse(props) {
       ? currentUrlParams.set('search', debouncedQuery)
       : currentUrlParams.delete('search');
     debouncedQuery ? setIsSearching(true) : setIsSearching(false);
+    setResults([]);
     search(currentUrlParams.toString()).then((data) => setResults(data));
     history.push({
       pathname: location.pathname,
@@ -102,7 +101,6 @@ export function Browse(props) {
     let currentUrlParams = new URLSearchParams(location.search);
     currentUrlParams.set('page', pageInfo.currentPage + 1);
     search(currentUrlParams.toString()).then((data) => {
-      console.log(data);
       setResults([...results, ...data]);
     });
   };
@@ -175,7 +173,7 @@ export function Browse(props) {
                 toast.error('Please login to create a list');
                 return;
               }
-              history.push('/top-lists/create');
+              history.push('/lists/create');
             }}
           >
             Create new list
