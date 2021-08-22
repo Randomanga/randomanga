@@ -23,6 +23,7 @@ export default function useUser() {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         if (error.response.status === 401) {
           localStorage.removeItem('alToken');
+          mutate(null);
           return;
         }
 
