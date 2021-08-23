@@ -170,7 +170,7 @@ export function Browse(props) {
               <Box maxW="lg" bg="gray.800" rounded="lg"
                 shadow="md">
                 <Skeleton h="44" />
-                <Box px={2}>
+                <Box p={2}>
                   <SkeletonText noOfLines={2} my={2} />
                   <SkeletonText noOfLines={4} my={6} />
                   <SkeletonText noOfLines={2} my={2} />
