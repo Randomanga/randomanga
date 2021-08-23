@@ -14,9 +14,12 @@ import {
   MenuList,
   MenuButton,
   MenuItemOption,
+  Center,
   MenuOptionGroup,
   MenuDivider,
   Button,
+  Skeleton,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { Article } from '../../components/Article';
 import { FaTimes, FaSearch, FaSort } from 'react-icons/fa';
@@ -27,6 +30,7 @@ import { useQuery } from '../../hooks/useQuery';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useUser from '../../hooks/data/useUser';
+import { Pagination } from '../../components/Pagination';
 
 export function Browse(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,9 +41,11 @@ export function Browse(props) {
   const [isSearching, setIsSearching] = useState(false);
   const debouncedQuery = useDebounce(searchTerm, 300);
   const [results, setResults] = useState([]);
-  const [sortBy, setSortBy] = useState('popularity_desc');
   const [pageInfo, setPageInfo] = useState();
+  const [isFetching, setIsFetching] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1);
   const search = async (url) => {
+    setIsFetching(true)
     const { data } = await searchLists(url);
     setPageInfo(data.pageInfo);
     const ids = data.list.map((article) => {
@@ -55,32 +61,25 @@ export function Browse(props) {
         cover: cor.bannerImage || cor.coverImage.extraLarge,
       };
     });
+    setIsFetching(false)
     return list;
   };
-  const onSortChange = (change) => {
-    setSortBy(change);
-    let currentUrlParams = new URLSearchParams(location.search);
-    const [sort, order] = change.split('_');
-    currentUrlParams.set('sort', sort);
-    currentUrlParams.set('order', order);
-    search(currentUrlParams.toString()).then((data) => setResults(data));
-    history.push({
-      pathname: location.pathname,
-      search: currentUrlParams.toString(),
-    });
-  };
-  // Updates sort and order state from the url
-  useEffect(() => {
-    const sort = query.get('sort');
-    const order = query.get('order');
-    if (sort && order) setSortBy(`${sort}_${order}`);
-  }, [query.get('sort'), query.get('order')]);
+
+
+
   //updates search term
   useEffect(() => {
     const search = query.get('search');
     if (search) setSearchTerm(search);
     else setSearchTerm('');
   }, [query.get('search')]);
+
+
+  useEffect(() => {
+    const page = query.get('page');
+    if (page) setCurrentPage(page)
+  }, [query.get('page')]);
+
 
   // adds or removed search param based on debounced state
   useEffect(() => {
@@ -97,13 +96,13 @@ export function Browse(props) {
     });
   }, [debouncedQuery]);
 
-  const onNextPage = async () => {
+  const handlePageChange = (change) => {
+    console.log("loading page ", change)
     let currentUrlParams = new URLSearchParams(location.search);
-    currentUrlParams.set('page', pageInfo.currentPage + 1);
-    search(currentUrlParams.toString()).then((data) => {
-      setResults([...results, ...data]);
-    });
-  };
+    currentUrlParams.set('page', change)
+    setResults([])
+    search(currentUrlParams.toString()).then((data) => setResults(data))
+  }
 
   return (
     <Box minH={'60vh'} maxW="6xl" mx="auto" mt={20} px={['2', '5']}>
@@ -140,32 +139,7 @@ export function Browse(props) {
               )}
             </InputGroup>
           </Box>
-          {/* <Menu>
-            <MenuButton color="gray.400">
-              <Icon size="md" as={FaSort} color="gray.500" />
-              Sort
-            </MenuButton>
-            <MenuList bg="gray.800" color="gray.400" border="none">
-              <MenuOptionGroup
-                defaultValue={sortBy}
-                type="radio"
-                onChange={onSortChange}
-              >
-                <MenuItemOption value="title_asc">
-                  Title ascending
-                </MenuItemOption>
-                <MenuItemOption value="title_desc">
-                  Title descending
-                </MenuItemOption>
-                <MenuItemOption value="popularity_asc">
-                  Popularity ascending
-                </MenuItemOption>
-                <MenuItemOption value="popularity_desc">
-                  Popularity descending
-                </MenuItemOption>
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu> */}
+
           <Button
             bg="gray.800"
             onClick={() => {
@@ -188,17 +162,26 @@ export function Browse(props) {
         {results?.map((list) => (
           <Article article={list} />
         ))}
+        {
+          isFetching ?
+            [...Array(5).keys()].map(() => {
+              <Box maxW="lg">
+                <Skeleton h="44"></Skeleton>
+                <SkeletonText noOfLines={3} />
+              </Box>
+            }) : null
+        }
       </Grid>
       {isSearching && results?.length < 1 && (
         <Text textAlign="center" fontSize="lg">
           No list found
         </Text>
       )}
-      {pageInfo?.hasNextPage && (
-        <Button w="full" size={'md'} mt={6} mb={6} onClick={onNextPage}>
-          Load more
-        </Button>
-      )}
+      <Center py={5}>
+        {!isFetching &&
+          <Pagination totalCount={20 * pageInfo.total} currentPage={currentPage} onPageChange={handlePageChange} pageSize={20} />
+        }
+      </Center>
     </Box>
   );
 }

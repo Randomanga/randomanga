@@ -25,9 +25,7 @@ import { Home } from './pages/Home';
 import { Browse } from './pages/Lists/Browse';
 function App() {
   const { user, mutate } = useUser();
-  useEffect(() => {
-    mutate();
-  }, []);
+
 
   return (
     <ChakraProvider theme={theme}>

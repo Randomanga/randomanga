@@ -90,12 +90,7 @@ export default function SignUp() {
                     value: 5,
                     message: 'Username must have at least 5 characters',
                   },
-                  pattern: {
-                    value:
-                      /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){5,15}[a-zA-Z0-9]$/,
-                    message:
-                      'Username must be 5 to 15 characters and only contain letters and numbers',
-                  },
+                  
                 })}
               />
               <FormErrorMessage>

@@ -1,5 +1,6 @@
 module.exports = {
   apps : [{
+    name: 'Randomanga',
     script: 'npm run start',
     watch: 'dist'
   }],
