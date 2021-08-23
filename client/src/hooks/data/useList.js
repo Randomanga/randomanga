@@ -1,6 +1,8 @@
 import useSWR from 'swr';
 import { request } from 'graphql-request';
 import axios from 'axios';
+import { BASE_URL } from '../../config';
+
 const query = `
 query ($ids: [Int]) { 
   Page(perPage: 50){
@@ -57,7 +59,7 @@ const fetcher = async (url) => {
 };
 function useList(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `/api/lists/${id}`,
+    BASE_URL + `/api/lists/${id}`,
     fetcher
   );
 

@@ -4,6 +4,8 @@ import {
   fetchTrending,
   getUserMangaList,
 } from '../../adapters/api';
+import { BASE_URL } from '../../config';
+
 
 export function usePopular() {
   const [page, setPage] = useState(1);

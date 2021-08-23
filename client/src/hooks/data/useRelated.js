@@ -2,6 +2,8 @@ import useSWR from 'swr';
 import { request } from 'graphql-request';
 import axios from 'axios';
 import useUser from './useUser';
+import { BASE_URL } from '../../config';
+
 const query = `
 query ($ids: [Int]) { 
   Page(perPage: 50){
@@ -45,7 +47,7 @@ const fetcher = async (url) => {
 };
 function useRelated(id) {
   const { data, mutate, isValidating, error } = useSWR(
-    `/api/manga/${id}/related`,
+    BASE_URL + `/api/manga/${id}/related`,
     fetcher
   );
 

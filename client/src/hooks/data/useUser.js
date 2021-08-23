@@ -1,36 +1,38 @@
 import useSWR from 'swr';
 import axios from 'axios';
 import { getUserAlId } from '../../adapters/api';
+import { BASE_URL } from '../../config';
+
 const fetch = async (url) => {
   const { data } = await axios.get(url, { withCredentials: true });
   const {
     data: { alToken },
-  } = await axios.get('https://randomanga.net/api/users/token', {
+  } = await axios.get('/api/users/token', {
     withCredentials: true,
   });
   if (alToken) {
     localStorage.setItem('alToken', alToken);
     const alID = await getUserAlId();
     return { ...data, alToken, alID };
-  }else{
+  } else {
     localStorage.removeItem('alToken')
   }
-  
+
   return { ...data, alToken };
 };
 export default function useUser() {
   const { data, error, mutate, isValidating } = useSWR(
-    'https://randomanga.net/api/auth/status',
+    BASE_URL + '/api/auth/status',
     fetch,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         if (error.response.status === 401) {
           localStorage.removeItem('alToken');
-          mutate(null,false);
+          mutate(null, false);
           return;
         }
 
-        if (key === 'https://randomanga.net/api/auth/status') return;
+        if (key === BASE_URL + '/api/auth/status') return;
 
         if (retryCount >= 2) return;
 

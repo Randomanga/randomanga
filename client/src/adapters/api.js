@@ -1,11 +1,12 @@
 import axios from 'axios';
 import request from 'graphql-request';
+import { BASE_URL } from '../config';
 async function createRandomList(filters) {
-  const list = await axios.post('https://randomanga.net/api/random-lists', filters);
+  const list = await axios.post(BASE_URL + '/api/random-lists', filters);
   return list.data._id;
 }
 async function getDailyManga() {
-  const res = await axios.get('https://randomanga.net/api/manga/daily', {
+  const res = await axios.get(BASE_URL + '/api/manga/daily', {
     withCredentials: true,
   });
   const { al_id } = res.data.manga;
@@ -41,49 +42,49 @@ async function getDailyManga() {
 async function toggleLikeManga(id, flag) {
   return axios({
     method: flag ? 'delete' : 'post',
-    url: `/api/manga/${id}/likes`,
+    url: BASE_URL + `/api/manga/${id}/likes`,
     withCredentials: true,
   });
 }
 async function login(data) {
-  return axios.post('https://randomanga.net/api/auth/login', data, {
+  return axios.post(BASE_URL + '/api/auth/login', data, {
     withCredentials: true,
   });
 }
 async function signup(data) {
-  return axios.post('https://randomanga.net/api/auth/register', data, {
+  return axios.post(BASE_URL + '/api/auth/register', data, {
     withCredentials: true,
   });
 }
 
 async function authStatus() {
-  return axios.get('https://randomanga.net/api/auth/status', {
+  return axios.get(BASE_URL + '/api/auth/status', {
     withCredentials: true,
   });
 }
 async function logout() {
-  return axios.delete('https://randomanga.net/api/auth/logout', {
+  return axios.delete(BASE_URL + '/api/auth/logout', {
     withCredentials: true,
   });
 }
 async function getRandomListInfo(id) {
-  return axios.get(`/api/random-lists/${id}/info`);
+  return axios.get(BASE_URL + `/api/random-lists/${id}/info`);
 }
 async function getAlIdentity() {
-  return axios.get('https://randomanga.net/api/oauth/identity', {
+  return axios.get(BASE_URL + '/api/oauth/identity', {
     withCredentials: true,
   });
 }
 async function getTokens() {
-  return axios.get('https://randomanga.net/api/users/token', {
+  return axios.get(BASE_URL + '/api/users/token', {
     withCredentials: true,
   });
 }
 async function getProfile(id) {
-  return axios.get(`/api/users/${id}`);
+  return axios.get(BASE_URL + `/api/users/${id}`);
 }
 async function removeAlAuth(id) {
-  return axios.delete(`/api/users/${id}/alAuth`);
+  return axios.delete(BASE_URL + `/api/users/${id}/alAuth`);
 }
 async function addToPlanning(id) {
   return request(
@@ -361,12 +362,12 @@ async function getUserMangaList(userId, page = 1) {
   // });
 }
 async function uploadList(data) {
-  return axios.post('https://randomanga.net/api/lists/', data, {
+  return axios.post(BASE_URL + '/api/lists/', data, {
     withCredentials: true,
   });
 }
 async function searchLists(query) {
-  return axios.get(`/api/lists?${query}`);
+  return axios.get(BASE_URL + `/api/lists?${query}`);
 }
 async function getListCover(ids) {
   const manga = await request(
@@ -395,7 +396,7 @@ async function getListCover(ids) {
 async function toggleListLike(id, flag) {
   return axios({
     method: flag ? 'delete' : 'post',
-    url: `/api/lists/${id}/likes`,
+    url: BASE_URL + `/api/lists/${id}/likes`,
     withCredentials: true,
   });
 }

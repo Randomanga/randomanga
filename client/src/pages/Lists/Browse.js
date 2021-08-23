@@ -150,38 +150,46 @@ export function Browse(props) {
               history.push('/lists/create');
             }}
           >
-            Create new list
+            Create list
           </Button>
         </Flex>
       </Box>
 
       <Grid
-        templateColumns={'repeat(auto-fit,minmax(var(--chakra-sizes-xs),1fr))'}
-        gridGap="6"
+        templateColumns={'repeat(auto-fit,minmax(280px,1fr))'}
+        rowGap={6}
+        columnGap={3}
       >
         {results?.map((list) => (
           <Article article={list} />
         ))}
         {
-          isFetching ?
-            [...Array(5).keys()].map(() => {
-              <Box maxW="lg">
-                <Skeleton h="44"></Skeleton>
-                <SkeletonText noOfLines={3} />
+          isFetching &&
+          [...Array(5).keys()].map(() => {
+            return (
+              <Box maxW="lg" bg="gray.800" rounded="lg"
+                shadow="md">
+                <Skeleton h="44" />
+                <SkeletonText noOfLines={2} my={2} />
+                <SkeletonText noOfLines={4} my={6} />
+                <SkeletonText noOfLines={2} my={2} />
               </Box>
-            }) : null
+            )
+          })
         }
       </Grid>
-      {isSearching && results?.length < 1 && (
-        <Text textAlign="center" fontSize="lg">
-          No list found
-        </Text>
-      )}
-      <Center py={5}>
+      {
+        isSearching && results?.length < 1 && (
+          <Text textAlign="center" fontSize="lg">
+            No list found
+          </Text>
+        )
+      }
+      <Flex py={5} width="full" direction="column" alignItems="center" justifyContent="center">
         {!isFetching &&
           <Pagination totalCount={20 * pageInfo.total} currentPage={currentPage} onPageChange={handlePageChange} pageSize={20} />
         }
-      </Center>
-    </Box>
+      </Flex>
+    </Box >
   );
 }

@@ -30,7 +30,13 @@ export abstract class Application {
   private initCors() {
     this._server.use(
       cors({
-        origin: ['https://randomanga.net','https://www.randomanga.net'],
+        origin: [
+          'https://randomanga.net',
+          'https://www.randomanga.net',
+          process.env.NODE_ENV == 'dev'
+            ? 'http://192.168.178.66:3000'
+            : '',
+        ],
         credentials: true,
         preflightContinue: true,
       })
@@ -50,7 +56,7 @@ export abstract class Application {
           collectionName: 'session',
           ttl: parseInt('100000000') / 1000,
         }),
-        cookie: { 
+        cookie: {
           httpOnly: true,
           secure: true,
           sameSite: 'lax',

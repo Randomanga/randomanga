@@ -2,6 +2,7 @@ import { useSWRInfinite } from 'swr';
 import { request } from 'graphql-request';
 import axios from 'axios';
 import useUser from './useUser';
+import { BASE_URL } from '../../config';
 
 const fetcher = async (url, hideOnList) => {
   const alToken = localStorage.getItem('alToken');
@@ -49,7 +50,7 @@ const fetcher = async (url, hideOnList) => {
 function useRandomList(id, hideOnList) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null;
-    return [`/api/random-lists/${id}/${Number(pageIndex) + 1}`];
+    return [BASE_URL + `/api/random-lists/${id}/${Number(pageIndex) + 1}`];
   };
   const { data, size, setSize, mutate, isValidating, error } = useSWRInfinite(
     getKey,

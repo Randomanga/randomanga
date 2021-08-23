@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 import { getDailyManga } from '../../adapters/api';
-
+import { BASE_URL } from '../../config';
 export default function useDaily() {
   const { data, error, mutate, isValidating } = useSWR(
-    'https://randomanga.net/api/manga/daily',
+    BASE_URL + '/api/manga/daily',
     getDailyManga
   );
   return {
