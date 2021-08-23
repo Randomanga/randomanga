@@ -1,6 +1,5 @@
 name: Deploy
 
-
 on:
     push:
         branches: [master]
@@ -15,4 +14,12 @@ jobs:
                   username: ${{secrets.USERNAME}}
                   host: ${{secrets.HOST}}
                   key: ${{secrets.SSHKEY}}
-                  script: 'cd apps/randomanga/client && npm run build && cd .. && cd server-ts/ && npm run build'
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      cd apps/randomanga/client
+                      git pull
+                      npm run build
+                      cd .. 
+                      cd server-ts/ 
+                      npm run build
