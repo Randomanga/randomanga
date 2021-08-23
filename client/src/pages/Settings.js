@@ -69,7 +69,7 @@ export function Settings() {
   const [alIdentity, setAlIdentity] = useState();
   const history = useHistory();
   const fetchAlIdentity = async () => {
-    if (user?.alToken) return;
+    if (localStorage.getItem('alToken')) return;
     const { data } = await getAlIdentity();
     setAlIdentity(data.identity);
   };
@@ -202,18 +202,18 @@ export function Settings() {
           <FormLabel color="gray.400">Anilist</FormLabel>
           <HStack>
             <Button
-              bg={user?.alToken ? 'green.500' : 'blue.400'}
+              bg={localStorage.getItem('alToken') ? 'green.500' : 'blue.400'}
               size="sm"
               _hover={{
-                bg: user?.alToken ? 'green.600' : 'blue.500',
+                bg: localStorage.getItem('alToken') ? 'green.600' : 'blue.500',
               }}
               _focus
               _active
-              disabled={user?.alToken !== null}
+              disabled={localStorage.getItem('alToken') !== null}
               as="a"
-              href={`https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=https://randomanga.net/api/oauth/token&response_type=code&state=${alIdentity}`}
+              href={localStorage.getItem('alToken') ? '#' : `https://anilist.co/api/v2/oauth/authorize?client_id=6064&redirect_uri=https://randomanga.net/api/oauth/token&response_type=code&state=${alIdentity}`}
             >
-              {user?.alToken ? 'Authorized' : 'Authorize'}
+              {localStorage.getItem('alToken') ? 'Authorized' : 'Authorize'}
             </Button>
             {/* {user.alToken ? (
               <IconButton

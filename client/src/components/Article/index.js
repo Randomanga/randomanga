@@ -58,6 +58,7 @@ export function Article({ article }) {
               color={useColorModeValue('gray.800', 'white')}
               fontWeight="bold"
               fontSize="lg"
+              noOfLines={1}
               _hover={{ color: 'gray.600', textDecor: 'underline' }}
             >
               {list.title}

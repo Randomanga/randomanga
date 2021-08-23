@@ -12,7 +12,10 @@ const fetch = async (url) => {
     localStorage.setItem('alToken', alToken);
     const alID = await getUserAlId();
     return { ...data, alToken, alID };
+  }else{
+    localStorage.removeItem('alToken')
   }
+  
   return { ...data, alToken };
 };
 export default function useUser() {
@@ -23,7 +26,7 @@ export default function useUser() {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
         if (error.response.status === 401) {
           localStorage.removeItem('alToken');
-          mutate(null);
+          mutate(null,false);
           return;
         }
 
