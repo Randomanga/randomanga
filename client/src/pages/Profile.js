@@ -44,7 +44,7 @@ export const Profile = (props) => {
             h="36"
             loading="lazy"
             objectFit="cover"
-            src={'https://avatars.dicebear.com/api/bottts/' + profile?.username}
+            src={'https://avatars.dicebear.com/api/bottts/' + profile?.username + '.svg'}
           />
           <Text pt={2} fontWeight="bold" color="white">
             {profile?.username}
