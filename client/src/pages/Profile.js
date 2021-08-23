@@ -44,12 +44,7 @@ export const Profile = (props) => {
             h="36"
             loading="lazy"
             objectFit="cover"
-            // src={'https://source.unsplash.com/random'}
-            src={
-              profile?.avatar
-                ? profile.avatar
-                : 'https://via.placeholder.com/128x144'
-            }
+            src={'https://avatars.dicebear.com/api/bottts/' + profile?.username}
           />
           <Text pt={2} fontWeight="bold" color="white">
             {profile?.username}
@@ -74,7 +69,7 @@ export const Profile = (props) => {
           </Box>
         </HStack> */}
       </Box>
-      <Box bg="gray.800" w="md" mx="auto" boxShadow="lg" mt={20} p={'6'}>
+      <Box bg="gray.800" maxW="md" w="full" mx="auto" boxShadow="lg" mt={20} p={'6'}>
         <Heading fontFamily="body" fontSize="xl" pb="2">
           Top lists
         </Heading>
