@@ -13,5 +13,5 @@ jobs:
               with:
                   username: ${{secrets.USERNAME}}
                   host: ${{secrets.HOST}}
-                  key: ${{secrets.KEY}}
+                  key: ${{secrets.SSHKEY}}
                   script: 'cd apps/randomanga/client && npm run build && cd .. && cd server-ts/ && npm run build'
