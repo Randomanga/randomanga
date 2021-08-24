@@ -58,7 +58,7 @@ export function Browse(props) {
       const cor = covers.find((cover) => cover.id == id);
       return {
         ...list,
-        cover: cor.bannerImage || cor.coverImage.extraLarge,
+        cover: cor?.bannerImage || cor?.coverImage?.extraLarge,
       };
     });
     setIsFetching(false)
@@ -100,6 +100,7 @@ export function Browse(props) {
     console.log("loading page ", change)
     let currentUrlParams = new URLSearchParams(location.search);
     currentUrlParams.set('page', change)
+    console.log(currentUrlParams.toString())
     setResults([])
     search(currentUrlParams.toString()).then((data) => setResults(data))
   }

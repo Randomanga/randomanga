@@ -2,7 +2,7 @@ import { Box, Button, Flex, Icon, IconButton } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { DOTS, usePagination } from "../../hooks/usePagination";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-export function Pagination({ onPageChange, totalCount, siblingCount = 1, currentPage = 1, pageSize }) {
+export function Pagination({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize }) {
     const paginationRange = usePagination({ currentPage, totalCount, siblingCount, pageSize })
     const onNext = () => {
         onPageChange(currentPage + 1)
@@ -10,6 +10,7 @@ export function Pagination({ onPageChange, totalCount, siblingCount = 1, current
     const onPrevious = () => {
         onPageChange(currentPage - 1)
     }
+    console.log(currentPage)
     const lastPage = paginationRange[paginationRange.length - 1]
     return <Flex flexWrap="wrap" px={4}>
         <IconButton aria-label="previous page button" m={2} icon={<FaChevronLeft />} disabled={currentPage === 1} onClick={onPrevious} />

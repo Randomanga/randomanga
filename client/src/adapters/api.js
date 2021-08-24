@@ -374,7 +374,7 @@ async function getListCover(ids) {
     'https://graphql.anilist.co/',
     `
     query ($ids: [Int]) { 
-      Page(perPage: 10){
+      Page{
       media (id_in: $ids) { 
        id
         coverImage{
