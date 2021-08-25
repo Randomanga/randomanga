@@ -39,8 +39,8 @@ export function List(props) {
         </Text>
       </SkeletonText>
       <SkeletonText noOfLines={4} isLoaded={!isLoading}>
-        <Text py={1} color="gray.300">
-          <Text color="gray.500">Description</Text> <br />
+        <Text py={4} color="gray.300">
+          <Text color="gray.500" m={1}>Description</Text>
           {data?.description}
         </Text>
       </SkeletonText>
