@@ -21,7 +21,7 @@ export function List(props) {
   const { id } = useParams();
   const { data, isLoading, error, mutate } = useList(id);
   const { user } = useUser();
-  const disqusShortname = "your-site-shortname"
+  const disqusShortname = "Randomanga"
   const disqusConfig = {
     url: `https://randomanga.net/lists/${id}`,
     identifier: id,
