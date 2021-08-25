@@ -72,7 +72,7 @@ export class UserService implements IUserService {
     if (!user) throw Error('User not found');
     return UserMapper.toUserTokensResponse(user);
   }
-  async update(data: { id: string; username: string }) {
+  async update(data: { id: string; username: string; about: string }) {
     const user = await this._usersRepo.update(data);
     if (!user) throw Error('Username invalid or taken.');
     return user;

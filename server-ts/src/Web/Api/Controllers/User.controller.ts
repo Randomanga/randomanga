@@ -50,6 +50,7 @@ export class UserController extends BaseHttpController {
     const data = UserMapper.toUserUpdateDto({
       _id: req.user!._id,
       username: req.body.username,
+      about: req.body.about,
     });
     const modified = await this._userService.update(data);
     this.toJson<IUserModel>(res, { statusCode: 200, data: modified });

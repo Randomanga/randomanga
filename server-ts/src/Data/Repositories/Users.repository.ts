@@ -15,14 +15,15 @@ export class UsersRepository implements IUsersRepository {
     if (exists) throw new Error('Username or email already taken');
     return user.save();
   }
-  public async update(data: { id: string; username: string }) {
+  public async update(data: { id: string; username: string; about: string }) {
     const user = await this._model.findOneAndUpdate(
       { _id: data.id },
       {
         $set: {
-          username: data.username,
+          about: data.about,
         },
-      }
+      },
+      { new: true }
     );
     return user;
   }

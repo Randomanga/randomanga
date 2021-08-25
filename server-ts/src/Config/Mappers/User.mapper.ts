@@ -63,10 +63,15 @@ export class UserMapper {
       id: data.id,
     } as UserShowDto;
   }
-  public static toUserUpdateDto(data: { _id: string; username: string }) {
+  public static toUserUpdateDto(data: {
+    _id: string;
+    username: string;
+    about: string;
+  }) {
     return {
       id: data._id,
       username: data.username,
+      about: data.about,
     };
   }
   /**
