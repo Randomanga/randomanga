@@ -154,7 +154,7 @@ export function Browse(props) {
                 toast.error('Please login to create a list');
                 return;
               }
-              history.push('/lists/browse/create');
+              history.push('/lists/create');
             }}
           >
             Create list
