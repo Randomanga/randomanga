@@ -86,10 +86,10 @@ export function List(props) {
             />
           ))}
       </Box>
-      <div className="article-container" my={'20'}>
+      <Box className="article-container" my={'20'}>
         <Heading as="h4" fontSize="lg" fontFamily="body">Comments</Heading>
         <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
-      </div>
+      </Box>
     </Box>
   );
 }
