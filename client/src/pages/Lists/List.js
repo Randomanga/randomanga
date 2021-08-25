@@ -7,6 +7,8 @@ import {
   Button,
   useBoolean,
 } from '@chakra-ui/react';
+import Disqus from "disqus-react"
+
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useList from '../../hooks/data/useList';
@@ -19,6 +21,14 @@ export function List(props) {
   const { id } = useParams();
   const { data, isLoading, error, mutate } = useList(id);
   const { user } = useUser();
+  const disqusShortname = "your-site-shortname"
+  const disqusConfig = {
+    url: "https://randomanga.net",
+    identifier: id,
+    title: "List",
+
+  }
+
   const onLike = async () => {
     if (!user) {
       toast.error('Please login to like this list.');
@@ -76,6 +86,10 @@ export function List(props) {
               key={manga.id}
             />
           ))}
+      </Box>
+      <Box className="article-container">
+        <Heading as="h4">{data?.title}</Heading>
+        <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
       </Box>
     </Box>
   );

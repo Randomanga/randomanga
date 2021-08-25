@@ -11,6 +11,7 @@
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "disqus-react": "^1.1.2",
     "dompurify": "^2.2.8",
     "framer-motion": "^4.1.16",
     "ggl": "0.0.1",
