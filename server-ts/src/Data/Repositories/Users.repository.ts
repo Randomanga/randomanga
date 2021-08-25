@@ -16,6 +16,7 @@ export class UsersRepository implements IUsersRepository {
     return user.save();
   }
   public async update(data: { id: string; username: string; about: string }) {
+    console.log(data.id);
     const user = await this._model.findOneAndUpdate(
       { _id: data.id },
       {
