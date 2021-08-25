@@ -116,7 +116,7 @@ export function RankingCard({ mangaData, rank }) {
           </Box>
           {manga.title.romaji}
         </Heading>
-        <HStack my={4}>
+        <HStack my={4} flexWrap="wrap">
           {manga.genres.map((genre) => (
             <Badge
               rounded="full"
