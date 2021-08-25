@@ -11,4 +11,5 @@ export interface IUsersRepository {
     user: IUserModel
   ): Promise<IUserModel>;
   removeAnilistAuth(id: string): Promise<boolean>;
+  update(data: { id: string; username: string }): Promise<IUserModel | null>;
 }

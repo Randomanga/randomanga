@@ -13,4 +13,5 @@ export interface IUserService {
   show(data: UserShowDto): Promise<IUserModel>;
   token(data: UserShowDto): Promise<UserTokensResponse>;
   removeAlToken(data: UserShowDto): Promise<boolean>;
+  update(data: { id: string; username: string }): Promise<IUserModel>;
 }

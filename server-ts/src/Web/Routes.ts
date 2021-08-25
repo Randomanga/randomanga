@@ -28,10 +28,7 @@ browter.group('/api', (browter) => {
     // browter.get('/', 'UserController.index', [AuthValidate({})]);
     browter.get('/token', 'UserController.token', [AuthValidate({})]);
     browter.get('/:id', 'UserController.show');
-    browter.patch('/:id', 'UserController.update', [AuthValidate({})]);
-    browter.put('/:id/avatar', 'UserController.updateAvatar', [
-      AuthValidate({}),
-    ]);
+    browter.put('/:id', 'UserController.update', [AuthValidate({})]);
     browter.delete('/:id/alAuth', 'UserController.removeAlToken', [
       AuthValidate({}),
     ]);

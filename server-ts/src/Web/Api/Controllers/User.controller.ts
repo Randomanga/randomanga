@@ -46,6 +46,12 @@ export class UserController extends BaseHttpController {
     const modified = await this._userService.removeAlToken(data);
     res.sendStatus(modified ? 200 : 500);
   }
-  async update(req: Request, res: Response) {}
-  async updateAvatar(req: Request, res: Response) {}
+  async update(req: Request, res: Response) {
+    const data = UserMapper.toUserUpdateDto({
+      _id: req.user!._id,
+      username: req.body.username,
+    });
+    const modified = await this._userService.update(data);
+    this.toJson<IUserModel>(res, { statusCode: 200, data: modified });
+  }
 }

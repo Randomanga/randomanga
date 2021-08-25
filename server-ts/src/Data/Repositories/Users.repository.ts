@@ -15,6 +15,17 @@ export class UsersRepository implements IUsersRepository {
     if (exists) throw new Error('Username or email already taken');
     return user.save();
   }
+  public async update(data: { id: string; username: string }) {
+    const user = await this._model.findOneAndUpdate(
+      { _id: data.id },
+      {
+        $set: {
+          username: data.username,
+        },
+      }
+    );
+    return user;
+  }
   public async delete(id: string) {
     const { deletedCount } = await this._model.deleteOne({ _id: id });
     return deletedCount ? deletedCount >= 1 : false;
