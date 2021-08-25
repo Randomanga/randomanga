@@ -27,7 +27,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { getListCover, searchLists } from '../../adapters/api';
 import { useEffect, useState } from 'react';
 import { useQuery } from '../../hooks/useQuery';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useUser from '../../hooks/data/useUser';
 import { Pagination } from '../../components/Pagination';
@@ -35,6 +35,7 @@ import { Pagination } from '../../components/Pagination';
 export function Browse(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const query = useQuery();
+  const { page } = useParams();
   const { user } = useUser();
   const history = useHistory();
   const location = useLocation();
@@ -76,9 +77,12 @@ export function Browse(props) {
 
 
   useEffect(() => {
-    const page = query.get('page');
-    if (page) setCurrentPage(page)
-  }, [query.get('page')]);
+    setCurrentPage(Number(page))
+    let currentUrlParams = new URLSearchParams(location.search);
+    currentUrlParams.set('page', page)
+    setResults([])
+    search(currentUrlParams.toString()).then((data) => setResults(data));
+  }, [page]);
 
 
   // adds or removed search param based on debounced state
@@ -96,14 +100,16 @@ export function Browse(props) {
     });
   }, [debouncedQuery]);
 
+
+
+
   const handlePageChange = (change) => {
-    console.log("loading page ", change)
     let currentUrlParams = new URLSearchParams(location.search);
-    currentUrlParams.set('page', change)
-    console.log(currentUrlParams.toString())
-    setResults([])
-    search(currentUrlParams.toString()).then((data) => setResults(data))
-  }
+    history.push({
+      pathname: `/lists/browse/${change}`,
+      search: currentUrlParams.toString(),
+    });
+  };
 
   return (
     <Box minH={'60vh'} maxW="6xl" mx="auto" mt={20} px={['2', '5']}>
@@ -148,7 +154,7 @@ export function Browse(props) {
                 toast.error('Please login to create a list');
                 return;
               }
-              history.push('/lists/create');
+              history.push('/lists/browse/create');
             }}
           >
             Create list
@@ -190,7 +196,7 @@ export function Browse(props) {
       }
       <Flex py={5} width="full" direction="column" alignItems="center" justifyContent="center">
         {!isFetching &&
-          <Pagination totalCount={20 * pageInfo.total} currentPage={currentPage} onPageChange={handlePageChange} pageSize={20} />
+          <Pagination totalCount={20 * pageInfo.total} defaultPage={page ?? 1} onPageChange={handlePageChange} pageSize={20} />
         }
       </Flex>
     </Box >

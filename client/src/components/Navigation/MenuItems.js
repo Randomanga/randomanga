@@ -76,7 +76,7 @@ const MenuLinks = ({ isOpen, toggle }) => {
         <MenuItem close={toggle} to="/recommendations">
           Recommendations
         </MenuItem>
-        <MenuItem close={toggle} isLast to="/lists">
+        <MenuItem close={toggle} isLast to="/lists/browse">
           Lists
         </MenuItem>
         {user ? (

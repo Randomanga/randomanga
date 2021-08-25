@@ -45,7 +45,7 @@ function App() {
           <Route exact path="/unauthorized" component={Unauthorized} />
           <Route exact path="/recommendations" component={Related} />
 
-          <Route exact path="/lists" component={Browse} />
+          <Route exact path="/lists/browse/:page?" component={Browse} />
           <Route exact path="/lists/create" component={Create} />
           <Route exact path="/lists/:id" component={List} />
           <Route path="" component={NotFound} />
