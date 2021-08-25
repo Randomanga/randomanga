@@ -23,10 +23,9 @@ export function List(props) {
   const { user } = useUser();
   const disqusShortname = "your-site-shortname"
   const disqusConfig = {
-    url: "https://randomanga.net",
+    url: `https://randomanga.net/lists/${id}`,
     identifier: id,
     title: "List",
-
   }
 
   const onLike = async () => {
@@ -88,7 +87,7 @@ export function List(props) {
           ))}
       </Box>
       <Box className="article-container">
-        <Heading as="h4">{data?.title}</Heading>
+        <Heading as="h4" fontSize="lg">{data?.title}</Heading>
         <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
       </Box>
     </Box>
