@@ -25,7 +25,7 @@ export function List(props) {
   const disqusConfig = {
     url: `https://randomanga.net/lists/${id}`,
     identifier: id,
-    title: "List",
+    title: "Randomanga lists",
   }
 
   const onLike = async () => {
