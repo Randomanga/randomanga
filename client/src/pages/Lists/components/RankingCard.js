@@ -121,6 +121,7 @@ export function RankingCard({ mangaData, rank }) {
             <Badge
               rounded="full"
               px="2"
+              my={1}
               fontSize="xs"
               textTransform="capitalize"
               color="white"
