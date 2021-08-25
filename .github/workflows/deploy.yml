@@ -19,7 +19,9 @@ jobs:
                       source ~/.nvm/nvm.sh
                       cd apps/randomanga/client
                       git pull
+                      npm i 
                       npm run build
                       cd .. 
                       cd server-ts/ 
+                      npm i 
                       npm run build
