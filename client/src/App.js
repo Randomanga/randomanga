@@ -23,6 +23,7 @@ import { Create } from './pages/Lists/Create';
 import { List } from './pages/Lists/List';
 import { Home } from './pages/Home';
 import { Browse } from './pages/Lists/Browse';
+import { Generator } from './pages/Generator';
 function App() {
   const { user, mutate } = useUser();
 
@@ -35,6 +36,7 @@ function App() {
         <Navigation />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/generator" component={Generator} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/sign-up" component={SignUp} />

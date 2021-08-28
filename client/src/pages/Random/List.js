@@ -21,7 +21,7 @@ import useOnScreen from '../../hooks/useOnScreen';
 import { CardSkeleton } from '../../components/Card/CardSkeleton';
 import { getRandomListInfo } from '../../adapters/api';
 import TagBadge from '../../components/TagBadge';
-
+import { Helmet } from 'react-helmet';
 export const RandomList = (props) => {
   const ID = props.match.params.id;
   const [listInfo, setListInfo] = useState();
@@ -64,6 +64,12 @@ export const RandomList = (props) => {
   }, [isVisible]);
   return (
     <Box minH={'60vh'} maxW="7xl" mx="auto" mt={16} px={['2', '5']} maxW="7xl">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Randomanga - Random List</title>
+        <meta name="description" content="Random list of manga created based on someone's preferences. " />
+        <link rel="canonical" href="https://randomanga.net/random-lists" />
+      </Helmet>
       <Stack py={10} maxW="xl">
         <Heading as="h2" fontFamily="body" fontWeight="bold">
           Random list
@@ -122,7 +128,7 @@ export const RandomList = (props) => {
       <Box ref={ref} w="full" h="48" p={10}>
         {isReachingEnd && (
           <Heading fontSize="lg" fontFamily="body" textAlign="center">
-            Wow! You've reached the end of the list. 
+            Wow! You've reached the end of the list.
           </Heading>
         )}
       </Box>

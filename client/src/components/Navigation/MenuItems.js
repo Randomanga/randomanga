@@ -25,7 +25,7 @@ const MenuItem = ({ children, to = '/', close, isLast, ...rest }) => {
 const NoAccount = ({ closeNavigation }) => {
   return (
     <Stack direction="row" align="center" pb={[5, 5, 0]}>
-      <MenuItem close={closeNavigation} mr={3} to="/login">
+      <MenuItem close={closeNavigation} mr={3} to="/login" nofollow>
         Login
       </MenuItem>
       <Link onClick={() => closeNavigation()} to="/sign-up">
@@ -44,6 +44,7 @@ const NoAccount = ({ closeNavigation }) => {
             boxShadow: '',
           }}
           variant="solid"
+          nofollow
         >
           Sign up
         </Button>
@@ -73,7 +74,7 @@ const MenuLinks = ({ isOpen, toggle }) => {
         <MenuItem close={toggle} to="/">
           Home
         </MenuItem>
-        <MenuItem close={toggle} to="/recommendations">
+        <MenuItem close={toggle} to="/recommendations" >
           Recommendations
         </MenuItem>
         <MenuItem close={toggle} isLast to="/lists/browse">

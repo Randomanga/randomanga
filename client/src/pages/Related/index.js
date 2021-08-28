@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '../../hooks/useQuery';
 import { Search } from './Search';
+import { Helmet } from "react-helmet";
 import { Sections } from './Sections';
 
 export const Related = () => {
@@ -10,6 +11,12 @@ export const Related = () => {
 
   return (
     <Box minH={'60vh'} maxW="7xl" mx="auto" mt={20} px={['2', '5']} maxW="4xl">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Randomanga - Recommendations</title>
+        <meta name="description" content="Have a favourite manga? Use this feature to find what's similar to your favourite manga using our machine learning algorithm.  " />
+        <link rel="canonical" href="https://randomanga.net/recommendations" />
+      </Helmet>
       <Heading as="h1" px={2} fontFamily="body" fontWeight="bold">
         Recommendations
       </Heading>

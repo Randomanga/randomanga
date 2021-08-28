@@ -33,9 +33,7 @@ export abstract class Application {
         origin: [
           'https://randomanga.net',
           'https://www.randomanga.net',
-          process.env.NODE_ENV == 'dev'
-            ? 'http://192.168.178.66:3000'
-            : '',
+          process.env.NODE_ENV == 'dev' ? 'http://192.168.178.66:3000' : '',
         ],
         credentials: true,
         preflightContinue: true,
@@ -58,7 +56,7 @@ export abstract class Application {
         }),
         cookie: {
           httpOnly: true,
-          secure: true,
+          secure: process.env.NODE_ENV == 'dev' ? false : true,
           sameSite: 'lax',
           //expire in one hour
           maxAge: 60 * 60 * 1000,

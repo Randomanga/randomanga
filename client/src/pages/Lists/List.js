@@ -8,6 +8,7 @@ import {
   useBoolean,
 } from '@chakra-ui/react';
 import Disqus from "disqus-react"
+import { Helmet } from 'react-helmet';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -39,6 +40,11 @@ export function List(props) {
 
   return (
     <Box minH={'60vh'} maxW="4xl" mx="auto" mt={20} px={['2', '5']}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Randomanga - ${data?.title}`}</title>
+        <meta name="description" content={`${data?.description}`} />
+      </Helmet>
       <SkeletonText noOfLines={4} isLoaded={!isLoading}>
         <Heading as="h1" mt={24} fontFamily="body" fontWeight="bold">
           {data?.title}

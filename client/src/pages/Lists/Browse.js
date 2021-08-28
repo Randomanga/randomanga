@@ -31,6 +31,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useUser from '../../hooks/data/useUser';
 import { Pagination } from '../../components/Pagination';
+import { Helmet } from 'react-helmet';
 
 export function Browse(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -113,6 +114,12 @@ export function Browse(props) {
 
   return (
     <Box minH={'60vh'} maxW="6xl" mx="auto" mt={20} px={['2', '5']}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Randomanga - Browse Lists</title>
+        <meta name="description" content="Browse various lists curated by other users. Have a list of manga you want to share? You can do so here. " />
+        <link rel="canonical" href="https://randomanga.net/lists/" />
+      </Helmet>
       <Box mt={24}>
         <Heading as="h1" mb={12} fontFamily="body" fontWeight="bold">
           {isSearching ? 'Search' : 'Browse'}
