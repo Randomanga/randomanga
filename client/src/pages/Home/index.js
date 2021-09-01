@@ -18,6 +18,9 @@ export const Home = (props) => {
         <link rel="icon" type="image/png" sizes="32x32" href="/logo192.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <meta name="author" content="Wiz" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://randomanga.net" />
+        <meta property="og:image" content="/logo512.png" />
         <link rel="apple-touch-icon" sizes="192x192" href="/logo192.png" />
       </Helmet>
       <Daily />
