@@ -15,12 +15,10 @@ export const Home = (props) => {
         <meta name="keywords" content="random manga, random manga generator, random list generator, manga recommendations, list recommendations, manga list, random manga list, manga, manga to read, what manga to read" />
         <meta property="og:description" content="Need a random manga? Or need some recommendations? Use this website to get a random list of manga, browse user curated lists or find recommendations created by our recommendations engine. " />
         <link rel="canonical" href="https://randomanga.net" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/logo192.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
         <meta name="author" content="Wiz" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://randomanga.net" />
-        <meta property="og:image" content="/logo512.png" />
+        <meta property="og:image" content="https://randomanga.net/logo512.png" />
         <link rel="apple-touch-icon" sizes="192x192" href="/logo192.png" />
       </Helmet>
       <Daily />
