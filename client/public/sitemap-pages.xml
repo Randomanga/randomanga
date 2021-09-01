@@ -1,21 +1,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-<loc>https://randomanime.net</loc>
+<loc>https://randomanga.net</loc>
 <changefreq>daily</changefreq>
 <lastmod>2021-08-28</lastmod>
 </url>
 <url>
-<loc>https://randomanime.net/generator/</loc>
+<loc>https://randomanga.net/generator/</loc>
 <changefreq>monthly</changefreq>
 <lastmod>2021-08-28</lastmod>
 </url>
 <url>
-<loc>https://randomanime.net/recommendations/</loc>
+<loc>https://randomanga.net/recommendations/</loc>
 <changefreq>daily</changefreq>
 <lastmod>2021-08-28</lastmod>
 </url>
 <url>
-<loc>https://randomanime.net/lists/browse/</loc>
+<loc>https://randomanga.net/lists/browse/</loc>
 <changefreq>weekly</changefreq>
 <lastmod>2021-08-28</lastmod>
 </url>
