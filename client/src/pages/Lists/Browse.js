@@ -117,8 +117,17 @@ export function Browse(props) {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Randomanga - Browse Lists</title>
+        <meta name="keyword" content="browse manga lists,manga user recommendations,manga user lists, recommendations, manga, manga lists " />
         <meta name="description" content="Browse various lists curated by other users. Have a list of manga you want to share? You can do so here. " />
         <link rel="canonical" href="https://randomanga.net/lists/" />
+        <meta property="og:description" content="Browse various lists curated by other users. Have a list of manga you want to share? You can do so here." />
+        <meta property="og:title" content="Randomanga - Browse Lists" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/logo512.png" />
+        <meta name="author" content="Wiz" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/logo192.png" />
       </Helmet>
       <Box mt={24}>
         <Heading as="h1" mb={12} fontFamily="body" fontWeight="bold">

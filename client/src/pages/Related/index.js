@@ -14,8 +14,17 @@ export const Related = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Randomanga - Recommendations</title>
+        <meta name="keywords" content="manga recommendations, related, similar manga, rleated manga, manga, manga like, manga like... ," />
         <meta name="description" content="Have a favourite manga? Use this feature to find what's similar to your favourite manga using our machine learning algorithm.  " />
         <link rel="canonical" href="https://randomanga.net/recommendations" />
+        <meta property="og:description" content="Have a favourite manga? Use this feature to find what's similar to your favourite manga using our machine learning algorithm.  " />
+        <meta property="og:title" content="Randomanga - Recommendations" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/logo512.png" />
+        <meta name="author" content="Wiz" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/logo192.png" />
       </Helmet>
       <Heading as="h1" px={2} fontFamily="body" fontWeight="bold">
         Recommendations
