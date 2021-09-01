@@ -45,12 +45,8 @@ export function List(props) {
         <title>{`Randomanga - ${data?.title}`}</title>
         <meta name="keywords" content={`${data?.title}, manga list, manga recommendations based on, similar to, user created list, ${data?.description}`} />
         <meta name="description" content={`${data?.description}`} />
-        <meta property="og:description" content={`${data?.description}`} />
-        <meta property="og:title" content={`Randomanga - ${data?.title}`} />
         <link rel="icon" type="image/png" sizes="32x32" href="/logo192.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="/logo512.png" />
         <meta name="author" content="Wiz" />
         <link rel="apple-touch-icon" sizes="192x192" href="/logo192.png" />
       </Helmet>
