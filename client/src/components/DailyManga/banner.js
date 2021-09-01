@@ -37,6 +37,7 @@ const Banner = () => {
           loading="lazy"
           objectPosition="center"
           src={manga?.banner}
+          alt="daily manga banner"
         />
       </Skeleton>
       <Box

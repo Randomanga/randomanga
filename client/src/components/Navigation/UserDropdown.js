@@ -55,6 +55,7 @@ export const UserDropdown = ({ closeNavigation }) => {
               '.svg'
             }
             loading={'lazy'}
+            alt="user avatar"
           />
           <Text fontSize="sm" fontWeight="semibold" fontFamily="sans-serif">
             {user.username}
