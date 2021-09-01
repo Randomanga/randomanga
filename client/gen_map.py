@@ -13,9 +13,8 @@ lists = lists_collection.find({})
 for list in lists:
     print(f'''
 <url>
-<loc>https://randomanime.net/lists/{list['_id']}</loc>
+<loc>https://randomanga.net/lists/{list['_id']}</loc>
 <changefreq>monthly</changefreq>
 <lastmod>2021-08-28</lastmod>
 </url>
-          
-          ''')
+''')
