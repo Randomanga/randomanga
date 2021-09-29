@@ -21,7 +21,7 @@ export class MangaController extends BaseHttpController {
   }
 
   async daily(req: Request, res: Response) {
-    const requestData = MangaMapper.toDailyRequestDto(req);
+    const requestData = MangaMapper.toDailyRequestDto(req);     
     const daily = await this._mangaService.getDaily(requestData);
     const manga = MangaMapper.toDailyResponseDto(daily);
     this.toJson<{ manga: ResponseDailyDto }>(res, {

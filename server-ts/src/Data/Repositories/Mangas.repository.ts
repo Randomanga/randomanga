@@ -82,7 +82,7 @@ export class MangaRepository implements IMangaRepository {
             }
             prev[key] = { [inOrExclude]: values };
           });
-
+          
           return prev;
         },
         {}

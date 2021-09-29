@@ -15,7 +15,7 @@ export class MangaService implements IMangaService {
   }
   async find(data: any) {
     const manga = await this._mangaRepo.findOneManga(80001);
-
+  
     return manga;
   }
   async getDaily(data: RequestDailyDto) {
