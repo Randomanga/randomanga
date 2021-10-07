@@ -66,7 +66,7 @@ export function Article({ article }) {
             <Text
               mt={2}
               fontSize="sm"
-              h="3rem"
+              h="4.2rem"
               noOfLines={3}
               color={useColorModeValue('gray.600', 'gray.400')}
             >

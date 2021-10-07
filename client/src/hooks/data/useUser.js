@@ -26,7 +26,7 @@ export default function useUser() {
     fetch,
     {
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        if (error.response.status === 401) {
+        if (error?.response?.status === 401) {
           localStorage.removeItem('alToken');
           mutate(null, false);
           return;

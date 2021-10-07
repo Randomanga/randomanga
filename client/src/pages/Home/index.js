@@ -5,13 +5,16 @@ import { Box } from '@chakra-ui/layout';
 import GeneratorForm from '../../components/GeneratorForm';
 import { QuickRecommendations } from './QuickRecommendations';
 import { Helmet } from 'react-helmet';
+import { Scroll } from './scroll'
 export const Home = (props) => {
   return (
     <Box>
       <Daily />
+      <Scroll />
       <FeatureDisplay />
       <GeneratorForm />
       {/* <QuickRecommendations /> */}
     </Box>
   );
 };
+
