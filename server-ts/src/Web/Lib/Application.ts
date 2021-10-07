@@ -30,6 +30,7 @@ export abstract class Application {
   private initCors() {
     this._server.use(
       cors({
+        origin: '*',
         credentials: true,
         preflightContinue: true,
       })
