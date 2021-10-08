@@ -74,13 +74,6 @@ export const Profile = (props) => {
           Top lists
         </Heading>
         <Divider />
-        <List py="2">
-          <Link>
-            <ListItem>Consectetur adipiscing elit</ListItem>
-          </Link>
-          <ListItem>Integer molestie lorem at massa</ListItem>
-          <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-        </List>
       </Box>
       {user && user?._id === profile?._id ? (
         <VStack p={5} alignItems="center">

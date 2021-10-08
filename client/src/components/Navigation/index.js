@@ -1,34 +1,26 @@
 import { Flex } from '@chakra-ui/layout';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Logo from '../Logo';
 import MenuToggle from './MenuToggle';
 import { Box } from '@chakra-ui/react';
 import { useOutsideClick } from '@chakra-ui/react';
 import { MenuLinks } from './MenuItems';
-const NavbarContainer = ({ children, ...props }) => {
-  return (
-    <Flex
-      as="nav"
-      align="center"
-      mx="auto"
-      justify={['space-between', 'space-between', 'space-around']}
-      h="full"
-      wrap="wrap"
-      w="100%"
-      px={[2, 4, 8]}
-      pr={['3', '2', 0, 0]}
-      py={['1', '3']}
-      color={['white', 'white', 'primary.700', 'primary.700']}
-      {...props}
-    >
-      {children}
-    </Flex>
-  );
-};
+
 
 export const Navigation = (props) => {
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setVisible] = useState(true);
+  const [lastPosition , setLastPosition] = useState(0);
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => { window.removeEventListener('scroll', handleScroll) }
+  })
+  function handleScroll(){
+    let scroll = window.scrollY
+    setVisible(scroll <= lastPosition)
+    setLastPosition(scroll)
+  }
   useOutsideClick({
     ref: ref,
     handler: () => setIsOpen(false),
@@ -44,6 +36,7 @@ export const Navigation = (props) => {
       w="full"
       zIndex="banner"
       ref={ref}
+      sx={isVisible ? navbarShown : navbarHidden}
     >
       <NavbarContainer maxW="7xl">
         <Logo />
@@ -53,3 +46,39 @@ export const Navigation = (props) => {
     </Box>
   );
 };
+
+const NavbarContainer = ({ children, ...props }) => {
+
+  return (
+    <Flex
+      as="nav"
+      align="center"
+      mx="auto"
+      justify={['space-between', 'space-between', 'space-around']}
+      h="full"
+      wrap="wrap"
+      w="100%"
+      px={[2, 4, 8]}
+      pr={['3', '2', 0, 0]}
+      py={['1', '3']}
+      color={['white', 'white', 'primary.700', 'primary.700']}
+
+      {...props}
+    >
+      {children}
+    </Flex>
+  );
+};
+
+
+
+let navbarShown = {
+  opacity: 1,
+  transform: "translateY(0)",
+  transition: "all 0.3s ease-in-out",
+}
+let navbarHidden = {
+  opacity: 0,
+  transform: "translateY(-100%)",
+  transition: "all 0.3s ease-in-out",
+}
