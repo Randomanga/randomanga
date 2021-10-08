@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/layout';
 import GeneratorForm from '../../components/GeneratorForm';
 import { QuickRecommendations } from './QuickRecommendations';
 import { Helmet } from 'react-helmet';
-import { Scroll } from './scroll'
+import { Scroll } from '../../components/ScrollMouse'
 export const Home = (props) => {
   return (
     <Box>

@@ -33,7 +33,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <ColorModeSwitcher />
       <Router>
-        <ScrollToTop />
+      <ScrollToTop />
         <Navigation />
         <Switch>
           <Route exact path="/" component={Home} />

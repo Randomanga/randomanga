@@ -7,8 +7,8 @@ export const LinkGrid = (props) => (
     <Box minW="130px">
       <FooterHeading mb="4">Links</FooterHeading>
       <Stack>
-        <Link _focus as={ReactLink} to="/how-it-works">
-          How it works
+      <Link _focus as={ReactLink} to="/recommendations">
+          Related manga
         </Link>
         <Link _focus as={ReactLink} to="/lists/browse">
           Lists
