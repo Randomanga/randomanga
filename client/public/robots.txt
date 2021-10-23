@@ -1,5 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: /login
-Disallow: /signup
+Disallow: /sign-up
 Disallow: /terms
