@@ -24,6 +24,7 @@ import { List } from './pages/Lists/List';
 import { Home } from './pages/Home';
 import { Browse } from './pages/Lists/Browse';
 import { Generator } from './pages/Generator';
+import { About } from './pages/About'
 function App() {
   const { user, mutate } = useUser();
 
@@ -32,7 +33,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <ColorModeSwitcher />
       <Router>
-        <ScrollToTop />
+      <ScrollToTop />
         <Navigation />
         <Switch>
           <Route exact path="/" component={Home} />
@@ -50,6 +51,7 @@ function App() {
           <Route exact path="/lists/browse/:page?" component={Browse} />
           <Route exact path="/lists/create" component={Create} />
           <Route exact path="/lists/:id" component={List} />
+          <Route exact path="/about" component={About} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

@@ -113,7 +113,7 @@ export default function SignUp() {
                   },
                   pattern: {
                     value:
-                      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d][?=\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,}$/,
+                    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]{8,}$/g,
                     message:
                       'Password must contain at least one letter and one number',
                   },

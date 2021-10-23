@@ -30,11 +30,7 @@ export abstract class Application {
   private initCors() {
     this._server.use(
       cors({
-        origin: [
-          'https://randomanga.net',
-          'https://www.randomanga.net',
-          process.env.NODE_ENV == 'dev' ? 'http://192.168.178.66:3000' : '',
-        ],
+        origin: '*',
         credentials: true,
         preflightContinue: true,
       })
