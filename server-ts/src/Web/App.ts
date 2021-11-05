@@ -20,12 +20,12 @@ class App extends Application {
     if (process.env.NODE_ENV != 'test') {
       await Database.connect();
       this.startAgenda();
-      await this.initSentry();
+      // await this.initSentry();
     }
-    this._server.use(Sentry.Handlers.requestHandler());
-    this.server.use(Sentry.Handlers.tracingHandler());
+    // this._server.use(Sentry.Handlers.requestHandler());
+    // this.server.use(Sentry.Handlers.tracingHandler());
     await this.registerRoutes();
-    this.server.use(Sentry.Handlers.errorHandler());
+    // this.server.use(Sentry.Handlers.errorHandler());
     this.catchExceptions();
   }
   private async registerRoutes() {
@@ -42,8 +42,7 @@ class App extends Application {
   }
   private async initSentry() {
     Sentry.init({
-      dsn:
-        'https://8ec227c7c9184f9782e84ce5023786d0@o551277.ingest.sentry.io/5745686',
+      dsn: 'https://8ec227c7c9184f9782e84ce5023786d0@o551277.ingest.sentry.io/5745686',
       integrations: [
         // enable HTTP calls tracing
         new Sentry.Integrations.Http({ tracing: true }),
@@ -70,4 +69,4 @@ class App extends Application {
   }
 }
 
-export default new App();
+export default App;
