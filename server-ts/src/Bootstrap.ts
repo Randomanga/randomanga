@@ -7,7 +7,7 @@ import { cpus } from 'os';
 import process from 'process';
 
 const numCPUs = cpus().length;
-
+//@ts-ignore
 if (cluster.isPrimary) {
   console.log(`Primary ${process.pid} is running`);
 
