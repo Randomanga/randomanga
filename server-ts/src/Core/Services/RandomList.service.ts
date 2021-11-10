@@ -53,6 +53,7 @@ export class RandomListService implements IRandomListService {
       includeFilters: data.includeFilters,
       excludeFilters: data.excludeFilters,
     });
+
     return RandomListMapper.toCreateResponseDto(randomList);
   }
   public async find(data: FindListRequestDto) {

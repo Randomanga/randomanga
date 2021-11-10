@@ -1,6 +1,6 @@
 import { ButtonGroup, IconButton } from '@chakra-ui/react';
 import * as React from 'react';
-import { FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaTwitter, FaDiscord } from 'react-icons/fa';
 
 export const SocialMediaLinks = (props) => (
   <ButtonGroup variant="ghost" color="gray.600" {...props}>
@@ -10,5 +10,12 @@ export const SocialMediaLinks = (props) => (
       aria-label="GitHub"
       icon={<FaGithub fontSize="20px" />}
     />
+    <IconButton
+      as="a"
+      href="https://discord.gg/yEXadzEQuK"
+      aria-label="Discord"
+      icon={<FaDiscord fontSize="20px" />}
+    >
+    </IconButton>
   </ButtonGroup>
 );

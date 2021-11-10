@@ -16,7 +16,7 @@ export abstract class Application {
   public abstract setup(): Promise<void>;
 
   private async run() {
-    this._server.use(morgan('dev'));
+    this._server.use(morgan('tiny'));
     this._server.use(express.json());
     // this._server.enable('trust proxy');
     this._server.use(express.urlencoded({ extended: true }));
