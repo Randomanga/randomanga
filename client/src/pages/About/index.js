@@ -3,6 +3,7 @@ import { useBreakpointValue } from '@chakra-ui/react'
 import { ListItem, UnorderedList, Image, Link } from "@chakra-ui/react"
 import { } from "react-router-dom"
 import KoFi from './Ko-Fi.png'
+import Discord from './101-1013839_discord-join-hd-png-download.png'
 export const About = (props) => {
     return <Box minH={'60vh'} maxW="7xl" mx="auto" mt={20} px={['2', '5']} maxW="4xl"
     >
@@ -38,7 +39,7 @@ export const About = (props) => {
             To support development and server costs, please make a dontion
 
         </Text>
-        <Link href='https://ko-fi.com/randomanga' >
+        <Link href='https://ko-fi.com/randomanga' target="_blank">
             <Box
                 background='white'
                 borderRadius='0.5rem'
@@ -48,6 +49,18 @@ export const About = (props) => {
                 marginTop='2rem'
             >
                 <Image src={KoFi} alt='Support me' width='6rem' />
+            </Box>
+        </Link>
+        <Link href='https://discord.gg/yEXadzEQuK' target="_blank" >
+            <Box
+                background='white'
+                borderRadius='0.5rem'
+                padding='0.5rem'
+                width='fit-content'
+                margin='0.5rem'
+                marginTop='2rem'
+            >
+                <Image src={Discord} alt='Join us on discord' width='6rem' />
             </Box>
         </Link>
     </Box>
