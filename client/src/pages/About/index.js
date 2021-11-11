@@ -1,4 +1,4 @@
-import { Box, Text, Heading, } from '@chakra-ui/layout';
+import { Box, Text, Heading, Flex, } from '@chakra-ui/layout';
 import { useBreakpointValue } from '@chakra-ui/react'
 import { ListItem, UnorderedList, Image, Link } from "@chakra-ui/react"
 import { } from "react-router-dom"
@@ -39,29 +39,31 @@ export const About = (props) => {
             To support development and server costs, please make a dontion
 
         </Text>
-        <Link href='https://ko-fi.com/randomanga' target="_blank">
-            <Box
-                background='white'
-                borderRadius='0.5rem'
-                padding='0.5rem'
-                width='fit-content'
-                margin='0.5rem'
-                marginTop='2rem'
-            >
-                <Image src={KoFi} alt='Support me' width='6rem' />
-            </Box>
-        </Link>
-        <Link href='https://discord.gg/yEXadzEQuK' target="_blank" >
-            <Box
-                background='white'
-                borderRadius='0.5rem'
-                padding='0.5rem'
-                width='fit-content'
-                margin='0.5rem'
-                marginTop='2rem'
-            >
-                <Image src={Discord} alt='Join us on discord' width='6rem' />
-            </Box>
-        </Link>
+        <Flex>
+            <Link href='https://ko-fi.com/randomanga' target="_blank">
+                <Box
+                    background='white'
+                    borderRadius='0.5rem'
+                    padding='0.5rem'
+                    width='fit-content'
+                    margin='0.5rem'
+                    marginTop='2rem'
+                >
+                    <Image src={KoFi} alt='Support me' width='6rem' />
+                </Box>
+            </Link>
+            <Link href='https://discord.gg/yEXadzEQuK' target="_blank" >
+                <Box
+                    background='white'
+                    borderRadius='0.5rem'
+                    padding='0.5rem'
+                    width='fit-content'
+                    margin='0.5rem'
+                    marginTop='2rem'
+                >
+                    <Image src={Discord} alt='Join us on discord' width='6rem' />
+                </Box>
+            </Link>
+        </Flex>
     </Box>
 }
