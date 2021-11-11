@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import { ColorModeSwitcher } from './components/ColorModeSwitcher';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
 import 'react-toastify/dist/ReactToastify.min.css';
