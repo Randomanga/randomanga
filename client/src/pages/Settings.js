@@ -106,13 +106,14 @@ export function Settings() {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
+
             fontSize="md"
             value={username}
             onChange={onUsernameChange}
             selectAllOnFocus={false}
           >
             <EditablePreview />
-            <EditableInput mr="3" as="input" />
+            <EditableInput disabled dmr="3" as="input" />
             <EditableControl />
           </Editable>
         </FormControl>
@@ -138,6 +139,7 @@ export function Settings() {
         <FormControl>
           <FormLabel color="gray.400">About: </FormLabel>
           <Textarea
+            disabled
             value={description}
             onChange={onDescChange}
             placeholder="A short description about yourself."
