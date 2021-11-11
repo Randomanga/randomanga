@@ -27,6 +27,6 @@ export function Pagination({ onPageChange, totalCount, siblingCount = 1, default
             }
             return <Button m={2} bgColor={page == pageNumber ? 'orange.400' : 'gray.700'} onClick={() => setPage(pageNumber)}>{pageNumber}</Button>
         })}
-        <IconButton aria-label="next page button" m={2} icon={<FaChevronRight />} disabled={page === lastPage} onClick={onNext} />
+        {page < lastPage && <IconButton aria-label="next page button" m={2} icon={<FaChevronRight />} disabled={page === lastPage} onClick={onNext} />}
     </Flex>
 }

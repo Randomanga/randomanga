@@ -137,7 +137,7 @@ export function Browse(props) {
               </InputLeftElement>
               <Input
                 placeholder="Search"
-                rounded="md"        
+                rounded="md"
                 variant="Filled"
                 bg="gray.800"
                 pr={12}
