@@ -69,12 +69,12 @@ export const Profile = (props) => {
           </Box>
         </HStack> */}
       </Box>
-      <Box bg="gray.800" maxW="md" w="full" mx="auto" boxShadow="lg" mt={20} p={'6'}>
+      {/* <Box bg="gray.800" maxW="md" w="full" mx="auto" boxShadow="lg" mt={20} p={'6'}>
         <Heading fontFamily="body" fontSize="xl" pb="2">
           Top lists
         </Heading>
         <Divider />
-      </Box>
+      </Box> */}
       {user && user?._id === profile?._id ? (
         <VStack p={5} alignItems="center">
           <Button
