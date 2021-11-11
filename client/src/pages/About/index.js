@@ -17,11 +17,10 @@ export const About = (props) => {
             fontSize="md"
             color="whiteAlpha.800"
         >
-            The first modern website to find new manga to read. It was made by manga lovers for manga lovers. <br />
-            You can create and view lists made by other users to find new things to read, and by using the reccomendation
-            page, you can find manga related to the one you chose.
+            The first modern website to find new manga to read. Made for manga lovers around the world.  <br />
+            You can create and view manga lists made by other users, find similar manga to the ones you already like, use Anilist to get recommendations according to your list and more.
             <br /> <br />
-            Don't know what exactly you want? Let our AI generator pick a random choice for you with the manga list generator
+            Don't know what exactly you want? Let the manga generator pick a random choice for you with the manga list generator
         </Text>
         <Heading as="h1" px={2} fontFamily="body" fontWeight="bold" marginTop={'2rem'}>
             Support development
@@ -36,7 +35,7 @@ export const About = (props) => {
             To develop this website i've spent years of learning and months of development
             everything is offered for free without any ads, this means that there is no sort of income
             except donations. <br />
-            To support development and server costs, please make a dontion
+            To support development and server costs, please consider making a donation
 
         </Text>
         <Flex>
