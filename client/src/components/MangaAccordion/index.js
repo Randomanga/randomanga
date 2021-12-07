@@ -33,10 +33,16 @@ export const MangaAccordion = ({
         shadow="lg"
         outline="0"
         userSelect="none"
+        role='group'
+        transition='all 0.2s'
+        _active={{transform: 'scale(0.99)'}}
       >
-        <Box position="relative">
+        <Box 
+          position="relative"
+          roundedTop="lg"
+          overflow='hidden'
+        >
           <Image
-            roundedTop="lg"
             unselectable="on"
             undraggable="on"
             w="full"
@@ -44,6 +50,8 @@ export const MangaAccordion = ({
             fit="cover"
             loading="lazy"
             objectPosition="center"
+            _groupHover={{ transform: 'scale(1.03)', filter:'brightness(0.7)' }}
+            transition='all 0.5s'
             src={bannerImage ?? (coverImage.extraLarge || coverImage.large)}
             alt="Manga banner"
           />
@@ -62,6 +70,8 @@ export const MangaAccordion = ({
           p={2}
           bg={useColorModeValue('white', 'gray.800')}
           roundedBottom="lg"
+          transition={'all 0.2s linear'}
+          _groupHover={{backgroundColor: '#212836'}}
           alignItems="center"
         >
           <Heading

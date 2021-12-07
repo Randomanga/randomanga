@@ -38,19 +38,31 @@ export function Article({ article }) {
         rounded="lg"
         shadow="md"
         maxW="lg"
+        role='group'
+        transition={'all 0.2s linear'}
+        _hover={{backgroundColor: '#212836'}}
+        _active={{transform: 'scale(0.98)'}}
+        overflow='hidden'
         bg={useColorModeValue('white', 'gray.800')}
       >
-        <Image
-          roundedTop="lg"
+        <Box 
+          overflow='hidden'
           w="full"
           h={'44'}
-          fit="cover"
-          loading="lazy"
-          fallbackSrc="https://placehold.it/400/202020?text=LOADING"
-          src={list.cover}
-          alt="Article"
-        />
-
+        >
+          <Image
+            roundedTop="lg"
+            _groupHover={{ transform: 'scale(1.05)', filter:'brightness(0.7)' }}
+            transition='all 0.5s'
+            w="full"
+            h={'44'}
+            fit="cover"
+            loading="lazy"
+            fallbackSrc="https://placehold.it/400/202020?text=LOADING"
+            src={list.cover}
+            alt="Article"
+          />
+        </Box>
         <Flex p={4} flex="1" justifyContent="space-between" direction="column">
           <Box>
             <Link
