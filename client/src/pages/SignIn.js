@@ -15,7 +15,6 @@ import {
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login } from '../adapters/api';
-import axios from 'axios';
 import { toast } from 'react-toastify'
 import useUser from '../hooks/data/useUser';
 
