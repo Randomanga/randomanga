@@ -5,19 +5,13 @@ import {
   Icon,
   IconButton,
   Image,
-  Tooltip,
   Text,
   Flex,
   FormControl,
   Textarea,
   Stack,
-  InputLeftElement,
   Button,
-  InputGroup,
-  InputRightElement,
   useBreakpointValue,
-  StackDivider,
-  Divider,
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -29,7 +23,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { uploadList } from '../../adapters/api';
 import { useHistory } from 'react-router-dom';
-export function Create(props) {
+export function Create() {
   const [list, setList] = React.useState([]);
   const [isUploading, setIsUploading] = React.useState(false);
   const { register, handleSubmit, formState } = useForm();
@@ -135,7 +129,7 @@ export function Create(props) {
         </Stack>
         <Box
           w={['full', 'full', '50%']}
-          mt={useBreakpointValue({ base: '8', md: null, lg: null, xl: null })}
+          mt={[8,null,'-2.55rem']}
           ml={useBreakpointValue({ md: '4' })}
         >
           <Flex justifyContent="space-between" p={1} alignItems="center">

@@ -1,47 +1,28 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  chakra,
   Box,
   Flex,
-  useColorModeValue,
-  SimpleGrid,
-  GridItem,
   Heading,
-  Text,
-  Stack,
   FormControl,
   FormLabel,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   FormHelperText,
   Textarea,
-  Avatar,
-  Icon,
   Button,
-  VisuallyHidden,
-  Select,
-  Image,
-  Checkbox,
-  RadioGroup,
   ButtonGroup,
   IconButton,
-  Radio,
   useEditableControls,
   VStack,
-  FormErrorMessage,
   HStack,
 } from '@chakra-ui/react';
-import { FaTimes, FaUser } from 'react-icons/fa';
+
 import { Editable, EditableInput, EditablePreview } from '@chakra-ui/react';
 import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import useUser from '../hooks/data/useUser';
-import Dropzone, { useDropzone } from 'react-dropzone';
-import { useForm } from 'react-hook-form';
+
 import { toast } from 'react-toastify';
-import { Redirect, useHistory } from 'react-router-dom';
-import { getAlIdentity, removeAlAuth } from '../adapters/api';
-const EditableControl = (props) => {
+import { useHistory } from 'react-router-dom';
+import { getAlIdentity} from '../adapters/api';
+const EditableControl = () => {
   const {
     isEditing,
     getSubmitButtonProps,

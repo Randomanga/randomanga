@@ -18,7 +18,7 @@ export const Navigation = (props) => {
   })
   function handleScroll(){
     let scroll = window.scrollY
-    if(scroll < 300 ) return
+    if(scroll < 300  && isVisible) return
     setVisible(scroll <= lastPosition)
     setLastPosition(scroll)
   }
