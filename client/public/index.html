@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#262630" />
 
-    <!-- Primary Meta Tags -->
-    <title>Random Manga Generator - Randomanga</title>
-    <meta name="title" content="Random Manga Generator - Randomanga" />
-    <meta
-      name="description"
-      content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine."
-    />
-    <meta
-      name="keywords"
-      content="recommend manga, random manga, random manga generator, random list generator, manga recommendations, list recommendations, manga list, random manga list, manga, manga to read, what manga to read"
-    />
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#262630" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://randomanga.net/" />
-    <meta property="og:title" content="Random Manga Generator - Randomanga" />
-    <meta
-      property="og:description"
-      content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine."
-    />
-    <meta property="og:image" content="https://randomanga.net/logo192.png" />
+  <!-- Primary Meta Tags -->
+  <title>Random Manga Generator - Randomanga</title>
+  <meta name="title" content="Random Manga Generator - Randomanga" />
+  <meta name="description"
+    content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine." />
+  <meta name="keywords"
+    content="recommend manga, random manga, random manga generator, random list generator, manga recommendations, list recommendations, manga list, random manga list, manga, manga to read, what manga to read" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://randomanga.net/" />
-    <meta
-      property="twitter:title"
-      content="Random Manga Generator - Randomanga"
-    />
-    <meta
-      property="twitter:description"
-      content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine."
-    />
-    <meta property="twitter:image" content="%PUBLIC_URL%/logo192.png" />
-    <link
-      rel="apple-touch-icon"
-      href="https://randomanga.net/apple-touch-icon.png"
-    />
-    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cunia" />
-    <!--
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://randomanga.net/" />
+  <meta property="og:title" content="Random Manga Generator - Randomanga" />
+  <meta property="og:description"
+    content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine." />
+  <meta property="og:image" content="https://randomanga.net/logo192.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://randomanga.net/" />
+  <meta property="twitter:title" content="Random Manga Generator - Randomanga" />
+  <meta property="twitter:description"
+    content="Need a random manga? Or need some manga recommendations? Use our random manga generator to get a list of manga, browse user curated lists or find manga recommendations created by our recommendations engine." />
+  <meta property="twitter:image" content="%PUBLIC_URL%/logo192.png" />
+  <link rel="apple-touch-icon" href="https://randomanga.net/apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/cunia" />
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <style>
-      * {
-        -webkit-tap-highlight-color: transparent !important;
-      }
-    </style>
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7314881456067478"
+    crossorigin="anonymous"></script>
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent !important;
+    }
+  </style>
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -64,11 +53,12 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -78,19 +68,18 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-163760789-1"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
+</body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163760789-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
 
-    gtag('config', 'UA-163760789-1');
-  </script>
+  gtag('config', 'UA-163760789-1');
+</script>
+
+
 </html>
