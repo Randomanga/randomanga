@@ -7,20 +7,20 @@ export class MangaService {
   create(createMangaInput: CreateMangaInput) {
     return 'This action adds a new manga';
   }
- 
+
   findAll() {
     return `This action returns all manga`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} manga`;
   }
 
-  update(id: number, updateMangaInput: UpdateMangaInput) {
+  update(id: string, updateMangaInput: UpdateMangaInput) {
     return `This action updates a #${id} manga`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} manga`;
   }
 }

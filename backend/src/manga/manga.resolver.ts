@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { MangaService } from './manga.service';
-import { Manga } from './entities/manga.entity';
 import { CreateMangaInput } from './dto/create-manga.input';
 import { UpdateMangaInput } from './dto/update-manga.input';
+import { Manga } from '@app/models';
 
 @Resolver(() => Manga)
 export class MangaResolver {
@@ -19,7 +19,7 @@ export class MangaResolver {
   }
 
   @Query(() => Manga, { name: 'manga' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.mangaService.findOne(id);
   }
 
@@ -29,7 +29,7 @@ export class MangaResolver {
   }
 
   @Mutation(() => Manga)
-  removeManga(@Args('id', { type: () => Int }) id: number) {
+  removeManga(@Args('id', { type: () => String }) id: string) {
     return this.mangaService.remove(id);
   }
 }

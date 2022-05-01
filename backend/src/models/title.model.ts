@@ -6,9 +6,9 @@ export class Title {
   id: string;
 
   @Field((type) => String, { nullable: true })
-  english?: String;
+  english?: string;
   @Field((type) => String, { nullable: true })
-  romaji?: String;
+  romaji?: string;
   @Field((type) => String, { nullable: true })
-  native?: String;
+  native?: string;
 }

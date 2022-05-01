@@ -11,7 +11,7 @@ model Manga {
   id String @id @db.Uuid
 
   title       Title         @relation(fields: [titleId], references: [id])
-  description String        @default(value: "")
+  description String
   cover       Cover?        @relation(fields: [coverId], references: [id])
   banner      String?
   tags        Tag[]

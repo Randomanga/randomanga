@@ -1,0 +1,94 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Manga {
+  id: ID!
+
+  """The default title of the manga. Regardless of language. """
+  title: Title!
+  description: String!
+  cover: Cover!
+  banner: String
+  genres: [String!]!
+  tags: [Tag!]!
+  synonyms: [String!]!
+  status: Status!
+
+  """The country which the manga originated"""
+  origin: String!
+
+  """Links to external websites for this manga. """
+  external: ExternalLinks!
+
+  """The number of chapters translated for this manga"""
+  chapters: Float
+
+  """The number of volumes translated for this manga. """
+  volumes: Float
+  updatedAt: String!
+  createdAt: String!
+}
+
+"""The publication status of the manga. """
+enum Status {
+  """The manga is still being published in the country of origin. """
+  ONGOING
+
+  """The manga has finished publishing"""
+  COMPLETED
+
+  """The manga has been cancelled, reason unknown. """
+  CANCELLED
+
+  """Similar to cancelled, but with a chance it might come back. """
+  HIATUS
+}
+
+type Title {
+  id: ID!
+  english: String
+  romaji: String
+  native: String
+}
+
+type Cover {
+  id: ID!
+  small: String!
+  original: String!
+  large: String!
+}
+
+type Tag {
+  id: ID!
+  name: String!
+}
+
+type ExternalLinks {
+  id: ID!
+  nu: String
+  mdex: String
+  mal: String
+  al: String
+}
+
+type Query {
+  manga(id: String!): Manga!
+}
+
+type Mutation {
+  createManga(createMangaInput: CreateMangaInput!): Manga!
+  updateManga(updateMangaInput: UpdateMangaInput!): Manga!
+  removeManga(id: String!): Manga!
+}
+
+input CreateMangaInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMangaInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: String!
+}

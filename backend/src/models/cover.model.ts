@@ -6,11 +6,11 @@ export class Cover {
   id: string;
 
   @Field((type) => String, { nullable: false })
-  small: String;
+  small: string;
 
   @Field((type) => String, { nullable: false })
-  original: String;
+  original: string;
 
   @Field((type) => String, { nullable: false })
-  large: String;
+  large: string;
 }
