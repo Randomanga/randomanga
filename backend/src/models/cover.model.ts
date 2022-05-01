@@ -2,15 +2,15 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Cover {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
-  @Field((type) => String, { nullable: false })
+  @Field(() => String, { nullable: false })
   small: string;
 
-  @Field((type) => String, { nullable: false })
+  @Field(() => String, { nullable: false })
   original: string;
 
-  @Field((type) => String, { nullable: false })
+  @Field(() => String, { nullable: false })
   large: string;
 }

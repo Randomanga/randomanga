@@ -1,15 +1,23 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MangaService } from './manga.service';
 import { CreateMangaInput } from './dto/create-manga.input';
 import { UpdateMangaInput } from './dto/update-manga.input';
-import { Manga } from '@app/models';
+import { Manga } from '@/models';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => Manga)
 export class MangaResolver {
   constructor(private readonly mangaService: MangaService) {}
 
   @Mutation(() => Manga)
-  createManga(@Args('createMangaInput') createMangaInput: CreateMangaInput) {
+  createManga(
+    @Args('createMangaInput')
+    createMangaInput: CreateMangaInput,
+    @Args({ name: 'cover', nullable: true, type: () => GraphQLUpload })
+    _cover: FileUpload,
+    @Args({ name: 'banner', nullable: true, type: () => GraphQLUpload })
+    _banner: FileUpload,
+  ) {
     return this.mangaService.create(createMangaInput);
   }
 

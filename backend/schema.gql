@@ -2,61 +2,104 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Manga {
+type Cover {
+  id: ID!
+  large: String!
+  original: String!
+  small: String!
+}
+
+input CreateMangaInput {
+  banner: String
+  chapters: Float
+  description: String
+  genres: [String!] = []
+  origin: String!
+  synonyms: [String!] = []
+  title: CreateTitleInput!
+  volumes: Float
+}
+
+input CreateTitleInput {
+  english: String
+  native: String
+  romaji: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ExternalLinks {
+  """Anilist link"""
+  al: String
   id: ID!
 
-  """The default title of the manga. Regardless of language. """
-  title: Title!
-  description: String!
-  cover: Cover!
+  """Kitsu link"""
+  kitsu: String
+
+  """MyAnimeList link"""
+  mal: String
+
+  """Mangadex link"""
+  mdex: String
+
+  """Novelupdates link"""
+  nu: String
+}
+
+type Manga {
   banner: String
-  genres: [String!]!
-  tags: [Tag!]!
-  synonyms: [String!]!
-  status: Status!
-
-  """The country which the manga originated"""
-  origin: String!
-
-  """Links to external websites for this manga. """
-  external: ExternalLinks!
 
   """The number of chapters translated for this manga"""
   chapters: Float
+  cover: Cover!
+  createdAt: DateTime!
+  description: String!
+
+  """Links to external websites for this manga. """
+  external: ExternalLinks!
+  genres: [String!]!
+  id: ID!
+
+  """The country which the manga originated"""
+  origin: String!
+  status: Status!
+  synonyms: [String!]!
+  tags: [Tag!]!
+
+  """The default title of the manga. Regardless of language. """
+  title: Title!
+  updatedAt: DateTime!
 
   """The number of volumes translated for this manga. """
   volumes: Float
-  updatedAt: String!
-  createdAt: String!
+}
+
+type Mutation {
+  createManga(banner: Upload, cover: Upload, createMangaInput: CreateMangaInput!): Manga!
+  removeManga(id: String!): Manga!
+  updateManga(updateMangaInput: UpdateMangaInput!): Manga!
+}
+
+type Query {
+  manga(id: String!): Manga!
 }
 
 """The publication status of the manga. """
 enum Status {
-  """The manga is still being published in the country of origin. """
-  ONGOING
+  """The manga has been cancelled, reason unknown. """
+  CANCELLED
 
   """The manga has finished publishing"""
   COMPLETED
 
-  """The manga has been cancelled, reason unknown. """
-  CANCELLED
-
   """Similar to cancelled, but with a chance it might come back. """
   HIATUS
-}
 
-type Title {
-  id: ID!
-  english: String
-  romaji: String
-  native: String
-}
-
-type Cover {
-  id: ID!
-  small: String!
-  original: String!
-  large: String!
+  """The manga is still being published in the country of origin. """
+  ONGOING
 }
 
 type Tag {
@@ -64,31 +107,24 @@ type Tag {
   name: String!
 }
 
-type ExternalLinks {
+type Title {
+  english: String
   id: ID!
-  nu: String
-  mdex: String
-  mal: String
-  al: String
-}
-
-type Query {
-  manga(id: String!): Manga!
-}
-
-type Mutation {
-  createManga(createMangaInput: CreateMangaInput!): Manga!
-  updateManga(updateMangaInput: UpdateMangaInput!): Manga!
-  removeManga(id: String!): Manga!
-}
-
-input CreateMangaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  native: String
+  romaji: String
 }
 
 input UpdateMangaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  banner: String
+  chapters: Float
+  description: String
+  genres: [String!] = []
   id: String!
+  origin: String
+  synonyms: [String!] = []
+  title: CreateTitleInput
+  volumes: Float
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

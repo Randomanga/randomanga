@@ -60,6 +60,7 @@ model ExternalLinks {
   mdex  String?
   mal   String?
   al    String?
+  kitsu String?
   Manga Manga[]
 }
 

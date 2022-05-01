@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MangaResolver } from './manga.resolver';
-import { MangaService } from './manga.service';
+import { MangaResolver } from '../manga.resolver';
+import { MangaService } from '../manga.service';
 
 describe('MangaResolver', () => {
   let resolver: MangaResolver;
