@@ -4,13 +4,16 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 export class Cover {
   @Field(() => ID)
   id: string;
-
-  @Field(() => String, { nullable: false })
+  /**
+   * Smallest size image. Used for thumbnails.
+   */
   small: string;
-
-  @Field(() => String, { nullable: false })
+  /**
+   * The original image that was uploaded. Highest quality.
+   */
   original: string;
-
-  @Field(() => String, { nullable: false })
+  /**
+   * Large size image. Used for fullscreen.
+   */
   large: string;
 }

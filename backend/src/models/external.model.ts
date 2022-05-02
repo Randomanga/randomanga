@@ -5,18 +5,31 @@ export class ExternalLinks {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String, { nullable: true, description: 'Novelupdates link' })
+  /**
+   * Link to NovelUpdates
+   */
   nu?: string;
 
-  @Field(() => String, { nullable: true, description: 'Mangadex link' })
+  /**
+   * Link to Mangadex
+   */
   mdex?: string;
 
-  @Field(() => String, { nullable: true, description: 'MyAnimeList link' })
+  /**
+   * Link to MyAnimeLisst
+   */
   mal?: string;
 
-  @Field(() => String, { nullable: true, description: 'Anilist link' })
+  /**
+   * Link to Anilist
+   */
   al?: string;
-
-  @Field(() => String, { nullable: true, description: 'Kitsu link' })
+  /**
+   * Link to Kitsu
+   */
   kitsu?: string;
+  /**
+   * Link to Mangaupdates
+   */
+  mu?: string;
 }

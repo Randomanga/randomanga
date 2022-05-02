@@ -4,6 +4,7 @@ import { CreateMangaInput } from './dto/create-manga.input';
 import { UpdateMangaInput } from './dto/update-manga.input';
 import { Manga } from '@/models';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { PrismaService } from 'nestjs-prisma';
 
 @Resolver(() => Manga)
 export class MangaResolver {

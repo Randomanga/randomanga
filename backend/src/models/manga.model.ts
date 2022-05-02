@@ -12,55 +12,44 @@ export class Manga {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Title, {
-    nullable: false,
-    description: 'The default title of the manga. Regardless of language. ',
-  })
+  /**
+   * The default title of the manga. Regardless of language.
+   */
   title: Title;
 
   @Field(() => String, { nullable: false, defaultValue: ' ' })
   description: string;
 
-  @Field(() => Cover)
   cover: Cover;
 
-  @Field(() => String, { nullable: true })
   banner?: string;
 
-  @Field(() => [String])
   genres: string[];
 
-  @Field(() => [Tag])
   tags: Tag[];
 
-  @Field(() => [String])
   synonyms: string[];
 
-  @Field(() => Status)
   status: Status;
 
-  @Field(() => String, {
-    nullable: false,
-    description: 'The country which the manga originated',
-  })
+  /**
+   * The country which the manga originated
+   */
   origin: string;
 
-  @Field(() => ExternalLinks, {
-    nullable: false,
-    description: 'Links to external websites for this manga. ',
-  })
+  /**
+   * Links to external websites for this manga.
+   */
   external: ExternalLinks;
 
-  @Field(() => Number, {
-    nullable: true,
-    description: 'The number of chapters translated for this manga',
-  })
+  /**
+   * The number of chapters translated for this manga
+   */
   chapters?: number;
 
-  @Field(() => Number, {
-    nullable: true,
-    description: 'The number of volumes translated for this manga. ',
-  })
+  /**
+   * The number of volumes translated for this manga.
+   */
   volumes?: number;
 
   @Field(() => GraphQLISODateTime)

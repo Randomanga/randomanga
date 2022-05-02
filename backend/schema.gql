@@ -4,8 +4,14 @@
 
 type Cover {
   id: ID!
+
+  """Large size image. Used for fullscreen."""
   large: String!
+
+  """The original image that was uploaded. Highest quality."""
   original: String!
+
+  """Smallest size image. Used for thumbnails."""
   small: String!
 }
 
@@ -32,20 +38,23 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type ExternalLinks {
-  """Anilist link"""
+  """Link to Anilist"""
   al: String
   id: ID!
 
-  """Kitsu link"""
+  """Link to Kitsu"""
   kitsu: String
 
-  """MyAnimeList link"""
+  """Link to MyAnimeLisst"""
   mal: String
 
-  """Mangadex link"""
+  """Link to Mangadex"""
   mdex: String
 
-  """Novelupdates link"""
+  """Link to Mangaupdates"""
+  mu: String
+
+  """Link to NovelUpdates"""
   nu: String
 }
 
@@ -58,7 +67,7 @@ type Manga {
   createdAt: DateTime!
   description: String!
 
-  """Links to external websites for this manga. """
+  """Links to external websites for this manga."""
   external: ExternalLinks!
   genres: [String!]!
   id: ID!
@@ -69,11 +78,11 @@ type Manga {
   synonyms: [String!]!
   tags: [Tag!]!
 
-  """The default title of the manga. Regardless of language. """
+  """The default title of the manga. Regardless of language."""
   title: Title!
   updatedAt: DateTime!
 
-  """The number of volumes translated for this manga. """
+  """The number of volumes translated for this manga."""
   volumes: Float
 }
 
