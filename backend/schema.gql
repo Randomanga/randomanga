@@ -15,18 +15,19 @@ type Cover {
   small: String!
 }
 
-input CreateMangaInput {
-  banner: String
+input CreateMangaArgs {
+  banner: Upload
   chapters: Float
-  description: String
+  cover: Upload
+  description: String!
   genres: [String!] = []
   origin: String!
   synonyms: [String!] = []
-  title: CreateTitleInput!
+  title: CreateTitleArgs!
   volumes: Float
 }
 
-input CreateTitleInput {
+input CreateTitleArgs {
   english: String
   native: String
   romaji: String
@@ -87,9 +88,9 @@ type Manga {
 }
 
 type Mutation {
-  createManga(banner: Upload, cover: Upload, createMangaInput: CreateMangaInput!): Manga!
+  createManga(create: CreateMangaArgs!): Manga!
   removeManga(id: String!): Manga!
-  updateManga(updateMangaInput: UpdateMangaInput!): Manga!
+  updateManga(updateMangaInput: UpdateMangaArgs!): Manga!
 }
 
 type Query {
@@ -123,15 +124,16 @@ type Title {
   romaji: String
 }
 
-input UpdateMangaInput {
-  banner: String
+input UpdateMangaArgs {
+  banner: Upload
   chapters: Float
+  cover: Upload
   description: String
   genres: [String!] = []
   id: String!
   origin: String
   synonyms: [String!] = []
-  title: CreateTitleInput
+  title: CreateTitleArgs
   volumes: Float
 }
 

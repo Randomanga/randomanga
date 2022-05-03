@@ -40,7 +40,7 @@ export class Manga {
   /**
    * Links to external websites for this manga.
    */
-  external: ExternalLinks;
+  external?: ExternalLinks;
 
   /**
    * The number of chapters translated for this manga
@@ -60,10 +60,10 @@ export class Manga {
 }
 
 export enum Status {
-  ONGOING,
-  COMPLETED,
-  CANCELLED,
-  HIATUS,
+  ONGOING = 'ONGOING',
+  COMPLETED = 'COMPLETED',
+  HIATUS = 'HIATUS',
+  CANCELLED = 'CANCELLED',
 }
 registerEnumType(Status, {
   name: 'Status',

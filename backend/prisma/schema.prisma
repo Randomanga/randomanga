@@ -8,18 +8,18 @@ datasource db {
 }
 
 model Manga {
-  id String @id @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  title       Title         @relation(fields: [titleId], references: [id])
+  title       Title          @relation(fields: [titleId], references: [id])
   description String
-  cover       Cover?        @relation(fields: [coverId], references: [id])
+  cover       Cover?         @relation(fields: [coverId], references: [id])
   banner      String?
   tags        Tag[]
   genres      String[]
   synonyms    String[]
   status      Status
   origin      String
-  external    ExternalLinks @relation(fields: [externalLinksId], references: [id])
+  external    ExternalLinks? @relation(fields: [externalLinksId], references: [id])
   chapters    Int?
   volumes     Int?
 
@@ -32,14 +32,14 @@ model Manga {
 }
 
 model Tag {
-  id      String  @id @db.Uuid
+  id      String  @id @default(uuid()) @db.Uuid
   name    String
   Manga   Manga?  @relation(fields: [mangaId], references: [id])
   mangaId String? @db.Uuid
 }
 
 model Cover {
-  id       String  @id @db.Uuid
+  id       String  @id @default(uuid()) @db.Uuid
   small    String
   original String
   large    String
@@ -47,7 +47,7 @@ model Cover {
 }
 
 model Title {
-  id      String  @id @db.Uuid
+  id      String  @id @default(uuid()) @db.Uuid
   english String?
   romaji  String?
   native  String?
@@ -55,7 +55,7 @@ model Title {
 }
 
 model ExternalLinks {
-  id    String  @id @db.Uuid
+  id    String  @id @default(uuid()) @db.Uuid
   nu    String?
   mdex  String?
   mal   String?
@@ -66,7 +66,7 @@ model ExternalLinks {
 }
 
 model User {
-  id       String @id @db.Uuid
+  id       String @id @default(uuid()) @db.Uuid
   username String
   email    String @unique
   password String

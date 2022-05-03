@@ -1,10 +1,8 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MangaService } from './manga.service';
-import { CreateMangaInput } from './dto/create-manga.input';
-import { UpdateMangaInput } from './dto/update-manga.input';
+import { CreateMangaArgs } from './dto/create-manga.args';
+import { UpdateMangaArgs } from './dto/update-manga.args';
 import { Manga } from '@/models';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { PrismaService } from 'nestjs-prisma';
 
 @Resolver(() => Manga)
 export class MangaResolver {
@@ -12,14 +10,14 @@ export class MangaResolver {
 
   @Mutation(() => Manga)
   createManga(
-    @Args('createMangaInput')
-    createMangaInput: CreateMangaInput,
-    @Args({ name: 'cover', nullable: true, type: () => GraphQLUpload })
-    _cover: FileUpload,
-    @Args({ name: 'banner', nullable: true, type: () => GraphQLUpload })
-    _banner: FileUpload,
+    @Args('create')
+    input: CreateMangaArgs,
   ) {
-    return this.mangaService.create(createMangaInput);
+    return this.mangaService.create({
+      ...input,
+      banner: 'sdaw',
+      cover: 'awdaw',
+    });
   }
 
   @Query(() => [Manga], { name: 'manga' })
@@ -33,7 +31,7 @@ export class MangaResolver {
   }
 
   @Mutation(() => Manga)
-  updateManga(@Args('updateMangaInput') updateMangaInput: UpdateMangaInput) {
+  updateManga(@Args('updateMangaInput') updateMangaInput: UpdateMangaArgs) {
     return this.mangaService.update(updateMangaInput.id, updateMangaInput);
   }
 

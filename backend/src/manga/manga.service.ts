@@ -1,11 +1,30 @@
+import { SaveMangaDTO } from '@/manga/dto/save-manga.dto';
 import { Injectable } from '@nestjs/common';
-import { CreateMangaInput } from './dto/create-manga.input';
-import { UpdateMangaInput } from './dto/update-manga.input';
+import { Prisma, Status } from '@prisma/client';
+import { PrismaService } from 'nestjs-prisma';
+import { UpdateMangaArgs } from './dto/update-manga.args';
 
 @Injectable()
 export class MangaService {
-  create(createMangaInput: CreateMangaInput) {
-    return 'This action adds a new manga';
+  private readonly mangaRepository: Prisma.MangaDelegate<Prisma.RejectOnNotFound>;
+
+  constructor(protected readonly prismaService: PrismaService) {
+    this.mangaRepository = this.prismaService.manga;
+  }
+  async create(payload: SaveMangaDTO) {
+    const manga = await this.mangaRepository.create({
+      data: {
+        ...payload,
+        title: {
+          create: payload.title,
+        },
+        tags: {
+          connect: payload.tags.map((tag) => ({ id: tag.id })),
+        },
+      },
+    });
+
+    return manga;
   }
 
   findAll() {
@@ -16,7 +35,7 @@ export class MangaService {
     return `This action returns a #${id} manga`;
   }
 
-  update(id: string, updateMangaInput: UpdateMangaInput) {
+  update(id: string, updateMangaInput: UpdateMangaArgs) {
     return `This action updates a #${id} manga`;
   }
 
