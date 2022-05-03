@@ -1,8 +1,8 @@
-import { SaveMangaDTO } from '@/manga/dto/save-manga.dto';
+import { SaveMangaDTO } from '@/manga/dto/save-manga.input';
 import { Injectable } from '@nestjs/common';
 import { Prisma, Status } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
-import { UpdateMangaArgs } from './dto/update-manga.args';
+import { UpdateMangaInput } from './dto/update-manga.input';
 
 @Injectable()
 export class MangaService {
@@ -19,7 +19,7 @@ export class MangaService {
           create: payload.title,
         },
         tags: {
-          connect: payload.tags.map((tag) => ({ id: tag.id })),
+          connect: payload.tags.map((id) => ({ id })),
         },
       },
     });
@@ -35,7 +35,7 @@ export class MangaService {
     return `This action returns a #${id} manga`;
   }
 
-  update(id: string, updateMangaInput: UpdateMangaArgs) {
+  update(id: string, updateMangaInput: UpdateMangaInput) {
     return `This action updates a #${id} manga`;
   }
 

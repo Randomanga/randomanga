@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MangaService } from './manga.service';
-import { CreateMangaArgs } from './dto/create-manga.args';
-import { UpdateMangaArgs } from './dto/update-manga.args';
+import { CreateMangaInput } from './dto/create-manga.input';
+import { UpdateMangaInput } from './dto/update-manga.input';
 import { Manga } from '@/models';
 
 @Resolver(() => Manga)
@@ -11,7 +11,7 @@ export class MangaResolver {
   @Mutation(() => Manga)
   createManga(
     @Args('create')
-    input: CreateMangaArgs,
+    input: CreateMangaInput,
   ) {
     return this.mangaService.create({
       ...input,
@@ -31,7 +31,7 @@ export class MangaResolver {
   }
 
   @Mutation(() => Manga)
-  updateManga(@Args('updateMangaInput') updateMangaInput: UpdateMangaArgs) {
+  updateManga(@Args('updateMangaInput') updateMangaInput: UpdateMangaInput) {
     return this.mangaService.update(updateMangaInput.id, updateMangaInput);
   }
 

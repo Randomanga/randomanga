@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Cover {
   id: ID!
 
@@ -15,19 +20,36 @@ type Cover {
   small: String!
 }
 
+input CreateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateExternalInput {
+  al: String
+  kitsu: String
+  mal: String
+  mdex: String
+  mu: String
+  nu: String
+}
+
 input CreateMangaArgs {
   banner: Upload
   chapters: Float
   cover: Upload
   description: String!
+  external: CreateExternalInput
   genres: [String!] = []
   origin: String!
+  status: Status!
   synonyms: [String!] = []
-  title: CreateTitleArgs!
+  tags: [ID!] = []
+  title: CreateTitleInput!
   volumes: Float
 }
 
-input CreateTitleArgs {
+input CreateTitleInput {
   english: String
   native: String
   romaji: String
@@ -69,7 +91,7 @@ type Manga {
   description: String!
 
   """Links to external websites for this manga."""
-  external: ExternalLinks!
+  external: ExternalLinks
   genres: [String!]!
   id: ID!
 
@@ -88,12 +110,16 @@ type Manga {
 }
 
 type Mutation {
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createManga(create: CreateMangaArgs!): Manga!
+  removeCategory(id: Int!): Category!
   removeManga(id: String!): Manga!
-  updateManga(updateMangaInput: UpdateMangaArgs!): Manga!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  updateManga(updateMangaInput: UpdateMangaInput!): Manga!
 }
 
 type Query {
+  category(id: Int!): Category!
   manga(id: String!): Manga!
 }
 
@@ -124,16 +150,25 @@ type Title {
   romaji: String
 }
 
-input UpdateMangaArgs {
+input UpdateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateMangaInput {
   banner: Upload
   chapters: Float
   cover: Upload
   description: String
+  external: CreateExternalInput
   genres: [String!] = []
   id: String!
   origin: String
+  status: Status
   synonyms: [String!] = []
-  title: CreateTitleArgs
+  tags: [ID!] = []
+  title: CreateTitleInput
   volumes: Float
 }
 

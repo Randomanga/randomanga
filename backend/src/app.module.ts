@@ -6,8 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from '@/common/config/configuration';
 import { GQLConfigService } from '@/services/gql-config.service';
 import { PrismaModule } from 'nestjs-prisma';
-import { TagModule } from './tag/tag.module';
-import { GenreModule } from './genre/genre.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -23,8 +22,7 @@ import { GenreModule } from './genre/genre.module';
     PrismaModule.forRoot({
       isGlobal: true,
     }),
-    TagModule,
-    GenreModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

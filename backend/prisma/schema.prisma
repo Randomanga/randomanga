@@ -14,7 +14,7 @@ model Manga {
   description String
   cover       Cover?         @relation(fields: [coverId], references: [id])
   banner      String?
-  tags        Tag[]
+  tags        Category[]
   genres      String[]
   synonyms    String[]
   status      Status
@@ -31,11 +31,14 @@ model Manga {
   createdAt DateTime @default(now())
 }
 
-model Tag {
-  id      String  @id @default(uuid()) @db.Uuid
-  name    String
-  Manga   Manga?  @relation(fields: [mangaId], references: [id])
-  mangaId String? @db.Uuid
+model Category {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String
+  group     CategoryGroup
+  Manga     Manga?        @relation(fields: [mangaId], references: [id])
+  mangaId   String?       @db.Uuid
+  updatedAt DateTime      @updatedAt
+  createdAt DateTime      @default(now())
 }
 
 model Cover {
@@ -80,4 +83,9 @@ enum Status {
   COMPLETED
   HIATUS
   CANCELLED
+}
+
+enum CategoryGroup {
+  GENRE
+  TAG
 }

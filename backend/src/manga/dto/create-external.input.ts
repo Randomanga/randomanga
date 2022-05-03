@@ -1,7 +1,7 @@
 import { InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateExternalArgs {
+export class CreateExternalInput {
   nu?: string;
   mal?: string;
   kitsu?: string;
