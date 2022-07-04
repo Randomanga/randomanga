@@ -35,10 +35,10 @@
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "latest",
     "apollo-server-express": "^3.6.7",
-    "graphql": "^16.3.0",
     "graphql-scalars": "^1.17.0",
     "graphql-upload": "^13.0.0",
     "nestjs-prisma": "^0.15.1",
+    "prisma-cursor-pagination": "^0.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

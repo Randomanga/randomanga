@@ -1,6 +1,8 @@
+import { Category } from '@/models/category.model';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { PaginationArgs, Connection } from 'prisma-cursor-pagination';
+import { catchError } from 'rxjs';
 import { CategoryService } from './category.service';
-import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 
@@ -9,23 +11,23 @@ export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Mutation(() => Category)
-  createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput) {
-    return this.categoryService.create(createCategoryInput);
+  createCategory(@Args('create') payload: CreateCategoryInput) {
+    return this.categoryService.create(payload);
   }
 
-  @Query(() => [Category], { name: 'category' })
-  findAll() {
+  @Query(() => [Category])
+  categories(@Args('args') pagination: PaginationArgs) {
     return this.categoryService.findAll();
   }
 
-  @Query(() => Category, { name: 'category' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Category)
+  category(@Args('id', { type: () => Int }) id: number) {
     return this.categoryService.findOne(id);
   }
 
   @Mutation(() => Category)
-  updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput) {
-    return this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
+  updateCategory(@Args('update') payload: UpdateCategoryInput) {
+    return this.categoryService.update(payload.id, payload);
   }
 
   @Mutation(() => Category)

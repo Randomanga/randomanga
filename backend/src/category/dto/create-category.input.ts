@@ -1,7 +1,9 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { CategoryGroup } from '@/models';
+import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  name: string;
+
+  group: CategoryGroup;
 }

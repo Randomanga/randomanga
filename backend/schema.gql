@@ -3,8 +3,21 @@
 # ------------------------------------------------------
 
 type Category {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  createdAt: DateTime!
+
+  """What group this category belongs to."""
+  group: CategoryGroup!
+  id: ID!
+
+  """The name of the category."""
+  name: String!
+  updatedAt: DateTime!
+}
+
+"""What kind of category this is"""
+enum CategoryGroup {
+  GENRE
+  TAG
 }
 
 type Cover {
@@ -21,8 +34,8 @@ type Cover {
 }
 
 input CreateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  group: CategoryGroup!
+  name: String!
 }
 
 input CreateExternalInput {
@@ -99,7 +112,7 @@ type Manga {
   origin: String!
   status: Status!
   synonyms: [String!]!
-  tags: [Tag!]!
+  tags: [Category!]!
 
   """The default title of the manga. Regardless of language."""
   title: Title!
@@ -110,15 +123,16 @@ type Manga {
 }
 
 type Mutation {
-  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  createCategory(create: CreateCategoryInput!): Category!
   createManga(create: CreateMangaArgs!): Manga!
   removeCategory(id: Int!): Category!
   removeManga(id: String!): Manga!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  updateCategory(update: UpdateCategoryInput!): Category!
   updateManga(updateMangaInput: UpdateMangaInput!): Manga!
 }
 
 type Query {
+  categories: [Category!]!
   category(id: Int!): Category!
   manga(id: String!): Manga!
 }
@@ -138,22 +152,26 @@ enum Status {
   ONGOING
 }
 
-type Tag {
-  id: ID!
-  name: String!
-}
-
 type Title {
+  """The translated version of the title."""
   english: String
   id: ID!
+
+  """
+  Native based on the origin. Meaning, the original name given by the author.
+  """
   native: String
+
+  """
+  The romanized version of the native title. Similar to how the title is pronounced.
+  """
   romaji: String
 }
 
 input UpdateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  group: CategoryGroup
   id: Int!
+  name: String
 }
 
 input UpdateMangaInput {
