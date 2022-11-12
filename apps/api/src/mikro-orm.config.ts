@@ -1,5 +1,7 @@
 import { Options } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import path from 'path';
+import { cwd } from 'process';
 
 const config: Options = {
     type: 'postgresql',
@@ -9,17 +11,17 @@ const config: Options = {
     password: process.env.DB_PASSWORD,
     dbName: process.env.DB_NAME,
     entities: ['dist/**/*.entity.js'],
-    entitiesTs: ['src/**/*.entity.ts'],
+    entitiesTs: [path.resolve(cwd(), 'apps/api/src/**/*.entity.ts')],
     highlighter: new SqlHighlighter(),
     debug: true,
     migrations: {
         path: 'dist/migrations',
-        pathTs: 'src/migrations',
+        pathTs: path.resolve(cwd(), 'apps/api/src/migrations'),
         disableForeignKeys: false
     },
     seeder: {
         pathTs: 'dist/seeders',
-        path: 'src/seeders'
+        path: path.resolve(cwd(), 'apps/api/src/seeders')
     },
 
     driverOptions: {

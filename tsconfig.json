@@ -20,10 +20,14 @@
         "noFallthroughCasesInSwitch": true,
         "module": "CommonJS",
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "paths": {
-            "~/*": ["./src/*"]
-        }
+            "@app/api": ["./apps/api/src"],
+            "@app/api/*": ["./apps/api/src/*"],
+            "@lib/relay": ["libs/relay/src"],
+            "@lib/relay/*": ["libs/relay/src/*"]
+        },
+        "baseUrl": "./"
     },
     "exclude": ["node_modules"],
     "include": ["src", "src/seeders"]

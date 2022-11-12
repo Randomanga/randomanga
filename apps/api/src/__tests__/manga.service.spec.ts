@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MangaService } from '~/manga/manga.service';
+import { MangaService } from '@app/api/manga/manga.service';
 
 describe('MangaService', () => {
     let service: MangaService;

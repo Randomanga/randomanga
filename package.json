@@ -10,13 +10,14 @@
         "lint": "tsc --noEmit && TIMING=1 eslint \"src/**/*.ts*\"",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "test": "jest --detectOpenHandles",
-        "orm:migrate:create": "mikro-orm migration:create",
-        "orm:migrate:up": "mikro-orm migration:up",
-        "orm:seed": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm seeder:run"
+        "db:seed": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm seeder:run",
+        "db": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm"
     },
     "jest": {
         "roots": [
-            "<rootDir>"
+            "<rootDir>",
+            "<rootDir>/libs/",
+            "<rootDir>/apps/"
         ],
         "transform": {
             "^.+\\.tsx?$": "ts-jest",
@@ -35,7 +36,10 @@
             "<rootDir>/node_modules",
             "<rootDir>/dist"
         ],
-        "preset": "ts-jest"
+        "preset": "ts-jest",
+        "moduleNameMapper": {
+            "^@lib/relay(|/.*)$": "<rootDir>/libs/relay/src/$1"
+        }
     },
     "dependencies": {
         "@mikro-orm/core": "^5.5.3",
@@ -94,7 +98,7 @@
         "useTsNode": true,
         "tsConfigPath": "../tsconfig.json",
         "configPaths": [
-            "./src/mikro-orm.config.ts",
+            "./apps/api/src/mikro-orm.config.ts",
             "./dist/mikro-orm.config.js"
         ]
     }
