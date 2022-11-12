@@ -2,15 +2,17 @@ version: "3"
 
 services:
   api:
-    container_name: api
+    container_name: randomanga-api
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
+      dockerfile: ./Dockerfile
     restart: always
     ports:
-      - 3001:3001
+      - 3001:5000
     networks:
       - rmg_network
+    env_file:
+      - .env
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname

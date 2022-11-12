@@ -13,7 +13,8 @@ export default (): Config => ({
     apollo: {
         debug: true,
         playground: true,
-        sortSchema: true
+        sortSchema: true,
+        introspection: true
     },
     security: {
         expiresIn: String(process.env.JWT_EXPIRES_AT) || '5min',
