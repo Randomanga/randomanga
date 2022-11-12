@@ -3,10 +3,10 @@ import { WebService } from './web.service';
 
 @Controller()
 export class WebController {
-  constructor(private readonly webService: WebService) {}
+    constructor(private readonly webService: WebService) {}
 
-  @Get()
-  getHello(): string {
-    return this.webService.getHello();
-  }
+    @Get()
+    getHello(): string {
+        return this.webService.getHello();
+    }
 }

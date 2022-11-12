@@ -7,7 +7,7 @@
         "build": "nest build",
         "dev": "nest start --watch",
         "start": "node dist/main",
-        "lint": "tsc --noEmit && TIMING=1 eslint \"src/**/*.ts*\"",
+        "lint": "tsc --noEmit && TIMING=1 eslint \"apps/**/src/**/*.ts*\"",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "test": "jest --detectOpenHandles",
         "db:seed": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm seeder:run",
@@ -38,7 +38,9 @@
         ],
         "preset": "ts-jest",
         "moduleNameMapper": {
-            "^@lib/relay(|/.*)$": "<rootDir>/libs/relay/src/$1"
+            "^@lib/relay(|/.*)$": "<rootDir>/libs/relay/src/$1",
+            "^@app/api(|/.*)$": "<rootDir>/apps/api/src/$1",
+            "^@app/web(|/.*)$": "<rootDir>/apps/web/src/$1"
         }
     },
     "dependencies": {

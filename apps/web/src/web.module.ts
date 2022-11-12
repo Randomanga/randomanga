@@ -3,8 +3,8 @@ import { WebController } from './web.controller';
 import { WebService } from './web.service';
 
 @Module({
-  imports: [],
-  controllers: [WebController],
-  providers: [WebService],
+    imports: [],
+    controllers: [WebController],
+    providers: [WebService]
 })
 export class WebModule {}
