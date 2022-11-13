@@ -1,2 +1,3 @@
-export * from './relay.module';
-export * from './relay.service';
+export * from './global-object-identification';
+export * from './mutation';
+export * from './connection';
