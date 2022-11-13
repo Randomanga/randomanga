@@ -8,13 +8,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "uuid_generate_v4()",
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "small": {
           "name": "small",
@@ -64,13 +63,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "uuid_generate_v4()",
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "nu": {
           "name": "nu",
@@ -147,13 +145,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "uuid_generate_v4()",
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "title": {
           "name": "title",
@@ -166,21 +163,21 @@
         },
         "description": {
           "name": "description",
-          "type": "varchar(255)",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "mappedType": "text"
         },
         "cover_id": {
           "name": "cover_id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "banner": {
           "name": "banner",
@@ -229,12 +226,12 @@
         },
         "external_id": {
           "name": "external_id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "chapters": {
           "name": "chapters",
@@ -318,13 +315,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "default": "uuid_generate_v4()",
-          "mappedType": "uuid"
+          "mappedType": "text"
         },
         "english": {
           "name": "english",

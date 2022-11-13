@@ -2,6 +2,71 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Cover implements Node {
+  id: ID!
+  large: String!
+  original: String!
+  small: String!
+}
+
+type ExternalLinks implements Node {
+  al: String!
+  id: ID!
+  kitsu: String!
+  mal: String!
+  mdex: String!
+  mu: String!
+  nu: String!
+}
+
+type Manga implements Node {
+  banner: String!
+  chapters: Float!
+  cover: Cover!
+  description: String!
+  external: ExternalLinks!
+  genres: [String!]!
+  id: ID!
+  origin: String!
+  status: String!
+  synonyms: [String!]!
+  title: String!
+  volumes: Float!
+}
+
+type MangaConnection {
+  edges: [MangaEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MangaEdge {
+  cursor: String!
+  node: Manga!
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+}
+
 type Query {
-  manga: String!
+  mangas(
+    """Paginate after opaque cursor"""
+    after: String
+
+    """Paginate before opaque cursor"""
+    before: String
+
+    """Paginate first"""
+    first: Int
+
+    """Paginate last"""
+    last: Int
+  ): MangaConnection!
 }

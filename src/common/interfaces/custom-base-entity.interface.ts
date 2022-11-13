@@ -1,7 +1,10 @@
-import { NodeInterface, ResolvedGlobalId } from '@libs/relay';
 import { PrimaryKey } from '@mikro-orm/core';
+import { Field, ID, InterfaceType } from '@nestjs/graphql';
+import { v4 } from 'uuid';
 
-export abstract class CustomBaseEntity extends NodeInterface {
-    @PrimaryKey({ type: 'uuid', defaultRaw: 'uuid_generate_v4()' })
-    id!: ResolvedGlobalId;
+@InterfaceType('Node')
+export class CustomBaseEntity {
+    @PrimaryKey({ type: 'text' })
+    @Field(() => ID)
+    id!: string;
 }

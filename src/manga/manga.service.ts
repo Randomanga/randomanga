@@ -2,32 +2,23 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { Manga } from '@app/entities';
 import { PublicationStatus } from '@app/entities/manga.entity';
+//@ts-ignore
+import { knexPaginator as paginate } from 'apollo-cursor-pagination';
+import { MangaConnection } from '@app/manga/dto/manga.connection';
+import { ConnectionArgs } from '@app/libs/relay';
 
 @Injectable()
 export class MangaService {
     constructor(private readonly em: EntityManager) {}
 
-    async test() {
-        const manga = this.em.create(Manga, {
-            banner: 'test',
-            chapters: 1,
-            cover: {
-                large: 'test',
-                original: 'test',
-                small: 'test'
-            },
-            description: 'test',
-            external: {
-                mal: 'tesst'
-            },
-            genres: ['test'],
-            origin: 'test',
+    async find(args: ConnectionArgs): Promise<MangaConnection> {
+        const repo = this.em.getRepository(Manga);
 
-            status: PublicationStatus.CANCELLED,
-            synonyms: ['test'],
-            title: 'test'
-        });
+        const res: MangaConnection = await paginate(
+            repo.qb().getKnexQuery(),
+            args
+        );
 
-        await this.em.flush();
+        return res;
     }
 }

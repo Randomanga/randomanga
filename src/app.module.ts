@@ -27,7 +27,5 @@ import { MikroORM } from '@mikro-orm/core';
 export class AppModule implements OnModuleInit {
     constructor(private readonly orm: MikroORM) {}
 
-    async onModuleInit() {
-        await this.orm.getMigrator().up();
-    }
+    async onModuleInit() {}
 }

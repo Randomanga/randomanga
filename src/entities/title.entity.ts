@@ -1,10 +1,10 @@
 import { Entity, Property } from '@mikro-orm/core';
 import { NodeType } from '@libs/relay';
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { CustomBaseEntity } from '@app/common/interfaces/custom-base-entity.interface';
 
 @Entity()
-@NodeType()
+@ObjectType({ implements: [CustomBaseEntity] })
 export default class Title extends CustomBaseEntity {
     @Field()
     @Property()

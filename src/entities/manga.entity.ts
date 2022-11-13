@@ -1,48 +1,54 @@
 import { CustomBaseEntity } from '@app/common/interfaces/custom-base-entity.interface';
 import Cover from '@app/entities/cover.entity';
 import { ExternalLinks } from '@app/entities/external.entity';
-import { NodeType } from '@libs/relay';
-import {
-    Entity,
-    OneToOne,
-    Property
-} from '@mikro-orm/core';
-import { registerEnumType } from '@nestjs/graphql';
+import { Entity, OneToOne, Property } from '@mikro-orm/core';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 
 @Entity()
-@NodeType()
+@ObjectType({ implements: [CustomBaseEntity] })
 export default class Manga extends CustomBaseEntity {
     @Property()
+    @Field()
     title!: string;
 
-    @Property()
+    @Property({ type: 'text' })
+    @Field()
     description!: string;
 
     @OneToOne()
+    @Field()
     cover!: Cover;
 
     @Property()
+    @Field()
     banner!: string;
 
     @Property()
+    @Field(() => [String])
     genres!: string[];
 
     @Property()
+    @Field(() => [String])
     synonyms!: string[];
 
     @Property()
+    @Field()
     status!: PublicationStatus;
 
     @Property()
+    @Field()
     origin!: string;
 
     @OneToOne()
+    @Field()
     external?: ExternalLinks;
 
     @Property()
+    @Field()
     chapters?: number;
 
     @Property()
+    @Field()
     volumes?: number;
 }
 

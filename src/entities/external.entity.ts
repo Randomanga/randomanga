@@ -1,10 +1,10 @@
 import { CustomBaseEntity } from '@app/common/interfaces/custom-base-entity.interface';
 import { NodeType } from '@libs/relay';
 import { Entity, Property } from '@mikro-orm/core';
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
-@NodeType()
 @Entity()
+@ObjectType({ implements: [CustomBaseEntity] })
 export class ExternalLinks extends CustomBaseEntity {
     /**
      * Link to NovelUpdates
