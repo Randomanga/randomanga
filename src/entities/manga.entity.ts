@@ -15,7 +15,7 @@ export default class Manga extends CustomBaseEntity {
     @Field()
     description!: string;
 
-    @OneToOne()
+    @OneToOne(() => Cover)
     @Field()
     cover!: Cover;
 
@@ -39,7 +39,7 @@ export default class Manga extends CustomBaseEntity {
     @Field()
     origin!: string;
 
-    @OneToOne()
+    @OneToOne(() => ExternalLinks)
     @Field()
     external?: ExternalLinks;
 

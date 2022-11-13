@@ -1,5 +1,6 @@
 import { Options } from '@mikro-orm/core';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 const config: Options = {
     type: 'postgresql',
@@ -11,6 +12,7 @@ const config: Options = {
     entities: ['dist/**/*.entity.js'],
     entitiesTs: ['src/**/*.entity.ts'],
     highlighter: new SqlHighlighter(),
+    metadataProvider: TsMorphMetadataProvider,
     debug: true,
     migrations: {
         path: 'dist/migrations',
