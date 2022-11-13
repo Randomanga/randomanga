@@ -1,5 +1,5 @@
 import { CustomBaseEntity } from '@app/common/interfaces/custom-base-entity.interface';
-import { NodeInterface, NodeType } from '@libs/relay';
+import { NodeType } from '@libs/relay';
 import { Entity, Property } from '@mikro-orm/core';
 import { Field } from '@nestjs/graphql';
 

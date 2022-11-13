@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MangaResolver } from '@app/manga/manga.resolver';
-import { MangaService } from '@app/manga/manga.service';
+import { MangaResolver } from '../manga/manga.resolver';
+import { MangaService } from '../manga/manga.service';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 
 describe('MangaResolver', () => {

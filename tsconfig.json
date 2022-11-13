@@ -21,6 +21,6 @@
         },
         "baseUrl": "src"
     },
-    "exclude": ["node_modules", "src/**/*.spec.ts", "dist"],
+    "exclude": ["node_modules", "**/*.spec.ts", "dist"],
     "include": ["src/**/*"]
 }

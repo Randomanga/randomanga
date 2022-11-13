@@ -18,7 +18,7 @@ export class GlobalIdScalar implements CustomScalar<string, ResolvedGlobalId> {
 
     serialize(value: unknown): string {
         if (!value) throw new GraphQLError(`Failed serializing ID: ${value}`);
-        
+
         const { id, type } = value as ResolvedGlobalId;
         return toGlobalId(type, id);
     }

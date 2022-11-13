@@ -1,6 +1,5 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { Manga } from '@app/entities';
 import { MangaSeeder } from '@app/seeders/MangaSeeder';
 
 export class DatabaseSeeder extends Seeder {

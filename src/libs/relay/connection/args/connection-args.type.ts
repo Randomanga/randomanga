@@ -1,4 +1,4 @@
-import { Field, ArgsType, Int } from '@nestjs/graphql';
+import { Field, ArgsType } from '@nestjs/graphql';
 import * as Relay from 'graphql-relay';
 import { returnsInt } from '../../common';
 

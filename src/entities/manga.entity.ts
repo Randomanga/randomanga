@@ -1,12 +1,10 @@
 import { CustomBaseEntity } from '@app/common/interfaces/custom-base-entity.interface';
 import Cover from '@app/entities/cover.entity';
 import { ExternalLinks } from '@app/entities/external.entity';
-import { NodeInterface, NodeType } from '@libs/relay';
+import { NodeType } from '@libs/relay';
 import {
     Entity,
-    OneToMany,
     OneToOne,
-    PrimaryKey,
     Property
 } from '@mikro-orm/core';
 import { registerEnumType } from '@nestjs/graphql';

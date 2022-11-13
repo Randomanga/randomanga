@@ -1,4 +1,4 @@
-import { EntityManager, MikroORM } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { Manga } from '@app/entities';
 import { PublicationStatus } from '@app/entities/manga.entity';

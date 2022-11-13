@@ -1,110 +1,108 @@
 {
-  "name": "randomanga-api",
-  "version": "3.0.0",
-  "private": true,
-  "scripts": {
-    "clean": "rimraf dist",
-    "build": "nest build",
-    "dev": "nest start --watch",
-    "start": "node dist/main",
-    "lint": "tsc --noEmit && TIMING=1 eslint \"apps/**/src/**/*.ts*\"",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "jest --detectOpenHandles",
-    "db:seed": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm seeder:run",
-    "db:migrate": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm migration:create",
-    "db": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' mikro-orm"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>",
-      "<rootDir>/libs/",
-      "<rootDir>/apps/"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest",
-      "^.+\\.(t|j)s$": "ts-jest"
+    "name": "randomanga-api",
+    "version": "3.0.0",
+    "private": true,
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "nest build",
+        "dev": "nest start --watch",
+        "start": "node dist/main",
+        "lint": "tsc --noEmit && TIMING=1 eslint \"src\"",
+        "lint:fix": "tsc --noEmit && TIMING=1 eslint \"src\" --fix",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "test": "jest --detectOpenHandles",
+        "db:seed": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm seeder:run",
+        "db:migrate": "NODE_OPTIONS=\"--loader ts-node/esm\" mikro-orm migration:create",
+        "db": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' mikro-orm"
     },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/test/__fixtures__",
-      "<rootDir>/node_modules",
-      "<rootDir>/dist"
-    ],
-    "preset": "ts-jest",
-    "moduleNameMapper": {
-      "^@lib/relay(|/.*)$": "<rootDir>/libs/relay/src/$1",
-      "^@app/api(|/.*)$": "<rootDir>/apps/api/src/$1",
-      "^@app/web(|/.*)$": "<rootDir>/apps/web/src/$1"
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest",
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ],
+        "rootDir": "./",
+        "modulePathIgnorePatterns": [
+            "<rootDir>/test/__fixtures__",
+            "<rootDir>/node_modules",
+            "<rootDir>/dist"
+        ],
+        "preset": "ts-jest",
+        "coverageDirectory": "./coverage",
+        "moduleNameMapper": {
+            "^@libs/(.*)$": "<rootDir>/src/libs/$1",
+            "^@app/(.*)$": "<rootDir>/src/$1"
+        }
+    },
+    "dependencies": {
+        "@apollo/gateway": "^2.1.4",
+        "@mikro-orm/core": "^5.5.3",
+        "@mikro-orm/migrations": "^5.5.3",
+        "@mikro-orm/nestjs": "^5.1.2",
+        "@mikro-orm/postgresql": "^5.5.3",
+        "@mikro-orm/reflection": "^5.5.3",
+        "@mikro-orm/seeder": "^5.5.3",
+        "@mikro-orm/sql-highlighter": "^1.0.1",
+        "@nestjs/apollo": "^10.1.6",
+        "@nestjs/common": "^9.0.0",
+        "@nestjs/config": "^2.2.0",
+        "@nestjs/core": "^9.0.0",
+        "@nestjs/graphql": "^10.1.6",
+        "@nestjs/platform-express": "^9.0.0",
+        "apollo-server-express": "^3.11.1",
+        "graphql": "^16.6.0",
+        "graphql-relay": "^0.10.0",
+        "reflect-metadata": "^0.1.13",
+        "rimraf": "^3.0.2",
+        "rxjs": "^7.2.0",
+        "typescript": "^4.7.4"
+    },
+    "devDependencies": {
+        "@mikro-orm/cli": "^5.5.3",
+        "@nestjs/cli": "^9.0.0",
+        "@nestjs/schematics": "^9.0.0",
+        "@nestjs/testing": "^9.0.0",
+        "@types/express": "^4.17.13",
+        "@types/graphql-relay": "^0.7.0",
+        "@types/jest": "28.1.8",
+        "@types/node": "^16.0.0",
+        "@types/supertest": "^2.0.11",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.42.1",
+        "esbuild": "^0.14.38",
+        "esbuild-register": "^3.3.2",
+        "eslint": "^8.0.1",
+        "eslint-config-next": "^12.0.8",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "7.28.0",
+        "eslint-plugin-unused-imports": "^2.0.0",
+        "jest": "28.1.3",
+        "nodemon": "^2.0.15",
+        "prettier": "^2.3.2",
+        "source-map-support": "^0.5.20",
+        "supertest": "^6.1.3",
+        "ts-jest": "28.0.8",
+        "ts-loader": "^9.2.3",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "4.1.0"
+    },
+    "engines": {
+        "node": ">=14.0.0",
+        "npm": ">=7.0.0"
+    },
+    "mikro-orm": {
+        "useTsNode": true,
+        "configPaths": [
+            "./src/mikro-orm.config.ts",
+            "./dist/api/mikro-orm.config.ts"
+        ]
     }
-  },
-  "dependencies": {
-    "@apollo/gateway": "^2.1.4",
-    "@mikro-orm/core": "^5.5.3",
-    "@mikro-orm/migrations": "^5.5.3",
-    "@mikro-orm/nestjs": "^5.1.2",
-    "@mikro-orm/postgresql": "^5.5.3",
-    "@mikro-orm/reflection": "^5.5.3",
-    "@mikro-orm/seeder": "^5.5.3",
-    "@mikro-orm/sql-highlighter": "^1.0.1",
-    "@nestjs/apollo": "^10.1.6",
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/config": "^2.2.0",
-    "@nestjs/core": "^9.0.0",
-    "@nestjs/graphql": "^10.1.6",
-    "@nestjs/platform-express": "^9.0.0",
-    "apollo-server-express": "^3.11.1",
-    "graphql": "^16.6.0",
-    "graphql-relay": "^0.10.0",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0",
-    "typescript": "^4.7.4"
-  },
-  "devDependencies": {
-    "@mikro-orm/cli": "^5.5.3",
-    "@nestjs/cli": "^9.0.0",
-    "@nestjs/schematics": "^9.0.0",
-    "@nestjs/testing": "^9.0.0",
-    "@types/express": "^4.17.13",
-    "@types/graphql-relay": "^0.7.0",
-    "@types/jest": "28.1.8",
-    "@types/node": "^16.0.0",
-    "@types/supertest": "^2.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.42.1",
-    "esbuild": "^0.14.38",
-    "esbuild-register": "^3.3.2",
-    "eslint": "^8.0.1",
-    "eslint-config-next": "^12.0.8",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "7.28.0",
-    "jest": "28.1.3",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.3.2",
-    "source-map-support": "^0.5.20",
-    "supertest": "^6.1.3",
-    "ts-jest": "28.0.8",
-    "ts-loader": "^9.2.3",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "4.1.0"
-  },
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=7.0.0"
-  },
-  "mikro-orm": {
-    "useTsNode": true,
-    "configPaths": [
-      "./src/mikro-orm.config.ts",
-      "./dist/api/mikro-orm.config.ts"
-    ]
-  }
 }
