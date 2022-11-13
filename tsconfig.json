@@ -1,34 +1,26 @@
 {
     "compilerOptions": {
-        "lib": ["ES2018"],
-        "composite": false,
-        "target": "ES2018",
+        "module": "commonjs",
         "declaration": true,
-        "declarationMap": true,
+        "noImplicitAny": false,
+        "removeComments": true,
         "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "inlineSources": false,
-        "isolatedModules": true,
-        "moduleResolution": "node",
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "preserveWatchOutput": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "experimentalDecorators": true,
+        "lib": ["es2017"],
         "emitDecoratorMetadata": true,
-        "noFallthroughCasesInSwitch": true,
-        "module": "CommonJS",
+        "experimentalDecorators": true,
+        "target": "es6",
+        "sourceMap": true,
+        "allowJs": true,
         "outDir": "./dist",
-        "rootDir": ".",
+        "strict": true,
+        "rootDir": "src",
         "paths": {
-            "@app/api": ["./apps/api/src"],
-            "@app/api/*": ["./apps/api/src/*"],
-            "@lib/relay": ["libs/relay/src"],
-            "@lib/relay/*": ["libs/relay/src/*"]
+            "@app/": ["./"],
+            "@app/*": ["./*"],
+            "@libs/*": ["./libs/*"]
         },
-        "baseUrl": "./"
+        "baseUrl": "src"
     },
-    "exclude": ["node_modules"],
-    "include": ["apps/"]
+    "exclude": ["node_modules", "src/**/*.spec.ts", "dist"],
+    "include": ["src/**/*"]
 }

@@ -1,40 +1,5 @@
 {
     "$schema": "https://json.schemastore.org/nest-cli",
     "collection": "@nestjs/schematics",
-    "sourceRoot": "apps/api/src",
-    "projects": {
-        "relay": {
-            "type": "library",
-            "root": "libs/relay",
-            "entryFile": "index",
-            "sourceRoot": "libs/relay/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/relay/tsconfig.json"
-            }
-        },
-        "api": {
-            "type": "application",
-            "root": "apps/api",
-            "entryFile": "main",
-            "sourceRoot": "apps/api/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/api/tsconfig.json"
-            }
-        },
-        "web": {
-            "type": "application",
-            "root": "apps/web",
-            "entryFile": "main",
-            "sourceRoot": "apps/web/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/web/tsconfig.json"
-            }
-        }
-    },
-    "compilerOptions": {
-        "webpack": true,
-        "tsConfigPath": "apps/api/tsconfig.json"
-    },
-    "monorepo": true,
-    "root": "apps/api"
+    "sourceRoot": "src"
 }
